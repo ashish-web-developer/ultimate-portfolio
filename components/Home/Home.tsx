@@ -50,6 +50,16 @@ const useStyles  = makeStyles({
         bottom:"0px",
         fontSize:"100px",
         textDecoration:"underline"
+    },
+    mainText:{
+        fontFamily:"'Oswald', sans-serif",
+        fontSize:"40px"
+    },
+    mainTextHeader:{
+        fontSize:"100px"
+    },
+    mainTextSub:{
+        letterSpacing:"25px"
     }
 })
 
@@ -87,12 +97,23 @@ const Home:FC  = ()=>{
                     </div>
                 </Grid>
                 <Grid xs = {10} item>
-                    <Canvas>
-                        <ambientLight intensity = {0.5}/>
-                        <pointLight position = {[-10,10,-5]}/>
-                        <spotLight intensity={0.5} position = {[0,-10,-10]}/>
-                        <ProjectCube/>
-                    </Canvas>
+                    <Grid  sx = {{height:"100%"}} container>
+                        <Grid xs = {8} item>
+                            <Canvas>
+                                <ambientLight intensity = {0.5}/>
+                                <pointLight position = {[-10,10,-5]}/>
+                                <spotLight intensity={0.5} position = {[0,-10,-10]}/>
+                                <ProjectCube/>
+                            </Canvas>
+                        </Grid>
+                        <Grid sx = {{display:"flex",alignItems:"center"}} xs = {4} item>
+                            <div className = {classes.mainText}>
+                                <span className = {classes.mainTextHeader}>CREATIVE</span>
+                                 <br/> 
+                                <span className = {classes.mainTextSub}>DEVELOPER</span>
+                            </div>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid sx = {{display:"flex",alignItems:"flex-end",justifyContent:"flex-end"}} xs = {1} item>
                     <div style = {{float:"right"}}>

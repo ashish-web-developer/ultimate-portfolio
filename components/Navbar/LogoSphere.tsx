@@ -23,9 +23,6 @@ function Model(props) {
       y:position.y+0.05
     })
   })
-  useEffect(()=>{
-    console.log("value of position got change",position);
-  },[position])
   return (
     <group {...props} dispose={null} scale = {0.025}>
       <group position={[0.02, 0.01, 0]} rotation={[-Math.PI / 2, position.x,position.y]}>
