@@ -36,6 +36,10 @@ const useStyles = makeStyles({
         color:"#fff",
         fontSize:"20px",
         textDecoration:"underline"
+    },
+    ankerStyle:{
+        fontFamily:"'Oswald', sans-serif",
+        textTransform:"uppercase"
     }
 })
 
@@ -60,13 +64,13 @@ const Navbar:FC = ()=>{
             <Grid xs = {4} item>
                 <div className = {classes.menuContainer}>
                     <Link href = "/">
-                        <a>About</a>
+                        <a className = {classes.ankerStyle}>About</a>
                     </Link>
                     <Link href = "/">
-                        <a>Portfolio</a>
+                        <a className = {classes.ankerStyle}>Portfolio</a>
                     </Link>
                     <Link href = "/">
-                        <a>Contact</a>
+                        <a className = {classes.ankerStyle}>Contact</a>
                     </Link>
                 </div>
             </Grid>

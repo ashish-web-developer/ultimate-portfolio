@@ -53,13 +53,17 @@ const useStyles  = makeStyles({
     },
     mainText:{
         fontFamily:"'Oswald', sans-serif",
-        fontSize:"40px"
+        fontSize:"40px",
+        fontWeight:"700"
     },
     mainTextHeader:{
-        fontSize:"100px"
+        fontSize:"100px",
+        backgroundColor:"#e2cf52",
+        color:"#000",
+        padding:"0px 50px"
     },
     mainTextSub:{
-        letterSpacing:"25px"
+        letterSpacing:"35px"
     }
 })
 
@@ -98,7 +102,7 @@ const Home:FC  = ()=>{
                 </Grid>
                 <Grid xs = {10} item>
                     <Grid  sx = {{height:"100%"}} container>
-                        <Grid xs = {8} item>
+                        <Grid xs = {6} item>
                             <Canvas>
                                 <ambientLight intensity = {0.5}/>
                                 <pointLight position = {[-10,10,-5]}/>
@@ -106,11 +110,11 @@ const Home:FC  = ()=>{
                                 <ProjectCube/>
                             </Canvas>
                         </Grid>
-                        <Grid sx = {{display:"flex",alignItems:"center"}} xs = {4} item>
+                        <Grid sx = {{display:"flex",alignItems:"center"}} xs = {6} item>
                             <div className = {classes.mainText}>
                                 <span className = {classes.mainTextHeader}>CREATIVE</span>
                                  <br/> 
-                                <span className = {classes.mainTextSub}>DEVELOPER</span>
+                                <span className = {classes.mainTextSub}><span style = {{color:"#e2cf52"}}>DEV</span>ELOPER</span>
                             </div>
                         </Grid>
                     </Grid>
