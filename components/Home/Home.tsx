@@ -24,6 +24,10 @@ import Link from "next/link"
 import { SpotLight } from "@react-three/drei"
 import { Canvas} from "@react-three/fiber"
 
+
+// react spring
+import {useSpring,animated} from "react-spring"
+
 const useStyles  = makeStyles({
     container:{
         position:"relative",
@@ -79,6 +83,7 @@ const useStyles  = makeStyles({
 
 const Home:FC  = ()=>{
     const classes = useStyles();
+    const springProps = useSpring({to:{opacity:1},from : {opacity:0}})
     return(
         <div className = {classes.container}>
             <Navbar/>
@@ -131,7 +136,7 @@ const Home:FC  = ()=>{
                             <div className = {classes.mainText}>
                                 <span className = {classes.mainTextHeader}>CREATIVE</span>
                                  <br/> 
-                                <span className = {classes.mainTextSub}><span style = {{color:"#e2cf52"}}>DEV</span>ELOPER</span>
+                                <animated.div onFocus = {()=>{console.log("hello world")}} style = {springProps} className = {classes.mainTextSub}><span style = {{color:"#e2cf52"}}>DEV</span>ELOPER</animated.div>
                             </div>
                         </Grid>
                     </Grid>

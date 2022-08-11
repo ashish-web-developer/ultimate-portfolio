@@ -37,6 +37,9 @@ const useStyles = makeStyles({
         fontSize:"20px",
         textDecoration:"underline"
     },
+    curlyBraces:{
+        color:"#e2cf52"
+    },
     ankerStyle:{
         fontFamily:"'Oswald', sans-serif",
         textTransform:"uppercase"
@@ -58,7 +61,7 @@ const Navbar:FC = ()=>{
                             <spotLight intensity={0.5} position = {[0,-10,-10]}/>
                         </Canvas>
                     </div>
-                    <span className = {classes.logoText}>Ashish Prajapati</span>
+                    <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
                 </div>
             </Grid>
             <Grid xs = {4} item>

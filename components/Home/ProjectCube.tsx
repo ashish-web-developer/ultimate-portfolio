@@ -3,10 +3,8 @@ import { useFrame,useLoader} from "@react-three/fiber"
 import { TextureLoader } from "three";
 
 const ProjectCube = ()=>{
-    const meshRef = useRef();
-    const colorMap = useMemo(()=>{
-        return useLoader(TextureLoader,"https://img.icons8.com/color/480/000000/javascript--v1.png")
-    },[])
+    const meshRef = useRef<null|any>(null);
+    const colorMap = useLoader(TextureLoader,"https://img.icons8.com/color/480/000000/javascript--v1.png");
 
     useFrame((state, delta) => {
         if(meshRef.current){
