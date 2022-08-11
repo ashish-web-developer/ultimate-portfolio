@@ -64,6 +64,15 @@ const useStyles  = makeStyles({
     },
     mainTextSub:{
         letterSpacing:"35px"
+    },
+    socialIcon:{
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        backgroundColor:"#fff",
+        borderRadius:"50%",
+        width:"25px",
+        height:"25px",
     }
 })
 
@@ -77,26 +86,34 @@ const Home:FC  = ()=>{
             <Grid  sx = {{height:"100%"}} container>
                 <Grid sx = {{display:"flex",alignItems:"center"}} xs = {1} item>
                     <div className = {classes.socialIconContainer}>
-                        <Link href = "/">
-                            <a>
-                                <ImFacebook/>
-                            </a>
-                        </Link>
-                        <Link href = "/">
-                            <a>
-                                <BsTwitter/>
-                            </a>
-                        </Link>
-                        <Link href = "/">
-                            <a>
-                                <FaGithubAlt/>
-                            </a>
-                        </Link>
-                        <Link href="/"> 
-                            <a>
-                                <GrLinkedinOption/>
-                            </a>
-                        </Link>
+                        <div className = {classes.socialIcon}>
+                            <Link href = "/">
+                                <a>
+                                    <ImFacebook color = "#000"/>
+                                </a>
+                            </Link>
+                        </div>
+                        <div className = {classes.socialIcon}>
+                            <Link href = "/">
+                                <a>
+                                    <BsTwitter color = "#000"/>
+                                </a>
+                            </Link>
+                        </div>
+                        <div className = {classes.socialIcon}>
+                            <Link href = "/">
+                                <a>
+                                    <FaGithubAlt color = "#000"/>
+                                </a>
+                            </Link>
+                        </div>
+                        <div className = {classes.socialIcon}>
+                            <Link href="/"> 
+                                <a>
+                                    <GrLinkedinOption color = "#000"/>
+                                </a>
+                            </Link>
+                        </div>
 
                     </div>
                 </Grid>
