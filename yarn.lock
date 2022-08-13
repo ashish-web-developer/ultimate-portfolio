@@ -238,6 +238,11 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@juggle/resize-observer@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.3.1.tgz#b50a781709c81e10701004214340f25475a171a0"
+  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
+
 "@mui/base@5.0.0-alpha.92":
   version "5.0.0-alpha.92"
   resolved "https://registry.npmjs.org/@mui/base/-/base-5.0.0-alpha.92.tgz"
@@ -2295,6 +2300,13 @@ react-reconciler@^0.27.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.21.0"
+
+react-sparkle@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-sparkle/-/react-sparkle-1.0.9.tgz#3e034da5ade47cd6b7081235221d088d92444bdd"
+  integrity sha512-MDRn+yaSf9PatEXJlNSqR9UHSj7jNa1bjJA5v9LQCIxP/k/fLWWwnRNv9QnNeKcELsYyeQgkTf4LTLaCccyzqQ==
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
 
 react-spring@^9.5.2:
   version "9.5.2"

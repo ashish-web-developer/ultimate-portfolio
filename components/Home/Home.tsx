@@ -20,13 +20,13 @@ import Link from "next/link";
 //three js
 
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera, OrthographicCamera } from "@react-three/drei";
-import Model from "./Scene";
+import { PerspectiveCamera, OrthographicCamera ,Loader} from "@react-three/drei";
+import Avatar from "./DevAvatar"
 
 // react spring
 import { useSpring, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import Avatar from "./DevAvatar"
+
 
 const useStyles = makeStyles({
   container: {
@@ -81,12 +81,27 @@ const useStyles = makeStyles({
   container2:{
     background: "linear-gradient(to right, #434343 0%, black 100%)"
   },
+  workContainer:{
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"center",
+    height:"100%"
+  },
   workHeading:{
-    fontFamily: "'Bungee', cursive",
-    color: "#fff",
-    fontSize: "60px",
-    textDecoration: "underline",
+    fontFamily:"'Bungee', cursive",
+    color:"#fff",
+    fontSize:"30px",
+    textDecoration:"underline",
+    textDecorationColor:"#e2cf52",
+    textDecorationThickness:"5px"
 
+  },
+  curlyBraces:{
+      color:"#e2cf52"
+  },
+  workListItem:{
+    fontSize:"24px",
+    fontFamily:"'Oswald', sans-serif",
   }
 });
 
@@ -208,9 +223,36 @@ const Home: FC = () => {
           <div className={clsx(classes.container,classes.container2)}>
             <Grid sx = {{height:"100%"}} container >
               <Grid sx = {{height:"100%"}} xs = {8} item>
-                <div>
-                  <span className={classes.workHeading}>WORK</span>
+                <div className = {classes.workContainer}>
+                  <span className = {classes.workHeading}><span className = {classes.curlyBraces}> &#123;</span> Work <span className = {classes.curlyBraces}>&#125;</span></span>
                   <div>
+                    <ul>
+                      <li>
+                        <Link href = "/">
+                          <a className ={classes.workListItem}>Mern Dev</a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href = "/">
+                          <a className ={classes.workListItem}>IP Address Tracker</a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href = "/">
+                          <a className ={classes.workListItem}>Calculator</a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href = "/">
+                          <a className ={classes.workListItem}>OTP Modal</a>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href = "/">
+                          <a className ={classes.workListItem}>Facebook Clone App</a>
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </Grid>
@@ -240,6 +282,7 @@ const Home: FC = () => {
           </div>
         </ParallaxLayer>
       </Parallax>
+      <Loader/>
     </>
   );
 };

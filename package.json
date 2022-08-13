@@ -22,6 +22,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
+    "react-sparkle": "^1.0.9",
     "react-spring": "^9.5.2",
     "three": "^0.143.0"
   },
