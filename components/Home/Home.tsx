@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo ,Suspense} from "react";
 import { makeStyles } from "@mui/styles";
 
 //components
@@ -136,7 +136,9 @@ const Home: FC = () => {
                       <ambientLight intensity={0.5} />
                       <pointLight position={[-10, 10, -5]} />
                       <spotLight intensity={0.5} position={[0, -10, -10]} />
-                      <ProjectCube />
+                      <Suspense>
+                        <ProjectCube />
+                      </Suspense>
                     </Canvas>
                   </Grid>
                   <Grid
@@ -203,7 +205,9 @@ const Home: FC = () => {
                 zoom={60}
                 makeDefault={true}
               />
-              <Model rotation={[-1.6, 0, 0]} position={[10, -7, 0]} />
+              <Suspense>
+                <Model rotation={[-1.6, 0, 0]} position={[10, -7, 0]} />
+              </Suspense>
               <ambientLight intensity={1} />
               <pointLight position={[-10, 10, 5]} />
               <spotLight intensity={0.5} position={[0, -10, -10]} />
