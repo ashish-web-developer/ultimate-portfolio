@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Home from '../components/Home/Home'
+import Home from '../components/home/Home'
 import {useEffect,useState} from "react";
 
 

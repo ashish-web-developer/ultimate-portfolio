@@ -1,8 +1,8 @@
-import { FC, memo } from "React";
+import { FC, memo } from "react";
 import { makeStyles } from "@mui/styles";
 
 //components
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../navbar/Navbar";
 import ProjectCube from "./ProjectCube";
 
 //material ui
@@ -20,7 +20,7 @@ import Link from "next/link";
 
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera, OrthographicCamera } from "@react-three/drei";
-import Model from "../Home/Scene";
+import Model from "./Scene";
 
 // react spring
 import { useSpring, animated } from "react-spring";
