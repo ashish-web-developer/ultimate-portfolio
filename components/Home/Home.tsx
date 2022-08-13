@@ -219,7 +219,7 @@ const Home: FC = () => {
                   <PerspectiveCamera
                     position={[0, 3, 0]}
                     fov={120}
-                    makeDefault={true}ggg
+                    makeDefault={true}
                   />
                   <OrthographicCamera
                     position={[-3, 0, 5]}
