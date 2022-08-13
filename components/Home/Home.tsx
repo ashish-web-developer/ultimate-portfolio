@@ -1,5 +1,6 @@
 import { FC, memo ,Suspense} from "react";
 import { makeStyles } from "@mui/styles";
+import clsx from "clsx";
 
 //components
 import Navbar from "../Navbar/Navbar";
@@ -25,6 +26,7 @@ import Model from "./Scene";
 // react spring
 import { useSpring, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import Avatar from "./DevAvatar"
 
 const useStyles = makeStyles({
   container: {
@@ -76,6 +78,16 @@ const useStyles = makeStyles({
     width: "25px",
     height: "25px",
   },
+  container2:{
+    background: "linear-gradient(to right, #434343 0%, black 100%)"
+  },
+  workHeading:{
+    fontFamily: "'Bungee', cursive",
+    color: "#fff",
+    fontSize: "60px",
+    textDecoration: "underline",
+
+  }
 });
 
 const Home: FC = () => {
@@ -193,25 +205,38 @@ const Home: FC = () => {
             color: "white",
           }}
         >
-          <div className={classes.container}>
-            <Canvas>
-              <PerspectiveCamera
-                position={[0, 3, 0]}
-                fov={120}
-                makeDefault={true}
-              />
-              <OrthographicCamera
-                position={[-3, 0, 5]}
-                zoom={60}
-                makeDefault={true}
-              />
-              <Suspense>
-                <Model rotation={[-1.6, 0, 0]} position={[10, -7, 0]} />
-              </Suspense>
-              <ambientLight intensity={1} />
-              <pointLight position={[-10, 10, 5]} />
-              <spotLight intensity={0.5} position={[0, -10, -10]} />
-            </Canvas>
+          <div className={clsx(classes.container,classes.container2)}>
+            <Grid sx = {{height:"100%"}} container >
+              <Grid sx = {{height:"100%"}} xs = {8} item>
+                <div className = {classes.workContainer}>
+                  <span className={classes.workHeading}>WORK</span>
+                  <div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid  sx = {{height:"100%"}} xs = {4} item>
+                <Canvas>
+                  <PerspectiveCamera
+                    position={[0, 3, 0]}
+                    fov={120}
+                    makeDefault={true}ggg
+                  />
+                  <OrthographicCamera
+                    position={[-3, 0, 5]}
+                    zoom={250}
+                    makeDefault={true}
+                  />
+                  <Suspense>
+                    <Avatar rotation={[0, -1, 0]} position={[-3,-1,0]} />
+                  </Suspense>
+                  <ambientLight intensity={1} />
+                  <pointLight position={[-10, 10, 5]} />
+                  <spotLight intensity={0.5} position={[0, -10, -10]} />
+                </Canvas>
+
+              </Grid>
+
+            </Grid>
           </div>
         </ParallaxLayer>
       </Parallax>
