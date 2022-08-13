@@ -208,7 +208,7 @@ const Home: FC = () => {
           <div className={clsx(classes.container,classes.container2)}>
             <Grid sx = {{height:"100%"}} container >
               <Grid sx = {{height:"100%"}} xs = {8} item>
-                <div className = {classes.workContainer}>
+                <div>
                   <span className={classes.workHeading}>WORK</span>
                   <div>
                   </div>
