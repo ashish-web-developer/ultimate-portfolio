@@ -13,8 +13,6 @@ import { makeStyles } from "@mui/styles";
 
 import { Canvas} from "@react-three/fiber"
 
-// component
-import LogoSphere from "../home/Scene";
 
 
 const useStyles = makeStyles({

@@ -2,7 +2,7 @@ import { FC, memo } from "react";
 import { makeStyles } from "@mui/styles";
 
 //components
-import Navbar from "../navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
 
 //material ui
