@@ -14,7 +14,7 @@ import { makeStyles } from "@mui/styles";
 import { Canvas} from "@react-three/fiber"
 
 // component
-import LogoSphere from "./LogoSphere";
+import LogoSphere from "../Home/Scene";
 
 
 const useStyles = makeStyles({
@@ -35,7 +35,9 @@ const useStyles = makeStyles({
         fontFamily:"'Bungee', cursive",
         color:"#fff",
         fontSize:"20px",
-        textDecoration:"underline"
+        textDecoration:"underline",
+        textDecorationColor:"#e2cf52",
+        textDecorationThickness:"5px"
     },
     curlyBraces:{
         color:"#e2cf52"
@@ -54,12 +56,12 @@ const Navbar:FC = ()=>{
             <Grid xs = {8} item>
                 <div className = {classes.logoContainer}>
                     <div className = {classes.logoCanvasContainer}>
-                        <Canvas>
+                        {/*<Canvas>
                             <LogoSphere/>
                             <ambientLight intensity = {0.5}/>
                             <pointLight position = {[-10,10,-5]}/>
                             <spotLight intensity={0.5} position = {[0,-10,-10]}/>
-                        </Canvas>
+                        </Canvas>*/}
                     </div>
                     <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
                 </div>

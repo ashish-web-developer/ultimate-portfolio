@@ -23,10 +23,12 @@ import Link from "next/link"
 
 import { SpotLight } from "@react-three/drei"
 import { Canvas} from "@react-three/fiber"
+import { PerspectiveCamera ,OrthographicCamera} from '@react-three/drei';
 
 
 // react spring
 import {useSpring,animated} from "react-spring"
+import Model from "../Home/Scene"
 
 const useStyles  = makeStyles({
     container:{
@@ -85,6 +87,7 @@ const Home:FC  = ()=>{
     const classes = useStyles();
     const springProps = useSpring({to:{opacity:1},from : {opacity:0}})
     return(
+        <>
         <div className = {classes.container}>
             <Navbar/>
             <span className={classes.pageNumberStyle}>01</span>
@@ -151,6 +154,17 @@ const Home:FC  = ()=>{
                 </Grid>
             </Grid>
         </div>
+        <div className={classes.container}>
+            <Canvas>
+                <PerspectiveCamera position={[0, 3, 0]} fov={120} makeDefault = {true}  />
+                <OrthographicCamera position={[-3, 0, 5]} zoom={60} makeDefault={true} />
+                <Model rotation = {[-1.6, 0,0]} position = {[10,-7,0]}/>
+                <ambientLight intensity = {1}/>
+                <pointLight position = {[-10,10,5]}/>
+                <spotLight intensity={0.5} position = {[0,-10,-10]}/>
+            </Canvas>
+        </div>
+        </>
     )
 }
 
