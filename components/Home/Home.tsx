@@ -86,7 +86,8 @@ const useStyles = makeStyles({
     display:"flex",
     flexDirection:"column",
     justifyContent:"flex-start",
-    height:"100%"
+    height:"100%",
+    width:"90%"
   },
   workHeading:{
     fontFamily:"'Bungee', cursive",
@@ -241,26 +242,44 @@ const Home: FC = () => {
                       <Grid xs = {12} item>
                         <Grid sx = {{height:"100%"}} container>
                           <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <span className = {classes.projectItem}>Mern Dev</span>
+                            <div>
+                              <span className = {classes.projectItem}>Mern Dev</span><br/>
+                              <span>EJS | Javascript | CSS</span>
+                            </div>
                           </Grid>
                           <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <span className = {classes.projectItem}>Vimrc</span>
+                            <div>
+                            <span className = {classes.projectItem}>Vimrc</span><br/>
+                            <span>VIM Script</span>
+                            </div>
                           </Grid>
                           <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <span className = {classes.projectItem}>IP Address Tracker</span>
+                            <div>
+                              <span className = {classes.projectItem}>IP Address Tracker</span><br/>
+                              <span>HTML</span> | <span>Javascript</span>
+                            </div>
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid xs = {12} item>
                         <Grid sx = {{height:"100%"}} container>
                           <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <span className = {classes.projectItem}>GDF</span>
+                            <div>
+                              <span className = {classes.projectItem}>GDF</span><br/>
+                              <span>Tailwind CSS</span>
+                            </div>
                           </Grid>
                           <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <span className = {classes.projectItem}>Personal blog</span>
+                            <div>
+                              <span className = {classes.projectItem}>Personal blog</span><br/>
+                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
+                            </div>
                           </Grid>
                           <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <span className = {classes.projectItem}>Facebook clone</span>
+                            <div>
+                              <span className = {classes.projectItem}>Facebook clone</span><br/>
+                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
+                            </div>
                           </Grid>
                         </Grid>
                       </Grid>
