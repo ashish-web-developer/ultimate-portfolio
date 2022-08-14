@@ -79,12 +79,13 @@ const useStyles = makeStyles({
     height: "25px",
   },
   container2:{
-    background: "linear-gradient(to right, #434343 0%, black 100%)"
+    position: "relative",
+    background:"#000"
   },
   workContainer:{
     display:"flex",
     flexDirection:"column",
-    justifyContent:"center",
+    justifyContent:"flex-start",
     height:"100%"
   },
   workHeading:{
@@ -99,9 +100,18 @@ const useStyles = makeStyles({
   curlyBraces:{
       color:"#e2cf52"
   },
-  workListItem:{
-    fontSize:"24px",
+  projectItemContainer:{
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    border:"1px solid #fff"
+  },
+  projectItem:{
+    fontSize:"32px",
     fontFamily:"'Oswald', sans-serif",
+    textTransform:"uppercase",
+    fontWeight:"600",
+
   }
 });
 
@@ -221,38 +231,40 @@ const Home: FC = () => {
           }}
         >
           <div className={clsx(classes.container,classes.container2)}>
-            <Grid sx = {{height:"100%"}} container >
+            <span className={classes.pageNumberStyle}>02</span>
+            <Grid sx = {{height:"100%",marginRight:"20px"}} container >
               <Grid sx = {{height:"100%"}} xs = {8} item>
                 <div className = {classes.workContainer}>
                   <span className = {classes.workHeading}><span className = {classes.curlyBraces}> &#123;</span> Work <span className = {classes.curlyBraces}>&#125;</span></span>
-                  <div>
-                    <ul>
-                      <li>
-                        <Link href = "/">
-                          <a className ={classes.workListItem}>Mern Dev</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href = "/">
-                          <a className ={classes.workListItem}>IP Address Tracker</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href = "/">
-                          <a className ={classes.workListItem}>Calculator</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href = "/">
-                          <a className ={classes.workListItem}>OTP Modal</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href = "/">
-                          <a className ={classes.workListItem}>Facebook Clone App</a>
-                        </Link>
-                      </li>
-                    </ul>
+                  <div style = {{height:"70%"}}>
+                    <Grid sx = {{height:"100%"}} container>
+                      <Grid xs = {12} item>
+                        <Grid sx = {{height:"100%"}} container>
+                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
+                            <span className = {classes.projectItem}>Mern Dev</span>
+                          </Grid>
+                          <Grid className = {classes.projectItemContainer} xs = {3} item>
+                            <span className = {classes.projectItem}>Vimrc</span>
+                          </Grid>
+                          <Grid className = {classes.projectItemContainer} xs = {5} item>
+                            <span className = {classes.projectItem}>IP Address Tracker</span>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid xs = {12} item>
+                        <Grid sx = {{height:"100%"}} container>
+                          <Grid className = {classes.projectItemContainer} xs = {3} item>
+                            <span className = {classes.projectItem}>GDF</span>
+                          </Grid>
+                          <Grid className = {classes.projectItemContainer} xs = {5} item>
+                            <span className = {classes.projectItem}>Personal blog</span>
+                          </Grid>
+                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
+                            <span className = {classes.projectItem}>Facebook clone</span>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </div>
                 </div>
               </Grid>
