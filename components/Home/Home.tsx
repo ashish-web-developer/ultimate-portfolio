@@ -1,4 +1,4 @@
-import { FC, memo ,Suspense} from "react";
+import React, { FC, memo ,Suspense,useRef} from "react";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 
@@ -7,7 +7,7 @@ import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
 
 //material ui
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 
 // icons
 import { ImFacebook } from "react-icons/im";
@@ -21,11 +21,16 @@ import Link from "next/link";
 
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera, OrthographicCamera ,Loader} from "@react-three/drei";
-import Avatar from "./DevAvatar"
+import Avatar from "./DevAvatar";
+import DesktopModel from "./Scene";
+import MicroPhone from "./Microphone"
 
 // react spring
 import { useSpring, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+
+
+import home from  "../../styles/Home.module.css";
 
 
 const useStyles = makeStyles({
@@ -113,15 +118,31 @@ const useStyles = makeStyles({
     textTransform:"uppercase",
     fontWeight:"600",
 
+  },
+  devInfoContainer:{
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"center",
+    width:"100%",
+    height:"100%"
+  },
+  devIntro:{
+    fontSize:"1.3rem"
   }
 });
 
 const Home: FC = () => {
   const classes = useStyles();
+  const parallaxRef = useRef<any>(null);
   const springProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
+  const scrollHandler = (offset:Number):void=>{
+    if(parallaxRef?.current){
+      parallaxRef.current.scrollTo(offset);
+    }
+  }
   return (
     <>
-      <Parallax pages={2}>
+      <Parallax ref = {parallaxRef} pages={3}>
         <ParallaxLayer
           offset={0}
           speed={2.5}
@@ -211,9 +232,11 @@ const Home: FC = () => {
               >
                 <div style={{ float: "right" }}>
                   <div className={classes.scrollCtaContainer}>
-                    <span style={{ writingMode: "vertical-rl" }}>
-                      SCROLL DOWN
-                    </span>
+                    <Button onClick = {()=>scrollHandler(1)}>
+                      <span style={{ writingMode: "vertical-rl",color:"#fff"}}>
+                        SCROLL DOWN
+                      </span>
+                    </Button>
                     <CgArrowDown size={40} />
                   </div>
                 </div>
@@ -250,7 +273,7 @@ const Home: FC = () => {
                           <Grid className = {classes.projectItemContainer} xs = {3} item>
                             <div>
                             <span className = {classes.projectItem}>Vimrc</span><br/>
-                            <span>VIM Script</span>
+                            <span className = {home.projectTitleText}>VIM Script</span>
                             </div>
                           </Grid>
                           <Grid className = {classes.projectItemContainer} xs = {5} item>
@@ -309,6 +332,54 @@ const Home: FC = () => {
 
               </Grid>
 
+            </Grid>
+          </div>
+        </ParallaxLayer>
+
+        <ParallaxLayer
+          offset={2}
+          speed={0.3}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+          }}
+        >
+          <div className = {classes.container}>
+            <span className={classes.pageNumberStyle}>03</span>
+            <Grid sx = {{height:"100%"}} container>
+              <Grid item xs = {6}>
+                <div className = {classes.devInfoContainer}>
+                  <h1><span className = {classes.curlyBraces}> &#123;</span>  Hi, I&apos;m Ashish Prajapati.<span className = {classes.curlyBraces}>&#125;</span> </h1>
+                  <p className = {classes.devIntro}>
+                    I&apos;m a creative developer / software engineer from India.
+                    I use Javascript, Typescript create high-end interactive experiences and products.
+                    I currently work as a senior software Developer at Mim-Essay.
+                  </p>
+                </div>
+              </Grid>
+              <Grid item xs = {6}>
+              <Canvas>
+                <PerspectiveCamera
+                  position={[0, 3, 0]}
+                  fov={120}
+                  makeDefault={true}
+                />
+                <OrthographicCamera
+                  position={[-3, 0, 5]}
+                  zoom={250}
+                  makeDefault={true}
+                />
+                <Suspense>
+                  <MicroPhone rotation={[0, -1, 0]} position={[-3,-1,0]} />
+                </Suspense>
+                <ambientLight intensity={1} />
+                <pointLight position={[-10, 10, 5]} />
+                <spotLight intensity={0.5} position={[0, -10, -10]} />
+              </Canvas>
+
+              </Grid>
             </Grid>
           </div>
         </ParallaxLayer>

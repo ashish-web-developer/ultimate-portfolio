@@ -75,6 +75,9 @@ const Navbar:FC = ()=>{
                     <Link href = "/">
                         <a className = {classes.ankerStyle}>Contact</a>
                     </Link>
+                    <Link href = "/login">
+                        <a className = {classes.ankerStyle}>Login</a>
+                    </Link>
                 </div>
             </Grid>
         </Grid>
