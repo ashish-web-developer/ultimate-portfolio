@@ -55,10 +55,13 @@ const useStyles = makeStyles({
   pageNumberStyle: {
     position: "absolute",
     fontFamily: "'Bungee', cursive",
-    color: "#fff",
+    color: "rgb(255, 200, 124)",
     bottom: "0px",
     fontSize: "100px",
     textDecoration: "underline",
+    backgroundImage: "radial-gradient(circle at 10% 20%, rgb(255, 200, 124) 0%, rgb(252, 251, 121) 90%)",
+    WebkitBackgroundClip:"text",
+    WebkitTextFillColor:"transparent"
   },
   mainText: {
     fontFamily: "'Oswald', sans-serif",
@@ -372,7 +375,7 @@ const Home: FC = () => {
                   makeDefault={true}
                 />
                 <Suspense>
-                  <MicroPhone rotation={[0, -1, 0]} position={[-3,-1,0]} />
+                  <MicroPhone rotation={[1, 1, 0]} position={[-3,0,0]} />
                 </Suspense>
                 <ambientLight intensity={1} />
                 <pointLight position={[-10, 10, 5]} />
