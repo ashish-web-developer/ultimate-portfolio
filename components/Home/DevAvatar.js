@@ -12,8 +12,8 @@ function Model(props) {
   const {viewport} = useThree();
   const ref = useRef()
   useFrame(({ mouse }) => {
-    const y = (mouse.y * viewport.height)*2
-    ref.current.rotation.set(0, y, 0)
+    const x = (mouse.x * viewport.width)*2
+    ref.current.rotation.set(0, x, 0)
   })
   return (
     <group ref = {ref} {...props} dispose={null}>
