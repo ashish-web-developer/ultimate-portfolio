@@ -25,18 +25,21 @@ const useStyles = makeStyles({
     headerText:{
         margin:"0px",
         padding:"0px",
-        fontSize:"2rem"
+        fontSize:"2rem",
+        color:"#101727"
+
     },
     headerSubtitle:{
         margin:"0px",
-        padding:"0px"
+        padding:"0px",
+        color:"#4a515d"
     },
     emailContainer:{
         marginBottom:"1rem",
         width:"350px"
     },
     inputStyles:{
-        border:"2px solid black",
+        border:"2px solid #e2e3e6",
         borderRadius:"5px",
         padding:"0.2rem 1rem"
     },
@@ -54,8 +57,12 @@ const useStyles = makeStyles({
         "&.MuiButton-root":{
             color:"#fff",
             fontFamily:"'Oswald', sans-serif;",
-            backgroundColor:"#000"
+            backgroundColor:"#101727",
+            padding:"0.5rem 0px"
         },
+        "&.MuiButton-root:hover":{
+            backgroundColor:"#101727",
+        }
     },
     socialCta:{
         "&.MuiButton-root":{
@@ -63,7 +70,10 @@ const useStyles = makeStyles({
             fontFamily:"'Oswald', sans-serif;",
         },
         "&.MuiButton-outlined":{
-            border: "2px black solid",
+            border: "2px solid #e2e3e6 ",
+        },
+        "&.MuiButton-outlined:hover":{
+            border: "2px solid #e2e3e6 ",
         },
     }
 })
@@ -77,7 +87,10 @@ const SignupLogin = ()=>{
                 <p className = {classes.headerSubtitle}>Please enter your Details</p>
             </div>
             <div className = {classes.emailContainer}>
-                <Input className = {classes.inputStyles} type = "text" placeholder="Enter your email" fullWidth/>
+                <Stack direction = "column" spacing = {2}>
+                    <Input disableUnderline = {true} className = {classes.inputStyles} type = "text" placeholder="Enter your email" fullWidth/>
+                    <Input disableUnderline = {true} className = {classes.inputStyles} type = "password" placeholder="Enter your password" fullWidth/>
+                </Stack>
             </div>
             <div className = {classes.signBtnContainer}>
                 <Stack direction = "column" spacing = {2}>
