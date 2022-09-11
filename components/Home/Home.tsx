@@ -169,21 +169,21 @@ const Home: FC = () => {
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="/">
+                    <Link href="https://twitter.com/thebad_bluffer">
                       <a>
                         <BsTwitter color="#000" />
                       </a>
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="/">
+                    <Link href="https://github.com/ashish-web-developer">
                       <a>
                         <FaGithubAlt color="#000" />
                       </a>
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="/">
+                    <Link href="https://www.linkedin.com/in/ashish-prajapati-abb3b824a">
                       <a>
                         <GrLinkedinOption color="#000" />
                       </a>
