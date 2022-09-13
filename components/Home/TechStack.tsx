@@ -18,20 +18,26 @@ const useStyles = makeStyles({
     },
     tabpanelHeader:{
         fontFamily: "'Bungee', cursive",
+        fontSize:"1.5rem"
 
     },
     tabPanelHeaderExperience:{
-        fontFamily:"'Oswald', sans-serif;",
+        fontFamily:"'Oswald', sans-serif",
         fontSize:"0.8rem"
     },
     tabPanelExperinceDesc:{
-        fontFamily:"'Oswald', sans-serif;",
+        fontFamily:"'Oswald', sans-serif",
+        fontSize:"1.1rem"
     },
     viewMoreCta:{
         "&.MuiButton-root":{
             backgroundColor:"#e2cf52",
             color:"#000",
-            marginTop:"2rem"
+            marginTop:"2rem",
+            fontFamily:"'Oswald', sans-serif",
+            fontSize:"1rem",
+            width:"150px"
+
         }
     },
     tabs:{
@@ -39,7 +45,8 @@ const useStyles = makeStyles({
             fontFamily:"'Oswald', sans-serif;",
             textTransform:"capitalize",
             color:"#fff",
-            alignItems:"flex-start"
+            alignItems:"flex-start",
+            fontSize:"1rem"
         },
         "&.Mui-selected": {
         color: '#e2cf52 !important'
