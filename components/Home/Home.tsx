@@ -5,6 +5,7 @@ import clsx from "clsx";
 //components
 import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
+import WorkEx from "./WorkEx";
 
 //material ui
 import { Grid, Button } from "@mui/material";
@@ -261,57 +262,7 @@ const Home: FC = () => {
             <span className={classes.pageNumberStyle}>02</span>
             <Grid sx = {{height:"100%",marginRight:"20px"}} container >
               <Grid sx = {{height:"100%"}} xs = {8} item>
-                <div className = {classes.workContainer}>
-                  <span className = {classes.workHeading}><span className = {classes.curlyBraces}> &#123;</span> Work <span className = {classes.curlyBraces}>&#125;</span></span>
-                  <div style = {{height:"70%"}}>
-                    <Grid sx = {{height:"100%"}} container>
-                      <Grid xs = {12} item>
-                        <Grid sx = {{height:"100%"}} container>
-                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <div>
-                              <span className = {classes.projectItem}>Mern Dev</span><br/>
-                              <span>EJS | Javascript | CSS</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <div>
-                            <span className = {classes.projectItem}>Vimrc</span><br/>
-                            <span className = {home.projectTitleText}>VIM Script</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <div>
-                              <span className = {classes.projectItem}>IP Address Tracker</span><br/>
-                              <span>HTML</span> | <span>Javascript</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid xs = {12} item>
-                        <Grid sx = {{height:"100%"}} container>
-                          <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <div>
-                              <span className = {classes.projectItem}>GDF</span><br/>
-                              <span>Tailwind CSS</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <div>
-                              <span className = {classes.projectItem}>Personal blog</span><br/>
-                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
-                            </div>
-                          </Grid>
-                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <div>
-                              <span className = {classes.projectItem}>Facebook clone</span><br/>
-                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </div>
+                <WorkEx/>
               </Grid>
               <Grid  sx = {{height:"100%"}} xs = {4} item>
                 <Canvas>
