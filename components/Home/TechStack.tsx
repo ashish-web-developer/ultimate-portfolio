@@ -52,7 +52,8 @@ const useStyles = makeStyles({
         color: '#e2cf52 !important'
         }
 
-    }
+    },
+
 })
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

@@ -14,13 +14,23 @@ import {
 
 //  mui
 import { makeStyles } from "@mui/styles";
-import {Grid} from "@mui/material"
+import {Grid,Button} from "@mui/material"
 import styles from "../../styles/workex.module.css"
 
 import TechStack from "./TechStack";
 
 
 const useStyles = makeStyles({
+  workParentContainer:{
+    width:"100%",
+    height:"560px",
+    backgroundColor:"#000",
+    padding:"20px",
+    display:"flex",
+    flexDirection:"column",
+    alignItems:"center",
+    justifyContent:"center"
+  },
   workContainer:{
     display:"flex",
     flexDirection:"column",
@@ -41,16 +51,22 @@ const useStyles = makeStyles({
       color:"#e2cf52"
   },
   projectItemContainer:{
+    width: "100%",
+    height: "100%",
+    borderRadius: "5px",
+    willChange: "transform, opacity",
     display:"flex",
+    flexDirection:"column",
     justifyContent:"center",
     alignItems:"center",
     border:"1px solid #fff"
   },
   projectItem:{
-    fontSize:"32px",
+    fontSize:"24px",
     fontFamily:"'Oswald', sans-serif",
     textTransform:"uppercase",
     fontWeight:"600",
+    color:"#fff"
 
   },
   workExContainer:{
@@ -81,7 +97,19 @@ const useStyles = makeStyles({
     display:"inline-block",
     backgroundColor:"#fff",
     marginLeft:"1rem"
-  }
+  },
+  viewLessCta:{
+      "&.MuiButton-root":{
+          backgroundColor:"#e2cf52",
+          color:"#000",
+          marginTop:"2rem",
+          fontFamily:"'Oswald', sans-serif",
+          fontSize:"1rem",
+          width:"150px"
+
+      }
+  },
+
 
 })
 
@@ -91,36 +119,48 @@ const data = [
     description: '#a8edea → #fed6e3',
     css: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
     height: 200,
+    project:"Mern Dev",
+    techStack:"EJS | Javascript | CSS"
   },
   {
     name: 'Saint Petersburg',
     description: '#f5f7fa → #c3cfe2',
     css: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     height: 400,
+    project:"VIMRC",
+    techStack:"Vim Script"
   },
   {
     name: 'Deep Blue',
     description: '#e0c3fc → #8ec5fc',
     css: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)',
     height: 400,
+    project:"IP ADDRESS TRACKER",
+    techStack:"HTML | Javascript"
   },
   {
     name: 'Ripe Malinka',
     description: '#f093fb → #f5576c',
     css: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
     height: 400,
+    project:"GDF",
+    techStack:"Tailwind css"
   },
   {
     name: 'Perfect White',
     description: '#fdfbfb → #ebedee',
     css: 'linear-gradient(135deg, #E3FDF5 0%, #FFE6FA 100%)',
     height: 400,
+    project:"PERSONAL Blog",
+    techStack:"Next js | Material UI | Dicebear"
   },
   {
     name: 'Near Moon',
     description: '#5ee7df → #b490ca',
     css: 'linear-gradient(135deg, #5ee7df 0%, #b490ca 100%)',
     height: 400,
+    project:"Facebook Clone",
+    techStack:"Next Js | Material Ui | dicebrear"
   },
 ]
 
@@ -159,16 +199,23 @@ const WorkEx = ()=>{
 
 
     return (
-        <div className={styles.wrapper}>
+        <div className={classes.workParentContainer}>
         <animated.div
             style={{ ...rest, width: size, height: size,display:open?"grid":"block"}}
             className={classes.workExContainer}
             >
             {open && transition((style, item) => (
             <animated.div
-                className={styles.item}
-                style={{ ...style, background:"#000",border:"1px solid #fff"}}
-            />
+                className={classes.projectItemContainer}
+                style={{
+                   ...style,
+                  background:"#000",
+                  border:"2px solid #fff"
+                }}
+            >
+              <div className = {classes.projectItem}>{item.project}</div>
+              <div>{item.techStack}</div>
+            </animated.div>
             ))}
             {
               !open &&
@@ -183,6 +230,7 @@ const WorkEx = ()=>{
               </div>
             }
         </animated.div>
+        {open && <Button onClick = {()=>setOpen(false)} variant = "contained" className = {classes.viewLessCta}>View Less</Button>}
         </div>
     )
 }
