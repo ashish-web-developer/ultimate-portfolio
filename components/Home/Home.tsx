@@ -25,6 +25,7 @@ import { PerspectiveCamera, OrthographicCamera ,Loader} from "@react-three/drei"
 import Avatar from "./DevAvatar";
 import DesktopModel from "./Scene";
 import MicroPhone from "./Microphone"
+import TechkStackCloud from "./TechStackCloud"
 
 // react spring
 import { useSpring, animated } from "react-spring";
@@ -32,6 +33,7 @@ import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 
 import home from  "../../styles/Home.module.css";
+import TechStackCloud from "./TechStackCloud";
 
 
 const useStyles = makeStyles({
@@ -265,7 +267,7 @@ const Home: FC = () => {
                 <WorkEx/>
               </Grid>
               <Grid  sx = {{height:"100%"}} xs = {4} item>
-                <Canvas>
+                {/*<Canvas>
                   <PerspectiveCamera
                     position={[0, 3, 0]}
                     fov={120}
@@ -282,7 +284,8 @@ const Home: FC = () => {
                   <ambientLight intensity={1} />
                   <pointLight position={[-10, 10, 5]} />
                   <spotLight intensity={0.5} position={[0, -10, -10]} />
-                </Canvas>
+              </Canvas>*/}
+              <TechStackCloud/>
 
               </Grid>
 
@@ -314,6 +317,7 @@ const Home: FC = () => {
                 </div>
               </Grid>
               <Grid item xs = {6}>
+
               <Canvas>
                 <PerspectiveCamera
                   position={[0, 3, 0]}
@@ -331,7 +335,7 @@ const Home: FC = () => {
                 <ambientLight intensity={1} />
                 <pointLight position={[-10, 10, 5]} />
                 <spotLight intensity={0.5} position={[0, -10, -10]} />
-              </Canvas>
+            </Canvas>
 
               </Grid>
             </Grid>
