@@ -184,7 +184,7 @@ const TechStack:React.FC<TechStackProps> = ({setOpen})=>{
                 {
                     techStackData.map((data,index)=>{
                         return(
-                        <TabPanel value={value} index={index}>
+                        <TabPanel key = {index} value={value} index={index}>
                             <div className = {classes.tabpanelHeader}>
                                 {data.title}
                             </div>
@@ -193,9 +193,9 @@ const TechStack:React.FC<TechStackProps> = ({setOpen})=>{
                             </div>
                             <ul className = {classes.tabPanelExperinceDesc}>
                                 {
-                                    data.descList.map((desc)=>{
+                                    data.descList.map((desc,i)=>{
                                         return(
-                                            <li>{desc}</li>
+                                            <li key={i}>{desc}</li>
                                         )
                                     })
                                 }
