@@ -1,5 +1,6 @@
 // React 
 import {useState} from "react";
+import Link from "next/link"
 
 // Spring
 
@@ -14,8 +15,7 @@ import {
 
 //  mui
 import { makeStyles } from "@mui/styles";
-import {Grid,Button} from "@mui/material"
-import styles from "../../styles/workex.module.css"
+import {Button} from "@mui/material"
 
 import TechStack from "./TechStack";
 
@@ -55,14 +55,19 @@ const useStyles = makeStyles({
     height: "100%",
     borderRadius: "5px",
     willChange: "transform, opacity",
+    border:"1px solid #fff"
+  },
+  projectItemAnker:{
+    width: "100%",
+    height: "100%",
     display:"flex",
     flexDirection:"column",
     justifyContent:"center",
     alignItems:"center",
-    border:"1px solid #fff"
+
   },
   projectItem:{
-    fontSize:"24px",
+    fontSize:"18px",
     fontFamily:"'Oswald', sans-serif",
     textTransform:"uppercase",
     fontWeight:"600",
@@ -118,52 +123,40 @@ const useStyles = makeStyles({
 
 const data = [
   {
-    name: 'Rare Wind',
-    description: '#a8edea → #fed6e3',
-    css: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
     height: 200,
     project:"Mern Dev",
-    techStack:"EJS | Javascript | CSS"
+    techStack:"EJS | Javascript | CSS",
+    link:"https://github.com/ashish-web-developer/MernDev"
   },
   {
-    name: 'Saint Petersburg',
-    description: '#f5f7fa → #c3cfe2',
-    css: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
     height: 400,
     project:"VIMRC",
-    techStack:"Vim Script"
+    techStack:"Vim Script",
+    link:"https://github.com/ashish-web-developer/vimrc"
   },
   {
-    name: 'Deep Blue',
-    description: '#e0c3fc → #8ec5fc',
-    css: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)',
     height: 400,
     project:"IP ADDRESS TRACKER",
-    techStack:"HTML | Javascript"
+    techStack:"HTML | Javascript",
+    link:"https://github.com/ashish-web-developer/ipAddressTracker"
   },
   {
-    name: 'Ripe Malinka',
-    description: '#f093fb → #f5576c',
-    css: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
     height: 400,
     project:"GDF",
-    techStack:"Tailwind css"
+    techStack:"Tailwind css",
+    link:"https://github.com/ashish-web-developer/gdf"
   },
   {
-    name: 'Perfect White',
-    description: '#fdfbfb → #ebedee',
-    css: 'linear-gradient(135deg, #E3FDF5 0%, #FFE6FA 100%)',
     height: 400,
     project:"PERSONAL Blog",
-    techStack:"Next js | Material UI | Dicebear"
+    techStack:"Next js | Material UI | Dicebear",
+    link:"https://github.com/ashish-web-developer/personal-blog-repo"
   },
   {
-    name: 'Near Moon',
-    description: '#5ee7df → #b490ca',
-    css: 'linear-gradient(135deg, #5ee7df 0%, #b490ca 100%)',
     height: 400,
     project:"Facebook Clone",
-    techStack:"Next Js | Material Ui | dicebrear"
+    techStack:"Next Js | Material Ui | dicebrear",
+    link:"https://github.com/ashish-web-developer/facebook-clone-app"
   },
 ]
 
@@ -213,11 +206,16 @@ const WorkEx = ()=>{
                 style={{
                    ...style,
                   background:"#000",
-                  border:"2px solid #fff"
+                  border:"2px solid #fff",
+                  borderTop:"5px solid yellow"
                 }}
             >
-              <div className = {classes.projectItem}>{item.project}</div>
-              <div>{item.techStack}</div>
+              <Link href = {item.link}>
+                <a className = {classes.projectItemAnker}>
+                  <div className = {classes.projectItem}>{item.project}</div>
+                  <div>{item.techStack}</div>
+                </a>
+              </Link>
             </animated.div>
             ))}
             {
@@ -229,7 +227,7 @@ const WorkEx = ()=>{
                   </span>
                   <span className = {classes.line}></span>
                 </div>
-                <TechStack setOpen = {(val)=>setOpen(val)}/>
+                <TechStack setOpen = {(val:boolean)=>setOpen(val)}/>
               </div>
             }
         </animated.div>

@@ -58,7 +58,73 @@ const useStyles = makeStyles({
     },
 
 })
-function TabPanel(props) {
+
+
+interface techStackDataI {
+    title:string;
+    startDate:string;
+    endDate:string;
+    descList:string[];
+}
+
+interface TabPanelI{
+    value:number;
+    index:number;
+    children:any
+}
+
+const techStackData:techStackDataI[] = [
+    {
+        title:'Next JS',
+        startDate:"January 2020",
+        endDate:"September 2022",
+        descList:[
+            "Have a quite good experience in it",
+            "I mostly work on Next js in my current company",
+        ]
+    },
+    {
+        title:"Nest JS",
+        startDate:"November 2020",
+        endDate:"September 2022",
+        descList:[
+            "Used it as the backend of of portfolio",
+            "Have gain quite good knowledge about this framwork and still curious to learn more, will love to work in a company in which this the part of Tech Stack",
+            "Have used Next js in Portfolio too"
+        ]
+    },
+    {
+        title:"Typescript",
+        startDate:"April 2020",
+        endDate:"September 2022",
+        descList:[
+            "Have a very good experience with typescript",
+            "Currently I am using typescript in almost my all project",
+            "Want to explore opportunity in it"
+        ]
+    },
+    {
+        title:"Mongo DB",
+        startDate:"January 2022",
+        endDate:"September 2022",
+        descList:[
+            "Haven't used it much, but quite familiar with it",
+            "Would be grateful If got a chance to work in tech company where mongo db is getting use as database",
+        ]
+    },
+    {
+        title:"Vim",
+        startDate:"January 2020",
+        endDate:"September 2022",
+        descList:[
+            "Been using it for a very long",
+            "Just found it very useful, can't even think of switching to other editor",
+            "It has almost all keybindings for everything"
+        ]
+    },
+]
+
+const TabPanel:React.FC<TabPanelI> =  (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -69,8 +135,8 @@ function TabPanel(props) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3}}>
+      {(value == index) && (
+        <Box component = "div">
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -84,10 +150,15 @@ function a11yProps(index:number) {
   };
 }
 
-const TechStack = ({setOpen})=>{
-    const [value,setValue] = useState<Number>(0);
+
+interface TechStackProps{
+    setOpen:(val:boolean)=>void
+}
+
+const TechStack:React.FC<TechStackProps> = ({setOpen})=>{
+    const [value,setValue] = useState<number>(0);
     const classes = useStyles();
-    const handleChange = (event, newValue:number) => {
+    const handleChange = (event:any, newValue:number) => {
         setValue(newValue);
     };
     return (
@@ -110,76 +181,30 @@ const TechStack = ({setOpen})=>{
 
             </Grid>
             <Grid item xs = {10}>
-                <TabPanel value={value} index={0}>
-                    <div className = {classes.tabpanelHeader}>
-                        Next js
-                    </div>
-                    <div className = {classes.tabPanelHeaderExperience}>
-                        November 2021 - September 2022
-                    </div>
-                    <ul className = {classes.tabPanelExperinceDesc}>
-                        <li>Worked on Facebook clone app using Next js</li>
-                        <li>Using Nest js in Mentr-me</li>
-                        <li>Have used Next js in Portfolio too</li>
-                    </ul>
-                    <Button onClick={()=>setOpen(true)} variant = "contained" className = {classes.viewMoreCta}>View More</Button>
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <div className = {classes.tabpanelHeader}>
-                        Nest Js
-                    </div>
-                    <div className = {classes.tabPanelHeaderExperience}>
-                        April 2022 - September 2022
-                    </div>
-                    <ul className = {classes.tabPanelExperinceDesc}>
-                        <li>Used it as the backend of of portfolio</li>
-                        <li>Have gain quite good knowledge about this framwork and still curious to learn more, will love to work in a company in which this the part of Tech Stack</li>
-                        <li>Have used Next js in Portfolio too</li>
-                    </ul>
-                    <Button onClick={()=>setOpen(true)} variant = "contained" className = {classes.viewMoreCta}>View More</Button>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <div className = {classes.tabpanelHeader}>
-                        Next js
-                    </div>
-                    <div className = {classes.tabPanelHeaderExperience}>
-                        November 2021 - September 2022
-                    </div>
-                    <ul className = {classes.tabPanelExperinceDesc}>
-                        <li>Worked on Facebook clone app using Next js</li>
-                        <li>Using Nest js in Mentr-me</li>
-                        <li>Have used Next js in Portfolio too</li>
-                    </ul>
-                    <Button onClick={()=>setOpen(true)} variant = "contained" className = {classes.viewMoreCta}>View More</Button>
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                    <div className = {classes.tabpanelHeader}>
-                        Next js
-                    </div>
-                    <div className = {classes.tabPanelHeaderExperience}>
-                        November 2021 - September 2022
-                    </div>
-                    <ul className = {classes.tabPanelExperinceDesc}>
-                        <li>Worked on Facebook clone app using Next js</li>
-                        <li>Using Nest js in Mentr-me</li>
-                        <li>Have used Next js in Portfolio too</li>
-                    </ul>
-                    <Button onClick={()=>setOpen(true)} variant = "contained" className = {classes.viewMoreCta}>View More</Button>
-                </TabPanel>
-                <TabPanel value={value} index={4}>
-                    <div className = {classes.tabpanelHeader}>
-                        Next js
-                    </div>
-                    <div className = {classes.tabPanelHeaderExperience}>
-                        November 2021 - September 2022
-                    </div>
-                    <ul className = {classes.tabPanelExperinceDesc}>
-                        <li>Worked on Facebook clone app using Next js</li>
-                        <li>Using Nest js in Mentr-me</li>
-                        <li>Have used Next js in Portfolio too</li>
-                    </ul>
-                    <Button onClick={()=>setOpen(true)} variant = "contained" className = {classes.viewMoreCta}>View More</Button>
-                </TabPanel>
+                {
+                    techStackData.map((data,index)=>{
+                        return(
+                        <TabPanel value={value} index={index}>
+                            <div className = {classes.tabpanelHeader}>
+                                {data.title}
+                            </div>
+                            <div className = {classes.tabPanelHeaderExperience}>
+                                {data.startDate} - {data.endDate} 
+                            </div>
+                            <ul className = {classes.tabPanelExperinceDesc}>
+                                {
+                                    data.descList.map((desc)=>{
+                                        return(
+                                            <li>{desc}</li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                            <Button onClick={()=>setOpen(true)} variant = "contained" className = {classes.viewMoreCta}>View More</Button>
+                        </TabPanel>
+                        )
+                    })
+                }
             </Grid>
         </Grid>
     )
