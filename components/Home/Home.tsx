@@ -5,6 +5,8 @@ import clsx from "clsx";
 //components
 import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
+import WorkEx from "./WorkEx";
+import TechStackCloud from "./TechStackCloud";
 
 //material ui
 import { Grid, Button } from "@mui/material";
@@ -22,15 +24,11 @@ import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera, OrthographicCamera ,Loader} from "@react-three/drei";
 import Avatar from "./DevAvatar";
-import DesktopModel from "./Scene";
-import MicroPhone from "./Microphone"
 
 // react spring
 import { useSpring, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
-
-import home from  "../../styles/Home.module.css";
 
 
 const useStyles = makeStyles({
@@ -51,6 +49,16 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  emailContainer:{
+    fontSize:"1.2rem",
+    letterSpacing:"0.1rem",
+    fontFamily: "'Oswald', sans-serif",
+    position:"fixed",
+    bottom:"50px",
+    left:"50%",
+    transform:"translateX(-50%)",
+    zIndex:"10"
   },
   pageNumberStyle: {
     position: "absolute",
@@ -145,6 +153,7 @@ const Home: FC = () => {
   }
   return (
     <>
+    <div className = {classes.emailContainer}>thebadbluffer@proton.me</div>
       <Parallax ref = {parallaxRef} pages={3}>
         <ParallaxLayer
           offset={0}
@@ -260,61 +269,11 @@ const Home: FC = () => {
           <div className={clsx(classes.container,classes.container2)}>
             <span className={classes.pageNumberStyle}>02</span>
             <Grid sx = {{height:"100%",marginRight:"20px"}} container >
-              <Grid sx = {{height:"100%"}} xs = {8} item>
-                <div className = {classes.workContainer}>
-                  <span className = {classes.workHeading}><span className = {classes.curlyBraces}> &#123;</span> Work <span className = {classes.curlyBraces}>&#125;</span></span>
-                  <div style = {{height:"70%"}}>
-                    <Grid sx = {{height:"100%"}} container>
-                      <Grid xs = {12} item>
-                        <Grid sx = {{height:"100%"}} container>
-                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <div>
-                              <span className = {classes.projectItem}>Mern Dev</span><br/>
-                              <span>EJS | Javascript | CSS</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <div>
-                            <span className = {classes.projectItem}>Vimrc</span><br/>
-                            <span className = {home.projectTitleText}>VIM Script</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <div>
-                              <span className = {classes.projectItem}>IP Address Tracker</span><br/>
-                              <span>HTML</span> | <span>Javascript</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid xs = {12} item>
-                        <Grid sx = {{height:"100%"}} container>
-                          <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <div>
-                              <span className = {classes.projectItem}>GDF</span><br/>
-                              <span>Tailwind CSS</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <div>
-                              <span className = {classes.projectItem}>Personal blog</span><br/>
-                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
-                            </div>
-                          </Grid>
-                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <div>
-                              <span className = {classes.projectItem}>Facebook clone</span><br/>
-                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </div>
+              <Grid sx = {{height:"100%"}} xs = {7} item>
+                <WorkEx/>
               </Grid>
-              <Grid  sx = {{height:"100%"}} xs = {4} item>
-                <Canvas>
+              <Grid sx = {{height:"100%"}} xs = {4} item>
+                {/*<Canvas>
                   <PerspectiveCamera
                     position={[0, 3, 0]}
                     fov={120}
@@ -331,10 +290,31 @@ const Home: FC = () => {
                   <ambientLight intensity={1} />
                   <pointLight position={[-10, 10, 5]} />
                   <spotLight intensity={0.5} position={[0, -10, -10]} />
-                </Canvas>
+              </Canvas>*/}
+              <TechStackCloud/>
 
               </Grid>
 
+              <Grid
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+                xs={1}
+                item
+              >
+                <div style={{ float: "right" }}>
+                  <div className={classes.scrollCtaContainer}>
+                    <Button onClick = {()=>scrollHandler(2)}>
+                      <span style={{ writingMode: "vertical-rl",color:"#fff"}}>
+                        SCROLL DOWN
+                      </span>
+                    </Button>
+                    <CgArrowDown size={40} />
+                  </div>
+                </div>
+              </Grid>
             </Grid>
           </div>
         </ParallaxLayer>
@@ -363,28 +343,31 @@ const Home: FC = () => {
                 </div>
               </Grid>
               <Grid item xs = {6}>
-              <Canvas>
-                <PerspectiveCamera
-                  position={[0, 3, 0]}
-                  fov={120}
-                  makeDefault={true}
-                />
-                <OrthographicCamera
-                  position={[-3, 0, 5]}
-                  zoom={250}
-                  makeDefault={true}
-                />
-                <Suspense>
-                  <MicroPhone rotation={[1, 1, 0]} position={[-3,0,0]} />
-                </Suspense>
-                <ambientLight intensity={1} />
-                <pointLight position={[-10, 10, 5]} />
-                <spotLight intensity={0.5} position={[0, -10, -10]} />
+
+                <Canvas>
+                  <PerspectiveCamera
+                    position={[0, 3, 0]}
+                    fov={120}
+                    makeDefault={true}
+                  />
+                  <OrthographicCamera
+                    position={[-3, 0, 5]}
+                    zoom={250}
+                    makeDefault={true}
+                  />
+                  <Suspense>
+                    <Avatar rotation={[0, -1, 0]} position={[-3,-1,0]} />
+                  </Suspense>
+                  <ambientLight intensity={1} />
+                  <pointLight position={[-10, 10, 5]} />
+                  <spotLight intensity={0.5} position={[0, -10, -10]} />
               </Canvas>
+
 
               </Grid>
             </Grid>
-          </div>
+        </div>
+
         </ParallaxLayer>
       </Parallax>
       <Loader/>
