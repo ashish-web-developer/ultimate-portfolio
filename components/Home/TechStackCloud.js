@@ -29,14 +29,11 @@ function Word({ children, ...props }) {
 function Cloud({ count = 4, radius = 20 }) {
   // Create a count x count random words with spherical distribution
   let techStack = [
-    ["Next JS","Nest JS","Typescript","VIM"],
-    ["HTML","CSS","Javascript","AJAX"],
-    ["Python","Bootstrap","Material ui","ReactJS"],
-    ["Three js","Mongodb","Slack","JIRA"],
-    ["Github","Git","VSCode","PHP"],
-    ["ldafjs","dsds","woewi","wovdf"],
-    ["mlsdf","mdood","woesb","wsdfb"],
-    ["scow","wnbl","sdk","sd"]
+    ["Next JS","Nest JS","Typescript","VIM","Flutter"],
+    ["HTML","CSS","Javascript","AJAX","React Native"],
+    ["Python","Bootstrap","Material ui","ReactJS","Jquery"],
+    ["Three js","Mongodb","Slack","JIRA","Tailwind"],
+    ["Github","Git","VSCode","PHP","Laravel"],
   ]
   const words = useMemo(() => {
     const temp = []
@@ -45,7 +42,7 @@ function Cloud({ count = 4, radius = 20 }) {
     const thetaSpan = (Math.PI * 2) / count
     for (let i = 1; i < count + 1; i++){
       for (let j = 0; j < count; j++) {
-        temp.push([new THREE.Vector3().setFromSpherical(spherical.set(radius, phiSpan * i, thetaSpan * j)),randomWord()])
+        temp.push([new THREE.Vector3().setFromSpherical(spherical.set(radius, phiSpan * i, thetaSpan * j)),techStack[i-1][j]])
       }
     }
     return temp
@@ -57,7 +54,7 @@ export default function TechStackCloud() {
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 35], fov: 90 }}>
       <fog attach="fog" args={['#202025', 0, 80]} />
-      <Cloud count={8} radius={20} />
+      <Cloud count={5} radius={20} />
       <TrackballControls />
     </Canvas>
   )
