@@ -7,17 +7,17 @@ import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
 import WorkEx from "./WorkEx";
 import TechStackCloud from "./TechStackCloud";
+import SocialIcon from "./SocialIcon"
 
 //material ui
-import { Grid, Button } from "@mui/material";
+import { 
+  Grid, 
+  Button,
+  useMediaQuery
+} from "@mui/material";
 
 // icons
-import { ImFacebook } from "react-icons/im";
-import { BsTwitter } from "react-icons/bs";
-import { GrLinkedinOption } from "react-icons/gr";
-import { FaGithubAlt } from "react-icons/fa";
 import { CgArrowDown } from "react-icons/cg";
-import Link from "next/link";
 
 //three js
 
@@ -38,12 +38,6 @@ const useStyles = makeStyles({
     height: "100vh",
     minHeight: "700px",
     padding: "3rem",
-  },
-  socialIconContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "150px",
   },
   scrollCtaContainer: {
     display: "flex",
@@ -84,15 +78,6 @@ const useStyles = makeStyles({
   },
   mainTextSub: {
     letterSpacing: "35px",
-  },
-  socialIcon: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: "50%",
-    width: "25px",
-    height: "25px",
   },
   container2:{
     position: "relative",
@@ -146,6 +131,8 @@ const Home: FC = () => {
   const classes = useStyles();
   const parallaxRef = useRef<any>(null);
   const springProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
+  const isMobile = useMediaQuery('(max-width:758px)');
+  
   const scrollHandler = (offset:Number):void=>{
     if(parallaxRef?.current){
       parallaxRef.current.scrollTo(offset);
@@ -169,36 +156,10 @@ const Home: FC = () => {
             <span className={classes.pageNumberStyle}>01</span>
             <Grid sx={{ height: "100%" }} container>
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
-                <div className={classes.socialIconContainer}>
-                  <div className={classes.socialIcon}>
-                    <Link href="https://www.facebook.com/thebadbluffer">
-                      <a>
-                        <ImFacebook color="#000" />
-                      </a>
-                    </Link>
-                  </div>
-                  <div className={classes.socialIcon}>
-                    <Link href="https://twitter.com/thebad_bluffer">
-                      <a>
-                        <BsTwitter color="#000" />
-                      </a>
-                    </Link>
-                  </div>
-                  <div className={classes.socialIcon}>
-                    <Link href="https://github.com/ashish-web-developer">
-                      <a>
-                        <FaGithubAlt color="#000" />
-                      </a>
-                    </Link>
-                  </div>
-                  <div className={classes.socialIcon}>
-                    <Link href="https://www.linkedin.com/in/ashish-prajapati-abb3b824a">
-                      <a>
-                        <GrLinkedinOption color="#000" />
-                      </a>
-                    </Link>
-                  </div>
-                </div>
+                {
+                  !isMobile?
+                    <SocialIcon/>:null
+                }
               </Grid>
               <Grid xs={10} item>
                 <Grid sx={{ height: "100%" }} container>
