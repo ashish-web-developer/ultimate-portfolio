@@ -16,11 +16,6 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     height: "150px",
   },
-  scrollCtaContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
   socialIcon: {
     display: "flex",
     justifyContent: "center",
