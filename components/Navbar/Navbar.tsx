@@ -5,13 +5,15 @@ import Link from "next/link";
 
 // material ui
 
-import {Grid} from "@mui/material";
+import {Grid, useMediaQuery} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 
-// three js
+// React icons
 
-import { Canvas} from "@react-three/fiber"
+import {
+    GiHamburgerMenu
+ } from "react-icons/gi";
 
 
 
@@ -35,7 +37,10 @@ const useStyles = makeStyles({
         fontSize:"20px",
         textDecoration:"underline",
         textDecorationColor:"#e2cf52",
-        textDecorationThickness:"5px"
+        textDecorationThickness:"5px",
+        ['@media(max-width:780px)']:{
+            fontSize:"18px",
+        }
     },
     curlyBraces:{
         color:"#e2cf52"
@@ -49,22 +54,16 @@ const useStyles = makeStyles({
 
 const Navbar:FC = ()=>{
     const classes = useStyles();
+    const isMobile = useMediaQuery('(max-width:758px)');
     return(
         <Grid container>
-            <Grid xs = {8} item>
+            <Grid xs = {10}  md = {8} item>
                 <div className = {classes.logoContainer}>
-                    <div className = {classes.logoCanvasContainer}>
-                        {/*<Canvas>
-                            <LogoSphere/>
-                            <ambientLight intensity = {0.5}/>
-                            <pointLight position = {[-10,10,-5]}/>
-                            <spotLight intensity={0.5} position = {[0,-10,-10]}/>
-                        </Canvas>*/}
-                    </div>
                     <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
                 </div>
             </Grid>
-            <Grid xs = {4} item>
+            {
+            !isMobile ?<Grid xs = {4} item>
                 <div className = {classes.menuContainer}>
                     <Link href = "/">
                         <a className = {classes.ankerStyle}>About</a>
@@ -79,7 +78,11 @@ const Navbar:FC = ()=>{
                         <a className = {classes.ankerStyle}>Login</a>
                     </Link>*/}
                 </div>
+            </Grid>:
+            <Grid sx = {{display:"flex",justifyContent:"flex-end"}} xs = {2} md = {4} item>
+                <GiHamburgerMenu size = {30} color = "#fff"/>
             </Grid>
+            }
         </Grid>
     )
 }
