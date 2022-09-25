@@ -5,14 +5,11 @@ import Link from "next/link";
 
 // material ui
 
-import {Grid} from "@mui/material";
+import {
+    Grid,
+    Button
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
-
-
-// three js
-
-import { Canvas} from "@react-three/fiber"
-
 
 
 const useStyles = makeStyles({
@@ -43,6 +40,14 @@ const useStyles = makeStyles({
     ankerStyle:{
         fontFamily:"'Oswald', sans-serif",
         textTransform:"uppercase"
+    },
+    resumeBtn:{
+        "&.MuiButton-root":{
+            border:"3px solid #fff",
+        },
+        "&.MuiButton-text":{
+            color:"#fff"
+        }
     }
 })
 
@@ -75,9 +80,11 @@ const Navbar:FC = ()=>{
                     <Link href = "/">
                         <a className = {classes.ankerStyle}>Contact</a>
                     </Link>
-                    {/*<Link href = "/login">
-                        <a className = {classes.ankerStyle}>Login</a>
-                    </Link>*/}
+                    <form method = "get" action = "/Resume/resume.pdf">
+                        <Button type ="submit" className = {classes.resumeBtn}>
+                            Resume
+                        </Button>
+                    </form>
                 </div>
             </Grid>
         </Grid>
