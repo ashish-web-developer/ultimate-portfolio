@@ -9,7 +9,7 @@ import WorkEx from "./WorkEx";
 import TechStackCloud from "./TechStackCloud";
 
 //material ui
-import { Grid, Button } from "@mui/material";
+import { Grid, Button ,useTheme,Theme} from "@mui/material";
 
 // icons
 import { ImFacebook } from "react-icons/im";
@@ -31,7 +31,7 @@ import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme:Theme)=>({
   container: {
     position: "relative",
     width: "100%",
@@ -78,7 +78,7 @@ const useStyles = makeStyles({
   },
   mainTextHeader: {
     fontSize: "100px",
-    backgroundColor: "#e2cf52",
+    backgroundColor: theme.palette.primary.main,
     color: "#000",
     padding: "0px 50px",
   },
@@ -110,12 +110,12 @@ const useStyles = makeStyles({
     color:"#fff",
     fontSize:"30px",
     textDecoration:"underline",
-    textDecorationColor:"#e2cf52",
+    textDecorationColor:theme.palette.primary.main,
     textDecorationThickness:"5px"
 
   },
   curlyBraces:{
-      color:"#e2cf52"
+      color:theme.palette.primary.main,
   },
   projectItemContainer:{
     display:"flex",
@@ -140,9 +140,10 @@ const useStyles = makeStyles({
   devIntro:{
     fontSize:"1.3rem"
   }
-});
+}));
 
 const Home: FC = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const parallaxRef = useRef<any>(null);
   const springProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
@@ -227,7 +228,7 @@ const Home: FC = () => {
                         style={springProps}
                         className={classes.mainTextSub}
                       >
-                        <span style={{ color: "#e2cf52" }}>DEV</span>ELOPER
+                        <span style={{ color: theme.palette.primary.main }}>DEV</span>ELOPER
                       </animated.div>
                     </div>
                   </Grid>

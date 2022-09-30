@@ -15,12 +15,18 @@ import {
 
 //  mui
 import { makeStyles } from "@mui/styles";
-import {Button} from "@mui/material"
+import {
+  Button,
+  useTheme,
+  Theme
+} from "@mui/material"
+
+// local components
 
 import TechStack from "./TechStack";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme:Theme)=>({
   workParentContainer:{
     width:"100%",
     height:"560px",
@@ -38,17 +44,8 @@ const useStyles = makeStyles({
     height:"100%",
     width:"90%"
   },
-  workHeading:{
-    fontFamily:"'Bungee', cursive",
-    color:"#fff",
-    fontSize:"30px",
-    textDecoration:"underline",
-    textDecorationColor:"#e2cf52",
-    textDecorationThickness:"5px"
-
-  },
   curlyBraces:{
-      color:"#e2cf52"
+      color:theme.palette.primary.main
   },
   projectItemContainer:{
     width: "100%",
@@ -105,7 +102,7 @@ const useStyles = makeStyles({
   },
   viewLessCta:{
       "&.MuiButton-root":{
-          backgroundColor:"#e2cf52",
+          backgroundColor:theme.palette.primary.main,
           color:"#000",
           marginTop:"2rem",
           fontFamily:"'Oswald', sans-serif",
@@ -114,12 +111,12 @@ const useStyles = makeStyles({
 
       },
       "&.MuiButton-root:hover":{
-          backgroundColor:"#e2cf52",
+          backgroundColor:theme.palette.primary.main,
       }
   },
 
 
-})
+}));
 
 const data = [
   {
@@ -163,6 +160,7 @@ const data = [
 const WorkEx = ()=>{
     const [open,setOpen] = useState(false);
     const springApi = useSpringRef(); 
+    const theme = useTheme();
     const classes = useStyles();
 
     const {size,...rest} = useSpring({

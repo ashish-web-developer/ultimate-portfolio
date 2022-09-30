@@ -7,12 +7,14 @@ import Link from "next/link";
 
 import {
     Grid,
-    Button
+    Button,
+    useTheme,
+    Theme
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme:Theme)=>({
     menuContainer:{
         display:"flex",
         justifyContent:"space-between",
@@ -31,11 +33,11 @@ const useStyles = makeStyles({
         color:"#fff",
         fontSize:"20px",
         textDecoration:"underline",
-        textDecorationColor:"#e2cf52",
+        textDecorationColor:theme.palette.primary.main,
         textDecorationThickness:"5px"
     },
     curlyBraces:{
-        color:"#e2cf52"
+        color:theme.palette.primary.main
     },
     ankerStyle:{
         fontFamily:"'Oswald', sans-serif",
@@ -49,10 +51,11 @@ const useStyles = makeStyles({
             color:"#fff"
         }
     }
-})
+}));
 
 
 const Navbar:FC = ()=>{
+    const theme = useTheme();
     const classes = useStyles();
     return(
         <Grid container>
