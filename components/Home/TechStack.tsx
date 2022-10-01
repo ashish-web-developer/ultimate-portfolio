@@ -5,12 +5,14 @@ import {
     Tab,
     Typography,
     Grid,
-    Button
+    Button,
+    useTheme,
+    Theme
 } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme:Theme)=>({
     techStackTabsContainer:{
         display:"grid",
 
@@ -31,7 +33,7 @@ const useStyles = makeStyles({
     },
     viewMoreCta:{
         "&.MuiButton-root":{
-            backgroundColor:"#e2cf52",
+            backgroundColor:theme.palette.primary.main,
             color:"#000",
             marginTop:"2rem",
             fontFamily:"'Oswald', sans-serif",
@@ -40,7 +42,7 @@ const useStyles = makeStyles({
 
         },
         "&.MuiButton-root:hover":{
-            backgroundColor:"#e2cf52",
+            backgroundColor:theme.palette.primary.main,
         }
     },
     tabs:{
@@ -49,15 +51,15 @@ const useStyles = makeStyles({
             textTransform:"capitalize",
             color:"#fff",
             alignItems:"flex-start",
-            fontSize:"1rem"
+            fontSize:"1rem",
         },
         "&.Mui-selected": {
-        color: '#e2cf52 !important'
+            color:`${theme.palette.primary.main} !important` 
         }
 
     },
 
-})
+}));
 
 
 interface techStackDataI {
@@ -157,6 +159,7 @@ interface TechStackProps{
 
 const TechStack:React.FC<TechStackProps> = ({setOpen})=>{
     const [value,setValue] = useState<number>(0);
+    const theme = useTheme();
     const classes = useStyles();
     const handleChange = (event:any, newValue:number) => {
         setValue(newValue);
@@ -165,7 +168,7 @@ const TechStack:React.FC<TechStackProps> = ({setOpen})=>{
         <Grid container style = {{height:"100%"}}>
             <Grid mt={2} item xs={2}>
                 <Tabs
-                    TabIndicatorProps = {{style:{backgroundColor:"#e2cf52",left:"0px",width:"7px"}}}
+                    TabIndicatorProps = {{style:{backgroundColor:theme.palette.primary.main,left:"0px",width:"7px"}}}
                     orientation="vertical"
                     variant="scrollable"
                     value={value}
