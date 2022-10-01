@@ -69,6 +69,10 @@ const useStyles = makeStyles({
     fontSize: "40px",
     fontWeight: "700",
     ['@media(max-width:780px)']:{
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"flex-start",
+        flexDirection:"column",
         fontSize:"32px",
     }
   },
@@ -78,11 +82,15 @@ const useStyles = makeStyles({
     color: "#000",
     padding: "0px 50px",
     ['@media(max-width:780px)']:{
-        fontSize:"90px",
+        fontSize:"45px",
     }
   },
   mainTextSub: {
     letterSpacing: "35px",
+    ['@media(max-width:780px)']:{
+        fontSize:"24px",
+        letterSpacing: "18px",
+    }
   },
   container2:{
     position: "relative",
@@ -147,6 +155,8 @@ const Home: FC = () => {
     <>
     <div className = {classes.emailContainer}>thebadbluffer@proton.me</div>
       <Parallax ref = {parallaxRef} pages={3}>
+
+        {/* layer one */}
         <ParallaxLayer
           offset={0}
           speed={2.5}
@@ -181,12 +191,13 @@ const Home: FC = () => {
                   }
                   <Grid
                     sx={{ display: "flex", alignItems: "center" }}
-                    xs={6}
+                    md={6}
+                    xs={12}
                     item
                   >
                     <div className={classes.mainText}>
                       <span className={classes.mainTextHeader}>CREATIVE</span>
-                      <br />
+                      {!isMobile?<br />:null}
                       <animated.div
                         onFocus={() => {
                           console.log("hello world");
@@ -214,6 +225,10 @@ const Home: FC = () => {
             </Grid>
           </div>
         </ParallaxLayer>
+
+
+
+
         <ParallaxLayer
           offset={1}
           speed={0.5}
@@ -227,10 +242,10 @@ const Home: FC = () => {
           <div className={clsx(classes.container,classes.container2)}>
             <span className={classes.pageNumberStyle}>02</span>
             <Grid sx = {{height:"100%",marginRight:"20px"}} container >
-              <Grid sx = {{height:"100%"}} xs = {7} item>
+              <Grid sx = {{height:"100%"}} xs = {12} md = {7} item>
                 <WorkEx/>
               </Grid>
-              <Grid sx = {{height:"100%"}} xs = {4} item>
+              <Grid sx = {{height:"100%"}} xs = {12} md = {4} item>
                 {/*<Canvas>
                   <PerspectiveCamera
                     position={[0, 3, 0]}
