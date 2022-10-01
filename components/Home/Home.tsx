@@ -2,13 +2,14 @@ import React, { FC, memo ,Suspense,useRef} from "react";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 
-//components
+// Local components
 import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
 import WorkEx from "./WorkEx";
 import TechStackCloud from "./TechStackCloud";
+import Contact from "./HomeSection/Contact";
 
-//material ui
+// material ui
 import { Grid, Button } from "@mui/material";
 
 // icons
@@ -154,7 +155,7 @@ const Home: FC = () => {
   return (
     <>
     <div className = {classes.emailContainer}>thebadbluffer@proton.me</div>
-      <Parallax ref = {parallaxRef} pages={3}>
+      <Parallax ref = {parallaxRef} pages={4}>
         <ParallaxLayer
           offset={0}
           speed={2.5}
@@ -368,6 +369,19 @@ const Home: FC = () => {
             </Grid>
         </div>
 
+        </ParallaxLayer>
+
+        <ParallaxLayer
+          offset={3}
+          speed={0.3}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+          }}
+        >
+          <Contact/>
         </ParallaxLayer>
       </Parallax>
       <Loader/>
