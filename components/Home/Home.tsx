@@ -10,7 +10,7 @@ import TechStackCloud from "./TechStackCloud";
 import Contact from "./HomeSection/Contact";
 
 // material ui
-import { Grid, Button } from "@mui/material";
+import { Grid, Button ,useTheme,Theme} from "@mui/material";
 
 // icons
 import { ImFacebook } from "react-icons/im";
