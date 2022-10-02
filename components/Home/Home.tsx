@@ -381,7 +381,11 @@ const Home: FC = () => {
             color: "white",
           }}
         >
-          <Contact/>
+
+          <div className = {classes.container}>
+            <span className={classes.pageNumberStyle}>04</span>
+            <Contact/>
+          </div>
         </ParallaxLayer>
       </Parallax>
       <Loader/>
