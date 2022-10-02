@@ -10,7 +10,7 @@ import TechStackCloud from "./TechStackCloud";
 import Contact from "./HomeSection/Contact";
 
 // material ui
-import { Grid, Button ,useTheme,Theme} from "@mui/material";
+import { Grid, Button ,useTheme,Theme,useMediaQuery} from "@mui/material";
 
 // icons
 import { ImFacebook } from "react-icons/im";
@@ -147,6 +147,7 @@ const Home: FC = () => {
   const theme = useTheme();
   const classes = useStyles();
   const parallaxRef = useRef<any>(null);
+  const isMobile = useMediaQuery('(max-width:758px)');
   const springProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
   const scrollHandler = (offset:Number):void=>{
     if(parallaxRef?.current){
@@ -155,6 +156,10 @@ const Home: FC = () => {
   }
   return (
     <>
+    {
+      !isMobile?
+    <div>
+
     <div className = {classes.emailContainer}>thebadbluffer@proton.me</div>
       <Parallax ref = {parallaxRef} pages={4}>
         <ParallaxLayer
@@ -390,6 +395,9 @@ const Home: FC = () => {
         </ParallaxLayer>
       </Parallax>
       <Loader/>
+      </div>:<h1>Mobile view is under progress....</h1>
+
+    }
     </>
   );
 };
