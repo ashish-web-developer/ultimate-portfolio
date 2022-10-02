@@ -185,7 +185,7 @@ const Home: FC = () => {
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="https://twitter.com/thebad_bluffer">
+                    <Link href="https://twitter.com/ashish_classic">
                       <a>
                         <BsTwitter color="#000" />
                       </a>
@@ -199,7 +199,7 @@ const Home: FC = () => {
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="https://www.linkedin.com/in/ashish-prajapati-abb3b824a">
+                    <Link href="https://www.linkedin.com/in/ashish_classic">
                       <a>
                         <GrLinkedinOption color="#000" />
                       </a>
