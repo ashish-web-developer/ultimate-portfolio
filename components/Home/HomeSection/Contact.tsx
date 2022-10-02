@@ -1,10 +1,12 @@
 import { makeStyles } from "@mui/styles";
+import { NextRouter } from "next/router";
 
 import { 
     Theme,
     useTheme ,
     Button
 } from "@mui/material";
+import { useRouter } from "next/router";
 
 
 const useStyles = makeStyles((theme:Theme)=>({
@@ -64,6 +66,7 @@ const useStyles = makeStyles((theme:Theme)=>({
 
 
 const Contact = ()=>{
+    const router:NextRouter = useRouter();
     const theme:Theme = useTheme();
     const classes = useStyles();
     return (
@@ -77,7 +80,8 @@ const Contact = ()=>{
                     I am currently looking for new opportunities, It would be great if got a chance to work as a full stack developer.
                     If you have any query, just want to say hi, I will try my best to get back to you.
                 </div>
-                <Button className = {classes.sayHelloCta} variant = "contained">Say Hello</Button>
+                <Button onClick = {()=>router.push("https://api.whatsapp.com/send?phone=9310566574")} className = {classes.sayHelloCta} variant = "contained">Say Hello</Button>
+
             </div>
         </div>
     )
