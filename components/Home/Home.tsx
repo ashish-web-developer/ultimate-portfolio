@@ -172,7 +172,7 @@ const Home: FC = () => {
           }}
         >
           <div className={classes.container}>
-            <Navbar />
+            <Navbar scrollHandler = {scrollHandler} />
             <span className={classes.pageNumberStyle}>01</span>
             <Grid sx={{ height: "100%" }} container>
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>

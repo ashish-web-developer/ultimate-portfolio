@@ -52,7 +52,9 @@ const useStyles = makeStyles((theme:Theme)=>({
     height: "100%",
     borderRadius: "5px",
     willChange: "transform, opacity",
-    border:"1px solid #fff"
+    background:"#000",
+    border:"2px solid #fff",
+    borderTop:"5px solid yellow"
   },
   projectItemAnker:{
     width: "100%",
@@ -203,15 +205,12 @@ const WorkEx = ()=>{
                 className={classes.projectItemContainer}
                 style={{
                    ...style,
-                  background:"#000",
-                  border:"2px solid #fff",
-                  borderTop:"5px solid yellow"
                 }}
             >
               <Link href = {item.link}>
                 <a className = {classes.projectItemAnker}>
                   <div className = {classes.projectItem}>{item.project}</div>
-                  <div>{item.techStack}</div>
+                  <div style = {{textAlign:"center"}}>{item.techStack}</div>
                 </a>
               </Link>
             </animated.div>
