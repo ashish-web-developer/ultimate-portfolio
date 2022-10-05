@@ -1,5 +1,10 @@
 // react
 import {FC,memo} from "react";
+import {
+    useSession, 
+    signIn, 
+    signOut
+} from "next-auth/react";
 
 
 // material ui
@@ -50,7 +55,8 @@ const useStyles = makeStyles((theme:Theme)=>({
         "&.MuiButton-text":{
             color:"#fff"
         }
-    }
+    },
+
 }));
 
 
@@ -61,6 +67,7 @@ interface Props{
 const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
+    const {data:session} = useSession();
     return(
         <Grid container>
             <Grid xs = {8} item>
@@ -86,6 +93,16 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                                 Resume
                             </Button>
                         </form>
+                        {
+                            session?
+                            <Button onClick = {()=> signOut()} className = {classes.resumeBtn}>
+                                Sign Out
+                            </Button>:
+                            <Button onClick = {()=>signIn()} className = {classes.resumeBtn}>
+                                Sign In
+                            </Button>
+
+                        }
                 </div>
             </Grid>
         </Grid>
