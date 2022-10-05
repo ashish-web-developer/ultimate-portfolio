@@ -343,7 +343,7 @@ const Home: FC = () => {
                 <div className = {classes.devInfoContainer}>
                   <h1><span className = {classes.curlyBraces}> &#123;</span>  Hi, I&apos;m Ashish Prajapati.<span className = {classes.curlyBraces}>&#125;</span> </h1>
                   <p className = {classes.devIntro}>
-                    I&apos;m a creative developer / software engineer from India.
+                    I&apos;m a creative web developer from India.
                     I use Javascript, Typescript create high-end interactive experiences and products.
                     I currently work as a senior software Developer at Mim-Essay.
                   </p>
