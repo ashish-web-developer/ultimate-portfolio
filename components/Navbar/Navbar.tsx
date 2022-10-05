@@ -1,6 +1,5 @@
 // react
 import {FC,memo} from "react";
-import Link from "next/link";
 
 
 // material ui
@@ -55,7 +54,11 @@ const useStyles = makeStyles((theme:Theme)=>({
 }));
 
 
-const Navbar:FC = ({scrollHandler})=>{
+interface Props{
+    scrollHandler:(offset:Number)=>void;
+}
+
+const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
     return(
