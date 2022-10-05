@@ -172,7 +172,7 @@ const Home: FC = () => {
           }}
         >
           <div className={classes.container}>
-            <Navbar />
+            <Navbar scrollHandler = {scrollHandler} />
             <span className={classes.pageNumberStyle}>01</span>
             <Grid sx={{ height: "100%" }} container>
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
@@ -349,7 +349,7 @@ const Home: FC = () => {
                   </p>
                 </div>
               </Grid>
-              <Grid item xs = {6}>
+              <Grid item xs = {5}>
 
                 <Canvas>
                   <PerspectiveCamera
@@ -370,6 +370,26 @@ const Home: FC = () => {
                   <spotLight intensity={0.5} position={[0, -10, -10]} />
               </Canvas>
 
+
+              </Grid>
+              <Grid 
+              sx={{
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "flex-end",
+              }}
+              item 
+              xs = {1}>
+                <div style={{ float: "right" }}>
+                  <div className={classes.scrollCtaContainer}>
+                    <Button onClick = {()=>scrollHandler(3)}>
+                      <span style={{ writingMode: "vertical-rl",color:"#fff"}}>
+                        SCROLL DOWN
+                      </span>
+                    </Button>
+                    <CgArrowDown size={40} />
+                  </div>
+                </div>
 
               </Grid>
             </Grid>

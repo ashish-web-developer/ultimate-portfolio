@@ -1,6 +1,5 @@
 // react
 import {FC,memo} from "react";
-import Link from "next/link";
 
 
 // material ui
@@ -41,7 +40,8 @@ const useStyles = makeStyles((theme:Theme)=>({
     },
     ankerStyle:{
         fontFamily:"'Oswald', sans-serif",
-        textTransform:"uppercase"
+        textTransform:"uppercase",
+        cursor:"pointer"
     },
     resumeBtn:{
         "&.MuiButton-root":{
@@ -54,7 +54,11 @@ const useStyles = makeStyles((theme:Theme)=>({
 }));
 
 
-const Navbar:FC = ()=>{
+interface Props{
+    scrollHandler:(offset:Number)=>void;
+}
+
+const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
     return(
@@ -74,20 +78,14 @@ const Navbar:FC = ()=>{
             </Grid>
             <Grid xs = {4} item>
                 <div className = {classes.menuContainer}>
-                    <Link href = "/">
-                        <a className = {classes.ankerStyle}>About</a>
-                    </Link>
-                    <Link href = "/">
-                        <a className = {classes.ankerStyle}>Portfolio</a>
-                    </Link>
-                    <Link href = "/">
-                        <a className = {classes.ankerStyle}>Contact</a>
-                    </Link>
-                    <form method = "get" action = "/Resume/resume.pdf">
-                        <Button type ="submit" className = {classes.resumeBtn}>
-                            Resume
-                        </Button>
-                    </form>
+                        <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
+                        <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
+                        <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
+                        <form method = "get" action = "/Resume/resume.pdf">
+                            <Button type ="submit" className = {classes.resumeBtn}>
+                                Resume
+                            </Button>
+                        </form>
                 </div>
             </Grid>
         </Grid>
