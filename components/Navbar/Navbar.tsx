@@ -1,5 +1,6 @@
 // react
 import {FC,memo} from "react";
+import {useRouter} from "next/router";
 import {
     useSession, 
     signIn, 
@@ -68,6 +69,16 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
     const {data:session} = useSession();
+    const router = useRouter();
+
+    const resumeClickHandler = ()=>{
+        if(!session){
+            signIn();
+            return
+        }
+        router.push("/Resume/resume.pdf")
+    }
+
     return(
         <Grid container>
             <Grid xs = {8} item>
@@ -88,11 +99,9 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                         <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
                         <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
                         <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
-                        <form method = "get" action = "/Resume/resume.pdf">
-                            <Button type ="submit" className = {classes.resumeBtn}>
-                                Resume
-                            </Button>
-                        </form>
+                        <Button onClick = {()=>resumeClickHandler()} className = {classes.resumeBtn}>
+                            Resume
+                        </Button>
                         {
                             session?
                             <Button onClick = {()=> signOut()} className = {classes.resumeBtn}>
