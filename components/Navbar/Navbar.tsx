@@ -68,7 +68,6 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
     const {data:session} = useSession();
-    console.log("value of session",session);
     return(
         <Grid container>
             <Grid xs = {8} item>
