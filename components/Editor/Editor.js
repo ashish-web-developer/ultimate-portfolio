@@ -74,12 +74,13 @@ const Editor = ()=>{
   }
 
 
-  const editorDatahandler = ()=>{
+  const editorDatahandler = async ()=>{
     editor.save().then((data)=>{
       console.log("value of data",data);
     }).catch((err)=>{
       console.log("value of err",err);
     })
+    const response = await fetch("http://localhost:8000/user");
   }
   const tabPanelHandler = (event,newValue)=>{
     setTabValue(newValue);
@@ -114,6 +115,7 @@ const Editor = ()=>{
           </div>
         </Grid>
       </Grid>
+      <Button variant = "contained" onClick = {()=>editorDatahandler()}>Save</Button>
     </div>
   )
 }
