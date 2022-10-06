@@ -2,12 +2,15 @@ import React, { FC, memo ,Suspense,useRef} from "react";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 
-//components
+// Local components
 import Navbar from "../Navbar/Navbar";
 import ProjectCube from "./ProjectCube";
+import WorkEx from "./WorkEx";
+import TechStackCloud from "./TechStackCloud";
+import Contact from "./HomeSection/Contact";
 
-//material ui
-import { Grid, Button } from "@mui/material";
+// material ui
+import { Grid, Button ,useTheme,Theme,useMediaQuery} from "@mui/material";
 
 // icons
 import { ImFacebook } from "react-icons/im";
@@ -22,18 +25,14 @@ import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera, OrthographicCamera ,Loader} from "@react-three/drei";
 import Avatar from "./DevAvatar";
-import DesktopModel from "./Scene";
-import MicroPhone from "./Microphone"
 
 // react spring
 import { useSpring, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 
-import home from  "../../styles/Home.module.css";
 
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme:Theme)=>({
   container: {
     position: "relative",
     width: "100%",
@@ -51,6 +50,16 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  emailContainer:{
+    fontSize:"1.2rem",
+    letterSpacing:"0.1rem",
+    fontFamily: "'Oswald', sans-serif",
+    position:"fixed",
+    bottom:"50px",
+    left:"50%",
+    transform:"translateX(-50%)",
+    zIndex:"10"
   },
   pageNumberStyle: {
     position: "absolute",
@@ -70,7 +79,7 @@ const useStyles = makeStyles({
   },
   mainTextHeader: {
     fontSize: "100px",
-    backgroundColor: "#e2cf52",
+    backgroundColor: theme.palette.primary.main,
     color: "#000",
     padding: "0px 50px",
   },
@@ -102,12 +111,12 @@ const useStyles = makeStyles({
     color:"#fff",
     fontSize:"30px",
     textDecoration:"underline",
-    textDecorationColor:"#e2cf52",
+    textDecorationColor:theme.palette.primary.main,
     textDecorationThickness:"5px"
 
   },
   curlyBraces:{
-      color:"#e2cf52"
+      color:theme.palette.primary.main,
   },
   projectItemContainer:{
     display:"flex",
@@ -132,11 +141,13 @@ const useStyles = makeStyles({
   devIntro:{
     fontSize:"1.3rem"
   }
-});
+}));
 
 const Home: FC = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const parallaxRef = useRef<any>(null);
+  const isMobile = useMediaQuery('(max-width:758px)');
   const springProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
   const scrollHandler = (offset:Number):void=>{
     if(parallaxRef?.current){
@@ -145,7 +156,12 @@ const Home: FC = () => {
   }
   return (
     <>
-      <Parallax ref = {parallaxRef} pages={3}>
+    {
+      !isMobile?
+    <div>
+
+    <div className = {classes.emailContainer}>thebadbluffer@proton.me</div>
+      <Parallax ref = {parallaxRef} pages={4}>
         <ParallaxLayer
           offset={0}
           speed={2.5}
@@ -162,14 +178,14 @@ const Home: FC = () => {
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
                 <div className={classes.socialIconContainer}>
                   <div className={classes.socialIcon}>
-                    <Link href="/">
+                    <Link href="https://www.facebook.com/thebadbluffer">
                       <a>
                         <ImFacebook color="#000" />
                       </a>
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="https://twitter.com/thebad_bluffer">
+                    <Link href="https://twitter.com/ashish_classic">
                       <a>
                         <BsTwitter color="#000" />
                       </a>
@@ -183,7 +199,7 @@ const Home: FC = () => {
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="https://www.linkedin.com/in/ashish-prajapati-abb3b824a">
+                    <Link href="https://www.linkedin.com/in/ashish_classic">
                       <a>
                         <GrLinkedinOption color="#000" />
                       </a>
@@ -218,7 +234,7 @@ const Home: FC = () => {
                         style={springProps}
                         className={classes.mainTextSub}
                       >
-                        <span style={{ color: "#e2cf52" }}>DEV</span>ELOPER
+                        <span style={{ color: theme.palette.primary.main }}>DEV</span>ELOPER
                       </animated.div>
                     </div>
                   </Grid>
@@ -260,61 +276,11 @@ const Home: FC = () => {
           <div className={clsx(classes.container,classes.container2)}>
             <span className={classes.pageNumberStyle}>02</span>
             <Grid sx = {{height:"100%",marginRight:"20px"}} container >
-              <Grid sx = {{height:"100%"}} xs = {8} item>
-                <div className = {classes.workContainer}>
-                  <span className = {classes.workHeading}><span className = {classes.curlyBraces}> &#123;</span> Work <span className = {classes.curlyBraces}>&#125;</span></span>
-                  <div style = {{height:"70%"}}>
-                    <Grid sx = {{height:"100%"}} container>
-                      <Grid xs = {12} item>
-                        <Grid sx = {{height:"100%"}} container>
-                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <div>
-                              <span className = {classes.projectItem}>Mern Dev</span><br/>
-                              <span>EJS | Javascript | CSS</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <div>
-                            <span className = {classes.projectItem}>Vimrc</span><br/>
-                            <span className = {home.projectTitleText}>VIM Script</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <div>
-                              <span className = {classes.projectItem}>IP Address Tracker</span><br/>
-                              <span>HTML</span> | <span>Javascript</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid xs = {12} item>
-                        <Grid sx = {{height:"100%"}} container>
-                          <Grid className = {classes.projectItemContainer} xs = {3} item>
-                            <div>
-                              <span className = {classes.projectItem}>GDF</span><br/>
-                              <span>Tailwind CSS</span>
-                            </div>
-                          </Grid>
-                          <Grid className = {classes.projectItemContainer} xs = {5} item>
-                            <div>
-                              <span className = {classes.projectItem}>Personal blog</span><br/>
-                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
-                            </div>
-                          </Grid>
-                          <Grid  className = {classes.projectItemContainer} xs = {4} item>
-                            <div>
-                              <span className = {classes.projectItem}>Facebook clone</span><br/>
-                              <span>Next JS</span> | <span>Material ui</span> | <span>Dicebears</span>
-                            </div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </div>
+              <Grid sx = {{height:"100%"}} xs = {7} item>
+                <WorkEx/>
               </Grid>
-              <Grid  sx = {{height:"100%"}} xs = {4} item>
-                <Canvas>
+              <Grid sx = {{height:"100%"}} xs = {4} item>
+                {/*<Canvas>
                   <PerspectiveCamera
                     position={[0, 3, 0]}
                     fov={120}
@@ -331,10 +297,31 @@ const Home: FC = () => {
                   <ambientLight intensity={1} />
                   <pointLight position={[-10, 10, 5]} />
                   <spotLight intensity={0.5} position={[0, -10, -10]} />
-                </Canvas>
+              </Canvas>*/}
+              <TechStackCloud/>
 
               </Grid>
 
+              <Grid
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+                xs={1}
+                item
+              >
+                <div style={{ float: "right" }}>
+                  <div className={classes.scrollCtaContainer}>
+                    <Button onClick = {()=>scrollHandler(2)}>
+                      <span style={{ writingMode: "vertical-rl",color:"#fff"}}>
+                        SCROLL DOWN
+                      </span>
+                    </Button>
+                    <CgArrowDown size={40} />
+                  </div>
+                </div>
+              </Grid>
             </Grid>
           </div>
         </ParallaxLayer>
@@ -363,31 +350,54 @@ const Home: FC = () => {
                 </div>
               </Grid>
               <Grid item xs = {6}>
-              <Canvas>
-                <PerspectiveCamera
-                  position={[0, 3, 0]}
-                  fov={120}
-                  makeDefault={true}
-                />
-                <OrthographicCamera
-                  position={[-3, 0, 5]}
-                  zoom={250}
-                  makeDefault={true}
-                />
-                <Suspense>
-                  <MicroPhone rotation={[1, 1, 0]} position={[-3,0,0]} />
-                </Suspense>
-                <ambientLight intensity={1} />
-                <pointLight position={[-10, 10, 5]} />
-                <spotLight intensity={0.5} position={[0, -10, -10]} />
+
+                <Canvas>
+                  <PerspectiveCamera
+                    position={[0, 3, 0]}
+                    fov={120}
+                    makeDefault={true}
+                  />
+                  <OrthographicCamera
+                    position={[-3, 0, 5]}
+                    zoom={250}
+                    makeDefault={true}
+                  />
+                  <Suspense>
+                    <Avatar rotation={[0, -1, 0]} position={[-3,-1,0]} />
+                  </Suspense>
+                  <ambientLight intensity={1} />
+                  <pointLight position={[-10, 10, 5]} />
+                  <spotLight intensity={0.5} position={[0, -10, -10]} />
               </Canvas>
+
 
               </Grid>
             </Grid>
+        </div>
+
+        </ParallaxLayer>
+
+        <ParallaxLayer
+          offset={3}
+          speed={0.3}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+          }}
+        >
+
+          <div className = {classes.container}>
+            <span className={classes.pageNumberStyle}>04</span>
+            <Contact/>
           </div>
         </ParallaxLayer>
       </Parallax>
       <Loader/>
+      </div>:<h1>Mobile view is under progress....</h1>
+
+    }
     </>
   );
 };
