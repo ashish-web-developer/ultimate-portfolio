@@ -87,7 +87,7 @@ const Editor = ()=>{
     const data = await editor.save();
     const response = await fetch("http://localhost:8000/api/blog",{
       method :"POST",
-      body:JSON.stringify(data?.blocks),
+      body:JSON.stringify(data),
       headers:{
         "Content-type":"Application/json"
       }
