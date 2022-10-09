@@ -49,6 +49,7 @@ const Editor = ()=>{
     const List = require("@editorjs/list");
     const Code = require("@editorjs/code");
     const Embed = require("@editorjs/embed");
+    const Image = require("@editorjs/image");
 
     editor = new EditorJS({
       logLevel:"error",
@@ -67,6 +68,14 @@ const Editor = ()=>{
             }
           }
         },
+        image: {
+          class: Image,
+          config: {
+            endpoints: {
+              byFile: 'http://localhost:8000/api/upload', // Your backend file uploader endpoint
+            }
+          }
+        }
       },
       data:{},
       placeholder:"Lets write",
@@ -75,12 +84,15 @@ const Editor = ()=>{
 
 
   const editorDatahandler = async ()=>{
-    editor.save().then((data)=>{
-      console.log("value of data",data);
-    }).catch((err)=>{
-      console.log("value of err",err);
-    })
-    const response = await fetch("http://localhost:8000/user");
+    const data = await editor.save();
+    const response = await fetch("http://localhost:8000/api/blog",{
+      method :"POST",
+      body:JSON.stringify(data?.blocks),
+      headers:{
+        "Content-type":"Application/json"
+      }
+    });
+
   }
   const tabPanelHandler = (event,newValue)=>{
     setTabValue(newValue);
