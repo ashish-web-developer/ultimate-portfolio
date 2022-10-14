@@ -25,6 +25,12 @@ const useStyles = makeStyles({
             width:"100%"
         }
     },
+    headerContainer:{
+        fontFamily: "'Oswald', sans-serif",
+    },
+    paraContainer:{
+        fontFamily:"'Allerta Stencil', sans-serif"
+    },
     header:{
       fontFamily:"'Oswald', sans-serif;",
       textTransform:"capitalize",
@@ -86,7 +92,7 @@ const Blogs  = ()=>{
                 </div>
                 {blogsData.length && 
                 <Blocks 
-                    data = {blogsData[1].blogs} 
+                    data = {blogsData[0].blogs} 
                     config = {{
                         image: {
                             className:classes.imageContainer ,
@@ -96,6 +102,12 @@ const Blogs  = ()=>{
                                 withBackground: "image-block--with-background",
                             }
                         },
+                        paragraph: {
+                            className:classes.paraContainer,
+                        },
+                        header:{
+                            className:classes.headerContainer
+                        }
 
                     }}/>
                 }
