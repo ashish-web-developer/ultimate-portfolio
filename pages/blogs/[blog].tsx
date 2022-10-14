@@ -1,5 +1,7 @@
+
 import {useEffect, useState} from "react";
 import Link from "next/link";
+import {useRouter} from "next/router"
 
 
 import { makeStyles } from "@mui/styles";
@@ -89,20 +91,33 @@ const useStyles = makeStyles({
 
 const Blogs  = ()=>{
     const classes = useStyles();
+    const router = useRouter();
+    const {blog} = router.query;
     const [isPageLoaded,setIsPageLoaded] = useState(false);
-    const [blogsData,setBlogsData] = useState<any>([]);
+    const [blogsData,setBlogsData] = useState<any>(null);
 
     useEffect(()=>{
-        (async function(){
-            const response = await fetch("http://localhost:8000/api/get-blog",{
-                method:"POST"
-            });
-            const data = await response.json();
-            setBlogsData(data);
-        }())
         setIsPageLoaded(true);
     },[])
 
+    useEffect(()=>{
+        if(blog){
+            (async function(){
+                const response = await fetch("http://localhost:8000/api/get-blog",{
+                    method:"POST",
+                    body:JSON.stringify({
+                        id:blog
+                    }),
+                    headers:{
+                        "Content-type":"Application/json"
+                    }
+                });
+                const data = await response.json();
+                setBlogsData(data);
+            }())
+        }
+        console.log("value of blogData",blogsData)
+    },[blog])
 
 
     if(!isPageLoaded){
@@ -127,13 +142,13 @@ const Blogs  = ()=>{
                     <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
                     <div style = {{color:"#fff"}}>Posted At 01 December</div>
                 </div>
-                {blogsData.length && 
+                {blogsData && 
                 <>
                     <div className = {classes.blogTitleContainer}>
-                        {blogsData[1].title}
+                        {blogsData.title}
                     </div>
                     <div className = {classes.blogImageContainer}>
-                        <img width="100%" src = {blogsData[1]["featured image"]}/>
+                        <img width="100%" src = {blogsData["featured image"]}/>
                     </div>
                     <Grid container>
                         <Grid item xs = {2}>
@@ -171,7 +186,7 @@ const Blogs  = ()=>{
                         </Grid>
                         <Grid item xs = {10}>
                             <Blocks 
-                                data = {blogsData[1].blogs} 
+                                data = {blogsData.blogs} 
                                 config = {{
                                     image: {
                                         className:classes.imageContainer ,
