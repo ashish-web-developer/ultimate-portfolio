@@ -85,6 +85,14 @@ const useStyles = makeStyles({
         height: "40px",
     },
     codeContainer:{
+    },
+    tableContainer:{
+        width:"100%",
+        "& tbody tr td":{
+            textAlign:"center",
+            borderBottom:"1px solid #fff",
+            padding:"8px 0px"
+        }
     }
 })
 
@@ -204,6 +212,9 @@ const Blogs  = ()=>{
                                     },
                                     code:{
                                         className:classes.codeContainer
+                                    },
+                                    table:{
+                                        className:classes.tableContainer
                                     }
 
                                 }}/>
