@@ -88,6 +88,10 @@ const useStyles = makeStyles({
     },
     tableContainer:{
         width:"100%",
+        "& thead tr th":{
+            borderBottom:"2px solid #fff",
+            padding:"8px 0px"
+        },
         "& tbody tr td":{
             textAlign:"center",
             borderBottom:"1px solid #fff",
