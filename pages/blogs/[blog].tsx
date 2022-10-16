@@ -16,7 +16,6 @@ import { ImFacebook } from "react-icons/im";
 import { BsTwitter } from "react-icons/bs";
 import { GrLinkedinOption } from "react-icons/gr";
 import { FaGithubAlt } from "react-icons/fa";
-import { CgArrowDown } from "react-icons/cg";
 
 
 
@@ -64,7 +63,10 @@ const useStyles = makeStyles({
         color:"#e2cf52"
     },
     blogImageContainer:{
-        width:"100%"
+        width:"100%",
+        border:"5px solid #e2cf52",
+        borderRadius: "0px 80px 0px 80px",
+        overflow:"hidden"
     },
     socialIconContainer: {
         display: "flex",
@@ -107,6 +109,7 @@ const Blogs  = ()=>{
     const {blog} = router.query;
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsData,setBlogsData] = useState<any>(null);
+    const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
 
     useEffect(()=>{
         setIsPageLoaded(true);
@@ -126,9 +129,10 @@ const Blogs  = ()=>{
                 });
                 const data = await response.json();
                 setBlogsData(data);
+                let creationDate = new Date(data.created_at);
+                setBlogCreationDate(creationDate);
             }())
         }
-        console.log("value of blogData",blogsData)
     },[blog])
 
 
@@ -148,85 +152,85 @@ const Blogs  = ()=>{
                     </Grid>
                 </Grid>
             </div>
-            <div>
-                <div className = {classes.blogsSubtitleContainer}>
-                    <div>Blogs</div>
-                    <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
-                    <div style = {{color:"#fff"}}>Posted At 01 December</div>
-                </div>
-                {blogsData && 
+            {blogsData && 
                 <>
-                    <div className = {classes.blogTitleContainer}>
-                        {blogsData.title}
-                    </div>
-                    <div className = {classes.blogImageContainer}>
-                        <img width="100%" src = {blogsData["featured image"]}/>
-                    </div>
-                    <Grid container>
-                        <Grid item xs = {2}>
-
-                            <div className={classes.socialIconContainer}>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://www.facebook.com/thebadbluffer">
-                                    <a>
-                                        <ImFacebook size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://twitter.com/ashish_classic">
-                                    <a>
-                                        <BsTwitter size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://github.com/ashish-web-developer">
-                                    <a>
-                                        <FaGithubAlt size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://www.linkedin.com/in/ashish_classic">
-                                    <a>
-                                        <GrLinkedinOption size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
+                    <div>
+                        <div className = {classes.blogsSubtitleContainer}>
+                            <div>Blogs</div>
+                            <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
+                            <div style = {{color:"#fff"}}>{`Posted At ${blogsCreationDate?.getDate()} ${blogsCreationDate?.getMonth()} ${blogsCreationDate?.getFullYear()}`}</div>
+                        </div>
+                            <div className = {classes.blogTitleContainer}>
+                                {blogsData.title}
                             </div>
-                        </Grid>
-                        <Grid item xs = {10}>
-                            <Blocks 
-                                data = {blogsData.blogs} 
-                                config = {{
-                                    image: {
-                                        className:classes.imageContainer ,
-                                        actionsClassNames: {
-                                            stretched: true,
-                                            withBorder: "image-block--with-border",
-                                            withBackground: "image-block--with-background",
-                                        }
-                                    },
-                                    paragraph: {
-                                        className:classes.paraContainer,
-                                    },
-                                    header:{
-                                        className:classes.headerContainer
-                                    },
-                                    code:{
-                                        className:classes.codeContainer
-                                    },
-                                    table:{
-                                        className:classes.tableContainer
-                                    }
+                            <div className = {classes.blogImageContainer}>
+                                <img width="100%" src = {blogsData["featured image"]}/>
+                            </div>
+                            <Grid container>
+                                <Grid item xs = {2}>
 
-                                }}/>
-                        </Grid>
-                    </Grid>
-                    </>
-                }
-            </div>
+                                    <div className={classes.socialIconContainer}>
+                                        <div className={classes.socialIcon}>
+                                            <Link href="https://www.facebook.com/thebadbluffer">
+                                            <a>
+                                                <ImFacebook size={24} color="#000" />
+                                            </a>
+                                            </Link>
+                                        </div>
+                                        <div className={classes.socialIcon}>
+                                            <Link href="https://twitter.com/ashish_classic">
+                                            <a>
+                                                <BsTwitter size={24} color="#000" />
+                                            </a>
+                                            </Link>
+                                        </div>
+                                        <div className={classes.socialIcon}>
+                                            <Link href="https://github.com/ashish-web-developer">
+                                            <a>
+                                                <FaGithubAlt size={24} color="#000" />
+                                            </a>
+                                            </Link>
+                                        </div>
+                                        <div className={classes.socialIcon}>
+                                            <Link href="https://www.linkedin.com/in/ashish_classic">
+                                            <a>
+                                                <GrLinkedinOption size={24} color="#000" />
+                                            </a>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </Grid>
+                                <Grid item xs = {10}>
+                                    <Blocks 
+                                        data = {blogsData.blogs} 
+                                        config = {{
+                                            image: {
+                                                className:classes.imageContainer ,
+                                                actionsClassNames: {
+                                                    stretched: true,
+                                                    withBorder: "image-block--with-border",
+                                                    withBackground: "image-block--with-background",
+                                                }
+                                            },
+                                            paragraph: {
+                                                className:classes.paraContainer,
+                                            },
+                                            header:{
+                                                className:classes.headerContainer
+                                            },
+                                            code:{
+                                                className:classes.codeContainer
+                                            },
+                                            table:{
+                                                className:classes.tableContainer
+                                            }
+
+                                        }}/>
+                                </Grid>
+                            </Grid>
+                    </div>
+                </>
+            }
         </div>
     )
 }
