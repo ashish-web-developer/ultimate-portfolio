@@ -1,8 +1,10 @@
+
 import { useEffect ,useState} from "react";
-import Editor from "../components/Editor/Editor";
+import Editor from "../../components/Editor/Editor"
 import { makeStyles } from "@mui/styles";
 import {Grid,Button,IconButton} from "@mui/material";
 import {FiChevronDown} from "react-icons/fi"
+import { useRouter } from "next/router";
 
 
 const useStyles = makeStyles({
@@ -55,6 +57,8 @@ const useStyles = makeStyles({
 const BlogEdit = ()=>{
     const [isLoaded,setIsLoaded] = useState(false);
     const classes = useStyles();
+    const router = useRouter();
+    const {id} = router.query;
     useEffect(()=>{
         setIsLoaded(true);
     },[isLoaded])
@@ -76,7 +80,7 @@ const BlogEdit = ()=>{
                     </Grid>
                 </Grid>
             </div>
-            <Editor/>
+            <Editor id = {id}/>
         </div>
     )
 }
