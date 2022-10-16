@@ -7,7 +7,9 @@ import {
   Tabs,
   Tab,
   Box,
-  Input
+  Input,
+  Snackbar,
+  Alert
 } from "@mui/material";
 
 
@@ -87,6 +89,8 @@ const Editor = ({id})=>{
   const [isRendered,setIsRendered] = useState(false);
   const [tabValue,setTabValue] = useState(0);
   const [isEditorReady,setIsEditorReady] = useState(false);
+  const [showSnackbar,setShowSnackbar] = useState(false);
+  const [alertMessage,setAlertMessage] = useState("");
   const [blogsData,setBlogsData] = useState({
     blogs:{},
     created_at:null,
@@ -152,7 +156,7 @@ const Editor = ({id})=>{
   
   const blogSubmitHandler = async ()=>{
     const data = await editorRef.current.save();
-    await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/blog`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/blog`,{
       method :"POST",
       body:JSON.stringify({
         data:data,
@@ -165,6 +169,9 @@ const Editor = ({id})=>{
         "Content-type":"Application/json"
       }
     });
+    const responseData =  await response.json();
+    setAlertMessage(responseData.message);
+    setShowSnackbar(true);
   }
 
   // Featured Image uploade handler
@@ -179,10 +186,14 @@ const Editor = ({id})=>{
     setBlogsData((prev)=>{
       return{
         ...prev,
-        featuredImageUrl:data.file.url
+        ["featured image"]:data.file.url
       }
     })
   }
+
+  const handleSnackbarClose = ()=>{
+    setShowSnackbar(false);
+  } 
 
 
   useEffect(()=>{
@@ -209,9 +220,6 @@ const Editor = ({id})=>{
       }
   },[id,isEditorReady])
 
-  useEffect(()=>{
-    console.log("value of blogsdata",blogsData);
-  },[blogsData])
 
 
   useEffect(()=>{
@@ -242,13 +250,19 @@ const Editor = ({id})=>{
               <div className = {classes.titleContainer}>
                 <div style = {{paddingTop:"5px"}}>Title</div>
                 <Input value = {blogsData.title} onChange={(event)=>setBlogsData((val)=>{return {...val,title:event.target.value}})} className = {classes.titleInput} disableUnderline placeholder = "Title of Blog" fullWidth/>
+                <img src={blogsData["featured image"]} width="100%"/>
                 <Input onChange={featuredImageHandlerUploader}  fullWidth disableUnderline type = "file" placeholder = "Add File"/>
               </div>
             </TabPanel>
           </div>
         </Grid>
       </Grid>
-      <Button variant = "contained" onClick = {()=>blogSubmitHandler()}>Save</Button>
+      <Button variant = "contained" onClick = {()=>blogSubmitHandler()}>{id?"Update":"Save"}</Button>
+      <Snackbar open={showSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
