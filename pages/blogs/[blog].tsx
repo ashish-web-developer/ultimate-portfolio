@@ -63,10 +63,21 @@ const useStyles = makeStyles({
         color:"#e2cf52"
     },
     blogImageContainer:{
+        position:"relative",
         width:"100%",
         border:"5px solid #e2cf52",
         borderRadius: "0px 80px 0px 80px",
         overflow:"hidden"
+    },
+    bottomBox:{
+        position:"absolute",
+        bottom:"0px",
+        right:"0px",
+        height:"100px",
+        width:"100px",
+        background:"#e2cf52",
+        zIndex:"10"
+
     },
     socialIconContainer: {
         display: "flex",
@@ -165,6 +176,8 @@ const Blogs  = ()=>{
                             </div>
                             <div className = {classes.blogImageContainer}>
                                 <img width="100%" src = {blogsData["featured image"]}/>
+                                <span className={classes.bottomBox}>
+                                </span>
                             </div>
                             <Grid container>
                                 <Grid item xs = {2}>
