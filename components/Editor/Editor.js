@@ -123,7 +123,7 @@ const Editor = ()=>{
           class: Image,
           config: {
             endpoints: {
-              byFile: `${process.env.NEXT_APP_API_URL}/api/upload`, // Your backend file uploader endpoint
+              byFile: `${process.env.NEXT_PUBLIC_APP_API_URL}/api/upload`, // Your backend file uploader endpoint
             }
           }
         }
@@ -141,7 +141,7 @@ const Editor = ()=>{
 
   const blogSubmitHandler = async ()=>{
     const data = await editorDatahandler();
-    const response = await fetch("http://localhost:8000/api/blog",{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/blog`,{
       method :"POST",
       body:JSON.stringify({
         data:data,
@@ -159,7 +159,7 @@ const Editor = ()=>{
     console.log("inside function",event.target.files[0]);
     const formData = new FormData();
     formData.append("image",event.target.files[0]);
-    const response = await fetch(`${process.env.NEXT_APP_API_URL}/api/featured-image`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/featured-image`,{
       method :"POST",
       body:formData
     });
