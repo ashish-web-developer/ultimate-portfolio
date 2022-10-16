@@ -1,6 +1,11 @@
 // react
 import {FC,memo} from "react";
-import Link from "next/link";
+import {useRouter} from "next/router";
+import {
+    useSession, 
+    signIn, 
+    signOut
+} from "next-auth/react";
 
 
 // material ui
@@ -41,7 +46,8 @@ const useStyles = makeStyles((theme:Theme)=>({
     },
     ankerStyle:{
         fontFamily:"'Oswald', sans-serif",
-        textTransform:"uppercase"
+        textTransform:"uppercase",
+        cursor:"pointer"
     },
     resumeBtn:{
         "&.MuiButton-root":{
@@ -50,13 +56,29 @@ const useStyles = makeStyles((theme:Theme)=>({
         "&.MuiButton-text":{
             color:"#fff"
         }
-    }
+    },
+
 }));
 
 
-const Navbar:FC = ()=>{
+interface Props{
+    scrollHandler:(offset:Number)=>void;
+}
+
+const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
+    const {data:session} = useSession();
+    const router = useRouter();
+
+    const resumeClickHandler = ()=>{
+        if(!session){
+            signIn();
+            return
+        }
+        router.push("/Resume/resume.pdf")
+    }
+
     return(
         <Grid container>
             <Grid xs = {8} item>
@@ -74,20 +96,22 @@ const Navbar:FC = ()=>{
             </Grid>
             <Grid xs = {4} item>
                 <div className = {classes.menuContainer}>
-                    <Link href = "/">
-                        <a className = {classes.ankerStyle}>About</a>
-                    </Link>
-                    <Link href = "/">
-                        <a className = {classes.ankerStyle}>Portfolio</a>
-                    </Link>
-                    <Link href = "/">
-                        <a className = {classes.ankerStyle}>Contact</a>
-                    </Link>
-                    <form method = "get" action = "/Resume/resume.pdf">
-                        <Button type ="submit" className = {classes.resumeBtn}>
+                        <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
+                        <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
+                        <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
+                        <Button onClick = {()=>resumeClickHandler()} className = {classes.resumeBtn}>
                             Resume
                         </Button>
-                    </form>
+                        {
+                            session?
+                            <Button onClick = {()=> signOut()} className = {classes.resumeBtn}>
+                                Sign Out
+                            </Button>:
+                            <Button onClick = {()=>signIn()} className = {classes.resumeBtn}>
+                                Sign In
+                            </Button>
+
+                        }
                 </div>
             </Grid>
         </Grid>

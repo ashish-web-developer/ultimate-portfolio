@@ -172,7 +172,7 @@ const Home: FC = () => {
           }}
         >
           <div className={classes.container}>
-            <Navbar />
+            <Navbar scrollHandler = {scrollHandler} />
             <span className={classes.pageNumberStyle}>01</span>
             <Grid sx={{ height: "100%" }} container>
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
@@ -343,13 +343,13 @@ const Home: FC = () => {
                 <div className = {classes.devInfoContainer}>
                   <h1><span className = {classes.curlyBraces}> &#123;</span>  Hi, I&apos;m Ashish Prajapati.<span className = {classes.curlyBraces}>&#125;</span> </h1>
                   <p className = {classes.devIntro}>
-                    I&apos;m a creative developer / software engineer from India.
+                    I&apos;m a creative web developer from India.
                     I use Javascript, Typescript create high-end interactive experiences and products.
                     I currently work as a senior software Developer at Mim-Essay.
                   </p>
                 </div>
               </Grid>
-              <Grid item xs = {6}>
+              <Grid item xs = {5}>
 
                 <Canvas>
                   <PerspectiveCamera
@@ -370,6 +370,26 @@ const Home: FC = () => {
                   <spotLight intensity={0.5} position={[0, -10, -10]} />
               </Canvas>
 
+
+              </Grid>
+              <Grid 
+              sx={{
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "flex-end",
+              }}
+              item 
+              xs = {1}>
+                <div style={{ float: "right" }}>
+                  <div className={classes.scrollCtaContainer}>
+                    <Button onClick = {()=>scrollHandler(3)}>
+                      <span style={{ writingMode: "vertical-rl",color:"#fff"}}>
+                        SCROLL DOWN
+                      </span>
+                    </Button>
+                    <CgArrowDown size={40} />
+                  </div>
+                </div>
 
               </Grid>
             </Grid>
