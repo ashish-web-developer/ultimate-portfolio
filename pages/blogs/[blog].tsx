@@ -1,5 +1,5 @@
 
-import {useEffect, useState} from "react";
+import {useEffect, useState,ReactDOM,useRef, useCallback} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router"
 
@@ -21,6 +21,8 @@ import { FaGithubAlt } from "react-icons/fa";
 
 import Blocks from 'editorjs-blocks-react-renderer';
 
+import hljs from "highlight.js";
+import 'highlight.js/styles/github-dark.css';
 
 const useStyles = makeStyles({
     blogContainer:{
@@ -121,11 +123,11 @@ const Blogs  = ()=>{
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsData,setBlogsData] = useState<any>(null);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
+    const blocksRef = useRef<any>(null);
 
     useEffect(()=>{
         setIsPageLoaded(true);
     },[])
-
     useEffect(()=>{
         if(blog){
             (async function(){
@@ -143,8 +145,23 @@ const Blogs  = ()=>{
                 let creationDate = new Date(data.created_at);
                 setBlogCreationDate(creationDate);
             }())
-        }
+    }
+
     },[blog])
+
+    const onRefChange = useCallback((node:any)=>{
+        if(node){
+            hljs.highlightAll();
+            let elements = Array.from(document.getElementsByClassName("hljs")).forEach(function(element){
+                let parentEl = element.parentElement;
+                parentEl.style.cssText=`
+                border:3px solid #e2cf52;
+                border-radius:10px;
+                overflow:hidden;
+                `;
+            });
+        }
+    },[])
 
 
     if(!isPageLoaded){
@@ -213,7 +230,7 @@ const Blogs  = ()=>{
                                         </div>
                                     </div>
                                 </Grid>
-                                <Grid item xs = {10}>
+                                <Grid ref = {onRefChange} item xs = {10}>
                                     <Blocks 
                                         data = {blogsData.blogs} 
                                         config = {{
@@ -242,10 +259,17 @@ const Blogs  = ()=>{
                                 </Grid>
                             </Grid>
                     </div>
+                    {/*
+                        <pre>
+                            <code dangerouslySetInnerHTML={{ __html: highlightedCode }}></code>
+                        </pre>
+                    */}
                 </>
+
             }
         </div>
     )
+
 }
 
 export default Blogs;
