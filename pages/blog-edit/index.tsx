@@ -77,7 +77,7 @@ const BlogEdit = ()=>{
                     </Grid>
                 </Grid>
             </div>
-            <Editor/>
+            <Editor id = {null}/>
         </div>
     )
 }

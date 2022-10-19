@@ -171,11 +171,13 @@ const Blogs  = ()=>{
             hljs.highlightAll();
             let elements = Array.from(document.getElementsByClassName("hljs")).forEach(function(element){
                 let parentEl = element.parentElement;
-                parentEl.style.cssText=`
-                border:3px solid #e2cf52;
-                border-radius:10px;
-                overflow:hidden;
-                `;
+                if(parentEl){
+                    parentEl.style.cssText=`
+                    border:3px solid #e2cf52;
+                    border-radius:10px;
+                    overflow:hidden;
+                    `;
+                }
             });
         }
     },[])
