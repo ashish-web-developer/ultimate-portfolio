@@ -8,7 +8,8 @@ import { makeStyles } from "@mui/styles";
 import {
     Theme,
     Grid,
-    Input
+    Input,
+    useMediaQuery
 } from "@mui/material";
 
 
@@ -26,7 +27,11 @@ import 'highlight.js/styles/github-dark.css';
 
 const useStyles = makeStyles({
     blogContainer:{
-      padding:"50px 160px 0px 160px"
+        padding:"50px 160px 0px 160px",
+        ['@media(max-width:780px)']:{
+            padding:"50px 18px 0px 18px",
+        }
+
     },
     imageContainer:{
         width:"100%",
@@ -37,6 +42,7 @@ const useStyles = makeStyles({
     },
     headerContainer:{
         fontFamily: "'Oswald', sans-serif",
+        fontSize:"2rem",
     },
     paraContainer:{
         fontFamily:"'Allerta Stencil', sans-serif"
@@ -62,14 +68,21 @@ const useStyles = makeStyles({
     blogTitleContainer:{
         fontSize:"2rem",
         fontFamily: "'Bungee', cursive",
-        color:"#e2cf52"
+        color:"#e2cf52",
+        ['@media(max-width:780px)']:{
+            fontSize:"1.6rem"
+        }
     },
     blogImageContainer:{
         position:"relative",
         width:"100%",
         border:"5px solid #e2cf52",
         borderRadius: "0px 80px 0px 80px",
-        overflow:"hidden"
+        overflow:"hidden",
+        ['@media(max-width:780px)']:{
+            border:"2px solid #e2cf52",
+            borderRadius: "0px 20px 0px 20px",
+        }
     },
     bottomBox:{
         position:"absolute",
@@ -78,7 +91,11 @@ const useStyles = makeStyles({
         height:"100px",
         width:"100px",
         background:"#e2cf52",
-        zIndex:"10"
+        zIndex:"10",
+        ['@media(max-width:780px)']:{
+            height:"30px",
+            width:"30px",
+        }
 
     },
     socialIconContainer: {
@@ -123,7 +140,7 @@ const Blogs  = ()=>{
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsData,setBlogsData] = useState<any>(null);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
-    const blocksRef = useRef<any>(null);
+    const isMobile = useMediaQuery('(max-width:758px)');
 
     useEffect(()=>{
         setIsPageLoaded(true);
@@ -171,12 +188,12 @@ const Blogs  = ()=>{
         <div className = {classes.blogContainer}>
             <div className = {classes.header}>
                 <Grid  container>
-                    <Grid item xs = {4} >
+                    <Grid item xs = {12} md={4} >
                         <div className = {classes.headerTitle}>
                             Ashish Prajapati
                         </div>
                     </Grid>
-                    <Grid item xs = {8}>
+                    <Grid item xs = {0} md = {8}>
                     </Grid>
                 </Grid>
             </div>
@@ -197,40 +214,44 @@ const Blogs  = ()=>{
                                 </span>
                             </div>
                             <Grid container>
-                                <Grid item xs = {2}>
+                                <Grid item xs = {0} md = {2}>
 
-                                    <div className={classes.socialIconContainer}>
-                                        <div className={classes.socialIcon}>
-                                            <Link href="https://www.facebook.com/thebadbluffer">
-                                            <a>
-                                                <ImFacebook size={24} color="#000" />
-                                            </a>
-                                            </Link>
+
+                                    {
+                                        !isMobile && 
+                                        <div className={classes.socialIconContainer}>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://www.facebook.com/thebadbluffer">
+                                                <a>
+                                                    <ImFacebook size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://twitter.com/ashish_classic">
+                                                <a>
+                                                    <BsTwitter size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://github.com/ashish-web-developer">
+                                                <a>
+                                                    <FaGithubAlt size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://www.linkedin.com/in/ashish_classic">
+                                                <a>
+                                                    <GrLinkedinOption size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
                                         </div>
-                                        <div className={classes.socialIcon}>
-                                            <Link href="https://twitter.com/ashish_classic">
-                                            <a>
-                                                <BsTwitter size={24} color="#000" />
-                                            </a>
-                                            </Link>
-                                        </div>
-                                        <div className={classes.socialIcon}>
-                                            <Link href="https://github.com/ashish-web-developer">
-                                            <a>
-                                                <FaGithubAlt size={24} color="#000" />
-                                            </a>
-                                            </Link>
-                                        </div>
-                                        <div className={classes.socialIcon}>
-                                            <Link href="https://www.linkedin.com/in/ashish_classic">
-                                            <a>
-                                                <GrLinkedinOption size={24} color="#000" />
-                                            </a>
-                                            </Link>
-                                        </div>
-                                    </div>
+                                    }
                                 </Grid>
-                                <Grid ref = {onRefChange} item xs = {10}>
+                                <Grid ref = {onRefChange} item xs = {12} md={10}>
                                     <Blocks 
                                         data = {blogsData.blogs} 
                                         config = {{
@@ -259,11 +280,6 @@ const Blogs  = ()=>{
                                 </Grid>
                             </Grid>
                     </div>
-                    {/*
-                        <pre>
-                            <code dangerouslySetInnerHTML={{ __html: highlightedCode }}></code>
-                        </pre>
-                    */}
                 </>
 
             }
