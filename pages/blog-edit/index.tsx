@@ -1,5 +1,6 @@
+
 import { useEffect ,useState} from "react";
-import Editor from "../components/Editor/Editor";
+import Editor from "../../components/Editor/Editor"
 import { makeStyles } from "@mui/styles";
 import {Grid,Button,IconButton} from "@mui/material";
 import {FiChevronDown} from "react-icons/fi"
@@ -76,7 +77,7 @@ const BlogEdit = ()=>{
                     </Grid>
                 </Grid>
             </div>
-            <Editor/>
+            <Editor id = {null}/>
         </div>
     )
 }

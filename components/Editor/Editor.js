@@ -1,5 +1,5 @@
 
-import { useEffect ,useState,memo, useCallback} from "react";
+import { useEffect ,useState,memo, useCallback,useRef} from "react";
 import { makeStyles } from "@mui/styles";
 import { 
   Button ,
@@ -7,7 +7,9 @@ import {
   Tabs,
   Tab,
   Box,
-  Input
+  Input,
+  Snackbar,
+  Alert
 } from "@mui/material";
 
 
@@ -82,17 +84,27 @@ function TabPanel(props) {
     </div>
   );
 }
-const Editor = ()=>{
-  const [editorData,setEditorData] = useState();
+const Editor = ({id})=>{
   const classes = useStyles();
   const [isRendered,setIsRendered] = useState(false);
   const [tabValue,setTabValue] = useState(0);
+  const [isEditorReady,setIsEditorReady] = useState(false);
+  const [showSnackbar,setShowSnackbar] = useState(false);
+  const [alertMessage,setAlertMessage] = useState("");
   const [blogsData,setBlogsData] = useState({
+    blogs:{},
+    created_at:null,
+    "featured image":"",
+    id:null,
     title:"",
-    featuredImageUrl:""
+    updated_at:null
   });
-  let editor;
+  const editorRef = useRef(null);
 
+
+
+
+  // Initializing the editor
   const initEditor = useCallback(()=>{
     const EditorJS = require("@editorjs/editorjs")
     const Header = require("@editorjs/header");
@@ -102,7 +114,7 @@ const Editor = ()=>{
     const Embed = require("@editorjs/embed");
     const Image = require("@editorjs/image");
 
-    editor = new EditorJS({
+    let editor = new EditorJS({
       logLevel:"error",
       holder:EDITOR_HOLDER_ID,
       tools:{
@@ -128,35 +140,42 @@ const Editor = ()=>{
           }
         }
       },
+      onReady:()=>{
+        setIsEditorReady(true);
+      },
       data:{},
       placeholder:"Lets write",
     })
+    editorRef.current = editor;
   },[]) 
 
 
-  const editorDatahandler = useCallback(async()=>{
-    const data = await editor.save();
-    return data;
-  },[])
 
+
+  // blog submit handler 
+  
   const blogSubmitHandler = async ()=>{
-    const data = await editorDatahandler();
+    const data = await editorRef.current.save();
     const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/blog`,{
       method :"POST",
       body:JSON.stringify({
         data:data,
         title:blogsData.title,
         status:"draft",
-        featured_image:blogsData.featuredImageUrl
+        featured_image:blogsData["featured image"],
+        id
       }),
       headers:{
         "Content-type":"Application/json"
       }
     });
+    const responseData =  await response.json();
+    setAlertMessage(responseData.message);
+    setShowSnackbar(true);
   }
 
+  // Featured Image uploade handler
   const featuredImageHandlerUploader = async (event)=>{
-    console.log("inside function",event.target.files[0]);
     const formData = new FormData();
     formData.append("image",event.target.files[0]);
     const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/featured-image`,{
@@ -167,24 +186,45 @@ const Editor = ()=>{
     setBlogsData((prev)=>{
       return{
         ...prev,
-        featuredImageUrl:data.file.url
+        ["featured image"]:data.file.url
       }
     })
   }
-  const tabPanelHandler = (event,newValue)=>{
-    setTabValue(newValue);
-  }
+
+  const handleSnackbarClose = ()=>{
+    setShowSnackbar(false);
+  } 
+
+
+  useEffect(()=>{
+    if(isRendered){
+      initEditor();
+    }
+  },[isRendered])
+  useEffect(()=>{
+      if(id && isEditorReady){
+        (async function(){
+          const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
+            method :"POST",
+            body:JSON.stringify({
+              id:id
+            }),
+            headers:{
+              "Content-type":"Application/json"
+            }
+          });
+          const data = await response.json();
+          editorRef.current.render(data.blogs);
+          setBlogsData(data);
+        }())
+      }
+  },[id,isEditorReady])
 
 
 
   useEffect(()=>{
     setIsRendered(true);
   },[])
-  useEffect(()=>{
-    if(isRendered){
-      initEditor();
-    }
-  },[isRendered])
 
   return (
     <div>
@@ -196,7 +236,7 @@ const Editor = ()=>{
         <Grid item xs = {3}>
           <div className = {classes.sidePanel}>
             <Box className = {classes.sidePanelHeader}>
-              <Tabs TabIndicatorProps  = {{style:{backgroundColor:"#e2cf52"}}}  value={tabValue} onChange = {tabPanelHandler} aria-label="basic tabs example">
+              <Tabs TabIndicatorProps  = {{style:{backgroundColor:"#e2cf52"}}}  value={tabValue} onChange = {(event,value)=>setTabValue(value)} aria-label="basic tabs example">
                 <Tab className = {classes.tabs} label="Post Settings" {...a11yProps(0)} />
                 <Tab className = {classes.tabs} label="Item Two" {...a11yProps(1)} />
                 <Tab className = {classes.tabs} label="Item Three" {...a11yProps(2)} />
@@ -209,14 +249,20 @@ const Editor = ()=>{
               </div>
               <div className = {classes.titleContainer}>
                 <div style = {{paddingTop:"5px"}}>Title</div>
-                <Input onChange={(event)=>setBlogsData((val)=>{return {...val,title:event.target.value}})} className = {classes.titleInput} disableUnderline placeholder = "Title of Blog" fullWidth/>
+                <Input value = {blogsData.title} onChange={(event)=>setBlogsData((val)=>{return {...val,title:event.target.value}})} className = {classes.titleInput} disableUnderline placeholder = "Title of Blog" fullWidth/>
+                <img src={blogsData["featured image"]} width="100%"/>
                 <Input onChange={featuredImageHandlerUploader}  fullWidth disableUnderline type = "file" placeholder = "Add File"/>
               </div>
             </TabPanel>
           </div>
         </Grid>
       </Grid>
-      <Button variant = "contained" onClick = {()=>blogSubmitHandler()}>Save</Button>
+      <Button variant = "contained" onClick = {()=>blogSubmitHandler()}>{id?"Update":"Save"}</Button>
+      <Snackbar open={showSnackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

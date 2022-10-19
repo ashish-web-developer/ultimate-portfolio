@@ -1,5 +1,5 @@
 
-import {useEffect, useState} from "react";
+import {useEffect, useState,ReactDOM,useRef, useCallback} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router"
 
@@ -8,7 +8,8 @@ import { makeStyles } from "@mui/styles";
 import {
     Theme,
     Grid,
-    Input
+    Input,
+    useMediaQuery
 } from "@mui/material";
 
 
@@ -16,16 +17,21 @@ import { ImFacebook } from "react-icons/im";
 import { BsTwitter } from "react-icons/bs";
 import { GrLinkedinOption } from "react-icons/gr";
 import { FaGithubAlt } from "react-icons/fa";
-import { CgArrowDown } from "react-icons/cg";
 
 
 
 import Blocks from 'editorjs-blocks-react-renderer';
 
+import hljs from "highlight.js";
+import 'highlight.js/styles/github-dark.css';
 
 const useStyles = makeStyles({
     blogContainer:{
-      padding:"50px 160px 0px 160px"
+        padding:"50px 160px 0px 160px",
+        ['@media(max-width:780px)']:{
+            padding:"50px 18px 0px 18px",
+        }
+
     },
     imageContainer:{
         width:"100%",
@@ -36,6 +42,7 @@ const useStyles = makeStyles({
     },
     headerContainer:{
         fontFamily: "'Oswald', sans-serif",
+        fontSize:"2rem",
     },
     paraContainer:{
         fontFamily:"'Allerta Stencil', sans-serif"
@@ -61,10 +68,35 @@ const useStyles = makeStyles({
     blogTitleContainer:{
         fontSize:"2rem",
         fontFamily: "'Bungee', cursive",
-        color:"#e2cf52"
+        color:"#e2cf52",
+        ['@media(max-width:780px)']:{
+            fontSize:"1.6rem"
+        }
     },
     blogImageContainer:{
-        width:"100%"
+        position:"relative",
+        width:"100%",
+        border:"5px solid #e2cf52",
+        borderRadius: "0px 80px 0px 80px",
+        overflow:"hidden",
+        ['@media(max-width:780px)']:{
+            border:"2px solid #e2cf52",
+            borderRadius: "0px 20px 0px 20px",
+        }
+    },
+    bottomBox:{
+        position:"absolute",
+        bottom:"0px",
+        right:"0px",
+        height:"100px",
+        width:"100px",
+        background:"#e2cf52",
+        zIndex:"10",
+        ['@media(max-width:780px)']:{
+            height:"30px",
+            width:"30px",
+        }
+
     },
     socialIconContainer: {
         display: "flex",
@@ -107,11 +139,12 @@ const Blogs  = ()=>{
     const {blog} = router.query;
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsData,setBlogsData] = useState<any>(null);
+    const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
+    const isMobile = useMediaQuery('(max-width:758px)');
 
     useEffect(()=>{
         setIsPageLoaded(true);
     },[])
-
     useEffect(()=>{
         if(blog){
             (async function(){
@@ -126,10 +159,28 @@ const Blogs  = ()=>{
                 });
                 const data = await response.json();
                 setBlogsData(data);
+                let creationDate = new Date(data.created_at);
+                setBlogCreationDate(creationDate);
             }())
-        }
-        console.log("value of blogData",blogsData)
+    }
+
     },[blog])
+
+    const onRefChange = useCallback((node:any)=>{
+        if(node){
+            hljs.highlightAll();
+            let elements = Array.from(document.getElementsByClassName("hljs")).forEach(function(element){
+                let parentEl = element.parentElement;
+                if(parentEl){
+                    parentEl.style.cssText=`
+                    border:3px solid #e2cf52;
+                    border-radius:10px;
+                    overflow:hidden;
+                    `;
+                }
+            });
+        }
+    },[])
 
 
     if(!isPageLoaded){
@@ -139,96 +190,104 @@ const Blogs  = ()=>{
         <div className = {classes.blogContainer}>
             <div className = {classes.header}>
                 <Grid  container>
-                    <Grid item xs = {4} >
+                    <Grid item xs = {12} md={4} >
                         <div className = {classes.headerTitle}>
                             Ashish Prajapati
                         </div>
                     </Grid>
-                    <Grid item xs = {8}>
+                    <Grid item xs = {0} md = {8}>
                     </Grid>
                 </Grid>
             </div>
-            <div>
-                <div className = {classes.blogsSubtitleContainer}>
-                    <div>Blogs</div>
-                    <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
-                    <div style = {{color:"#fff"}}>Posted At 01 December</div>
-                </div>
-                {blogsData && 
+            {blogsData && 
                 <>
-                    <div className = {classes.blogTitleContainer}>
-                        {blogsData.title}
-                    </div>
-                    <div className = {classes.blogImageContainer}>
-                        <img width="100%" src = {blogsData["featured image"]}/>
-                    </div>
-                    <Grid container>
-                        <Grid item xs = {2}>
-
-                            <div className={classes.socialIconContainer}>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://www.facebook.com/thebadbluffer">
-                                    <a>
-                                        <ImFacebook size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://twitter.com/ashish_classic">
-                                    <a>
-                                        <BsTwitter size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://github.com/ashish-web-developer">
-                                    <a>
-                                        <FaGithubAlt size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.socialIcon}>
-                                    <Link href="https://www.linkedin.com/in/ashish_classic">
-                                    <a>
-                                        <GrLinkedinOption size={24} color="#000" />
-                                    </a>
-                                    </Link>
-                                </div>
+                    <div>
+                        <div className = {classes.blogsSubtitleContainer}>
+                            <div>Blogs</div>
+                            <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
+                            <div style = {{color:"#fff"}}>{`Posted At ${blogsCreationDate?.getDate()} ${blogsCreationDate?.getMonth()} ${blogsCreationDate?.getFullYear()}`}</div>
+                        </div>
+                            <div className = {classes.blogTitleContainer}>
+                                {blogsData.title}
                             </div>
-                        </Grid>
-                        <Grid item xs = {10}>
-                            <Blocks 
-                                data = {blogsData.blogs} 
-                                config = {{
-                                    image: {
-                                        className:classes.imageContainer ,
-                                        actionsClassNames: {
-                                            stretched: true,
-                                            withBorder: "image-block--with-border",
-                                            withBackground: "image-block--with-background",
-                                        }
-                                    },
-                                    paragraph: {
-                                        className:classes.paraContainer,
-                                    },
-                                    header:{
-                                        className:classes.headerContainer
-                                    },
-                                    code:{
-                                        className:classes.codeContainer
-                                    },
-                                    table:{
-                                        className:classes.tableContainer
-                                    }
+                            <div className = {classes.blogImageContainer}>
+                                <img width="100%" src = {blogsData["featured image"]}/>
+                                <span className={classes.bottomBox}>
+                                </span>
+                            </div>
+                            <Grid container>
+                                <Grid item xs = {0} md = {2}>
 
-                                }}/>
-                        </Grid>
-                    </Grid>
-                    </>
-                }
-            </div>
+
+                                    {
+                                        !isMobile && 
+                                        <div className={classes.socialIconContainer}>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://www.facebook.com/thebadbluffer">
+                                                <a>
+                                                    <ImFacebook size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://twitter.com/ashish_classic">
+                                                <a>
+                                                    <BsTwitter size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://github.com/ashish-web-developer">
+                                                <a>
+                                                    <FaGithubAlt size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                            <div className={classes.socialIcon}>
+                                                <Link href="https://www.linkedin.com/in/ashish_classic">
+                                                <a>
+                                                    <GrLinkedinOption size={24} color="#000" />
+                                                </a>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    }
+                                </Grid>
+                                <Grid ref = {onRefChange} item xs = {12} md={10}>
+                                    <Blocks 
+                                        data = {blogsData.blogs} 
+                                        config = {{
+                                            image: {
+                                                className:classes.imageContainer ,
+                                                actionsClassNames: {
+                                                    stretched: true,
+                                                    withBorder: "image-block--with-border",
+                                                    withBackground: "image-block--with-background",
+                                                }
+                                            },
+                                            paragraph: {
+                                                className:classes.paraContainer,
+                                            },
+                                            header:{
+                                                className:classes.headerContainer
+                                            },
+                                            code:{
+                                                className:classes.codeContainer
+                                            },
+                                            table:{
+                                                className:classes.tableContainer
+                                            }
+
+                                        }}/>
+                                </Grid>
+                            </Grid>
+                    </div>
+                </>
+
+            }
         </div>
     )
+
 }
 
 export default Blogs;
