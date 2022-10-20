@@ -94,7 +94,7 @@ const Blogs  = ()=>{
 
     useEffect(()=>{
         (async function(){
-            const response = await fetch("http://localhost:8000/api/get-blog",{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
                 method:"POST"
             });
             const data = await response.json();
