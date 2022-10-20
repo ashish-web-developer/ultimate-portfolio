@@ -161,9 +161,9 @@ const Editor = ({id})=>{
       body:JSON.stringify({
         data:data,
         title:blogsData.title,
-        status:"draft",
+        status:0,
         featured_image:blogsData["featured image"],
-        id
+        ...(id?{id}:{})
       }),
       headers:{
         "Content-type":"Application/json"
