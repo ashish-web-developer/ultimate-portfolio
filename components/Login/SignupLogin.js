@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 import {FcGoogle}  from "react-icons/fc"
 import {FaFacebook}  from "react-icons/fa"
 import {FaGithub} from "react-icons/fa"
+import { Formik } from "formik";
 
 const useStyles = makeStyles({
     container:{
@@ -81,26 +82,37 @@ const useStyles = makeStyles({
 const SignupLogin = ()=>{
     const  classes = useStyles();
     return(
-        <div className = {classes.container}>
-            <div className = {classes.header}>
-                <h3 className = {classes.headerText}>Welcome back</h3>
-                <p className = {classes.headerSubtitle}>Please enter your Details</p>
-            </div>
-            <div className = {classes.emailContainer}>
-                <Stack direction = "column" spacing = {2}>
-                    <Input disableUnderline = {true} className = {classes.inputStyles} type = "text" placeholder="Enter your email" fullWidth/>
-                    <Input disableUnderline = {true} className = {classes.inputStyles} type = "password" placeholder="Enter your password" fullWidth/>
-                </Stack>
-            </div>
-            <div className = {classes.signBtnContainer}>
-                <Stack direction = "column" spacing = {2}>
-                <Button className = {classes.submitCta} variant = "contained">Continue</Button>
-                <Button className = {classes.socialCta} fullWidth startIcon = {<FcGoogle/>} variant = "outlined">Continue with Google</Button>
-                <Button className = {classes.socialCta} fullWidth startIcon = {<FaFacebook/>} variant = "outlined">Continue with Facebook</Button>
-                <Button className = {classes.socialCta} fullWidth startIcon = {<FaGithub/>} variant = "outlined">Continue with Github</Button>
-                </Stack>
-            </div>
-        </div>
+        <Formik
+        initialValues={{email:"",password:""}}
+        onSubmit={(values,{setSubmitting})=>{
+        }}
+        >
+            {({values,isSubmitting,handleChange,handleSubmit})=>{
+                return(
+                    <form onSubmit = {handleSubmit} className = {classes.container}>
+                        <div className = {classes.header}>
+                            <h3 className = {classes.headerText}>Welcome back</h3>
+                            <p className = {classes.headerSubtitle}>Please enter your Details</p>
+                        </div>
+                        <div className = {classes.emailContainer}>
+                            <Stack direction = "column" spacing = {2}>
+                                <Input onChange = {handleChange} disableUnderline = {true} name = "email" className = {classes.inputStyles} type = "text" placeholder="Enter your email" fullWidth/>
+                                <Input onChange = {handleChange} disableUnderline = {true} name = "password" className = {classes.inputStyles} type = "password" placeholder="Enter your password" fullWidth/>
+                            </Stack>
+                        </div>
+                        <div className = {classes.signBtnContainer}>
+                            <Stack direction = "column" spacing = {2}>
+                            <Button type="submit" disabled = {isSubmitting} className = {classes.submitCta} variant = "contained">Continue</Button>
+                            <Button className = {classes.socialCta} fullWidth startIcon = {<FcGoogle/>} variant = "outlined">Continue with Google</Button>
+                            <Button className = {classes.socialCta} fullWidth startIcon = {<FaFacebook/>} variant = "outlined">Continue with Facebook</Button>
+                            <Button className = {classes.socialCta} fullWidth startIcon = {<FaGithub/>} variant = "outlined">Continue with Github</Button>
+                            </Stack>
+                        </div>
+                    </form>
+                )
+
+            }}
+        </Formik>
     )
 }
 
