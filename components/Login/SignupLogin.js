@@ -4,6 +4,7 @@ import {FcGoogle}  from "react-icons/fc"
 import {FaFacebook}  from "react-icons/fa"
 import {FaGithub} from "react-icons/fa"
 import { Formik } from "formik";
+import useAuth from "../../hooks/auth";
 
 const useStyles = makeStyles({
     container:{
@@ -81,10 +82,12 @@ const useStyles = makeStyles({
 
 const SignupLogin = ()=>{
     const  classes = useStyles();
+    const {login} = useAuth();
     return(
         <Formik
         initialValues={{email:"",password:""}}
-        onSubmit={(values,{setSubmitting})=>{
+        onSubmit={async (values,{setSubmitting})=>{
+            login(values.email,values.password);
         }}
         >
             {({values,isSubmitting,handleChange,handleSubmit})=>{

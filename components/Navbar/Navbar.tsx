@@ -1,11 +1,7 @@
 // react
 import {FC,memo} from "react";
 import {useRouter} from "next/router";
-import {
-    useSession, 
-    signIn, 
-    signOut
-} from "next-auth/react";
+import useAuth from "../../hooks/auth";
 
 
 // material ui
@@ -68,14 +64,9 @@ interface Props{
 const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
-    const {data:session} = useSession();
+    const {user,logout} = useAuth();
     const router = useRouter();
-
     const resumeClickHandler = ()=>{
-        if(!session){
-            signIn();
-            return
-        }
         router.push("/Resume/resume.pdf")
     }
 
@@ -103,11 +94,11 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                             Resume
                         </Button>
                         {
-                            session?
-                            <Button onClick = {()=> signOut()} className = {classes.resumeBtn}>
+                            user?
+                            <Button onClick = {()=> logout()} className = {classes.resumeBtn}>
                                 Sign Out
                             </Button>:
-                            <Button onClick = {()=>signIn()} className = {classes.resumeBtn}>
+                            <Button onClick = {()=>router.push("/login")} className = {classes.resumeBtn}>
                                 Sign In
                             </Button>
 
@@ -117,5 +108,6 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
         </Grid>
     )
 }
+
 
 export default memo(Navbar);
