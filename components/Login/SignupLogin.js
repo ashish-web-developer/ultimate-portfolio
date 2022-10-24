@@ -86,8 +86,9 @@ const SignupLogin = ()=>{
     return(
         <Formik
         initialValues={{email:"",password:""}}
-        onSubmit={async (values,{setSubmitting})=>{
-            login(values.email,values.password);
+        onSubmit={(values,{setSubmitting})=>{
+            setSubmitting(true);
+            login(values.email,values.password,setSubmitting);
         }}
         >
             {({values,isSubmitting,handleChange,handleSubmit})=>{

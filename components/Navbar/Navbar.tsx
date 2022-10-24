@@ -2,6 +2,7 @@
 import {FC,memo} from "react";
 import {useRouter} from "next/router";
 import useAuth from "../../hooks/auth";
+import Link from "next/link";
 
 
 // material ui
@@ -72,7 +73,7 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
 
     return(
         <Grid container>
-            <Grid xs = {8} item>
+            <Grid xs = {user?6:8} item>
                 <div className = {classes.logoContainer}>
                     <div className = {classes.logoCanvasContainer}>
                         {/*<Canvas>
@@ -85,24 +86,34 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                     <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
                 </div>
             </Grid>
-            <Grid xs = {4} item>
+            <Grid xs = {user?6:4} item>
                 <div className = {classes.menuContainer}>
-                        <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
-                        <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
-                        <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
-                        <Button onClick = {()=>resumeClickHandler()} className = {classes.resumeBtn}>
-                            Resume
+                    {user?
+                    <Link href = "/blogs">
+                        <a className = {classes.ankerStyle}>blogs</a>
+                    </Link>:null
+                    }
+                    {user?
+                    <Link href = "/blog-edit">
+                        <a className = {classes.ankerStyle}>write blog</a>
+                    </Link>:null
+                    }
+                    <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
+                    <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
+                    <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
+                    <Button onClick = {()=>resumeClickHandler()} className = {classes.resumeBtn}>
+                        Resume
+                    </Button>
+                    {
+                        user?
+                        <Button onClick = {()=> logout()} className = {classes.resumeBtn}>
+                            Sign Out
+                        </Button>:
+                        <Button onClick = {()=>router.push("/login")} className = {classes.resumeBtn}>
+                            Sign In
                         </Button>
-                        {
-                            user?
-                            <Button onClick = {()=> logout()} className = {classes.resumeBtn}>
-                                Sign Out
-                            </Button>:
-                            <Button onClick = {()=>router.push("/login")} className = {classes.resumeBtn}>
-                                Sign In
-                            </Button>
 
-                        }
+                    }
                 </div>
             </Grid>
         </Grid>
