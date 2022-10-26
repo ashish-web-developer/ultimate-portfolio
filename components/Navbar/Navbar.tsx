@@ -89,13 +89,13 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
             <Grid xs = {user?6:4} item>
                 <div className = {classes.menuContainer}>
                     {user?
-                    <Link href = "/blogs">
-                        <a className = {classes.ankerStyle}>blogs</a>
+                    <Link className = {classes.ankerStyle} href = "/blogs">
+                        blogs
                     </Link>:null
                     }
                     {user?
-                    <Link href = "/blog-edit">
-                        <a className = {classes.ankerStyle}>write blog</a>
+                    <Link className = {classes.ankerStyle} href = "/blog-edit">
+                        write blog
                     </Link>:null
                     }
                     <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>

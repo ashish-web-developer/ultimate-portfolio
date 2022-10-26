@@ -1,4 +1,4 @@
-import axios from "../lib/axios";
+import {axios} from "../lib/axios";
 import Cookies from "universal-cookie";
 import {useState,useEffect} from "react";
 import { useRouter } from "next/router";
