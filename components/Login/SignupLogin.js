@@ -32,7 +32,7 @@ const SignupLogin = () => {
       initialValues={{ email: "", password: "" ,name:""}}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
-        isSignup?register(values,setSubmitting):login(values,setSubmitting);
+        isSignup?register(values,setSubmitting,setIsSignUp):login(values,setSubmitting);
       }}
     >
       {({ values, isSubmitting, handleChange, handleSubmit }) => {
@@ -116,7 +116,7 @@ const SignupLogin = () => {
                   {isSignup?"Create An Account":"Login"}
                 </Button>
                 <div>
-                  Don't Have an Account?
+                  Don&apos;t Have an Account?
                   <Button onClick = {()=>setIsSignUp(!isSignup)} className = {classes.switchFormCta} variant = "text">{isSignup?"Login":"Sign Up"}</Button>
                 </div>
               </Stack>

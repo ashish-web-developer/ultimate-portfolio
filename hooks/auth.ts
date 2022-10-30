@@ -14,7 +14,7 @@ function useAuth(){
 
 
     // register handler
-    const register:register = (values,setSubmitting)=>{
+    const register:register = (values,setSubmitting,setIsSignUp)=>{
         const {name,email,password} = values;
         axios.post("/api/register",{
             name,
@@ -22,8 +22,10 @@ function useAuth(){
             password
         }).then((res)=>{
             setSubmitting(false)
+            setIsSignUp(false);
         }).catch((err)=>{
             setSubmitting(false);
+            setIsSignUp(true);
             console.log("value of err",err);
         })
     }
