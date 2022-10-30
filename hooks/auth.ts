@@ -2,24 +2,19 @@ import {axios} from "../lib/axios";
 import Cookies from "universal-cookie";
 import {useState,useEffect} from "react";
 import { useRouter } from "next/router";
+import {register,login} from "../types/login"
+import User from "../types/user";
 
 function useAuth(){
     const cookies = new Cookies();
     const token = cookies.get("token");
-    const [isUserLoggedOut,setIsUserLoggedout]= useState(false);
+    const [isUserLoggedOut,setIsUserLoggedout]= useState<boolean>(false);
     const router = useRouter();
-    const [user,setUser] = useState<any>(null);
+    const [user,setUser] = useState<User|null>(null);
 
 
     // register handler
-    const register = (
-        values:{
-            name:string,
-            email:string,
-            password:string,
-        },
-        setSubmitting:any
-    )=>{
+    const register:register = (values,setSubmitting)=>{
         const {name,email,password} = values;
         axios.post("/api/register",{
             name,
@@ -34,10 +29,7 @@ function useAuth(){
     }
 
 
-    const login = (
-        values:{email:string,password:string},
-        setSubmitting:any
-    ) =>{
+    const login:login = (values,setSubmitting) =>{
         const {email,password} = values;
         axios.post("/api/login",{
             email,

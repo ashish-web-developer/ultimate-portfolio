@@ -26,6 +26,7 @@ const SignupLogin = () => {
   const classes = useStyles();
   const [isSignup,setIsSignUp] = useState(true);
   const { login, register } = useAuth();
+
   return (
     <Formik
       initialValues={{ email: "", password: "" ,name:""}}
