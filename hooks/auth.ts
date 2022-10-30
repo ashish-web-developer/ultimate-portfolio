@@ -10,8 +10,35 @@ function useAuth(){
     const router = useRouter();
     const [user,setUser] = useState<any>(null);
 
-    // handling login
-    const login = (email:string,password:string,setSubmitting:any)=>{
+
+    // register handler
+    const register = (
+        values:{
+            name:string,
+            email:string,
+            password:string,
+        },
+        setSubmitting:any
+    )=>{
+        const {name,email,password} = values;
+        axios.post("/api/register",{
+            name,
+            email,
+            password
+        }).then((res)=>{
+            setSubmitting(false)
+        }).catch((err)=>{
+            setSubmitting(false);
+            console.log("value of err",err);
+        })
+    }
+
+
+    const login = (
+        values:{email:string,password:string},
+        setSubmitting:any
+    ) =>{
+        const {email,password} = values;
         axios.post("/api/login",{
             email,
             password
@@ -23,7 +50,9 @@ function useAuth(){
             setSubmitting(false);
             console.log("value of err",err)
         })
+
     }
+
 
     // handling logout
     const logout = ()=>{
@@ -65,7 +94,7 @@ function useAuth(){
         }
     },[isUserLoggedOut])
 
-    return {login,logout,user}
+    return {login,register,logout,user}
 }
 
 

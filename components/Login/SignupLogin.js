@@ -1,3 +1,6 @@
+// React
+import {useState} from "react";
+
 // Mui
 import {
   Input,
@@ -5,14 +8,11 @@ import {
   Stack,
   InputLabel,
   InputAdornment,
-  Checkbox
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
-// Icons
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
 import {MdAlternateEmail} from "react-icons/md";
 import {RiLockPasswordFill} from "react-icons/ri";
 
@@ -24,13 +24,14 @@ import { Formik } from "formik";
 
 const SignupLogin = () => {
   const classes = useStyles();
-  const { login } = useAuth();
+  const [isSignup,setIsSignUp] = useState(true);
+  const { login, register } = useAuth();
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ email: "", password: "" ,name:""}}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
-        login(values.email, values.password, setSubmitting);
+        isSignup?register(values,setSubmitting):login(values,setSubmitting);
       }}
     >
       {({ values, isSubmitting, handleChange, handleSubmit }) => {
@@ -41,7 +42,26 @@ const SignupLogin = () => {
               <p className={classes.headerSubtitle}>Create Your Account</p>
             </div>
             <div className={classes.emailContainer}>
-              <Stack direction="column" spacing={2}>
+              <Stack direction="column" spacing={3}>
+                {
+                 isSignup && <div>
+                  <InputLabel className={classes.inputLabel}>Name</InputLabel>
+                  <Input
+                    onChange={handleChange}
+                    disableUnderline={true}
+                    name="name"
+                    className={classes.inputStyles}
+                    type="text"
+                    placeholder="Enter your name"
+                    endAdornment = {
+                        <InputAdornment position ="end">
+                            <MdAlternateEmail size = {20} color="#fff"/>
+                        </InputAdornment>
+                    }
+                  />
+
+                </div>
+                }
                 <div>
                   <InputLabel className={classes.inputLabel}>Email</InputLabel>
                   <Input
@@ -51,7 +71,6 @@ const SignupLogin = () => {
                     className={classes.inputStyles}
                     type="text"
                     placeholder="Enter your email"
-                    fullWidth
                     endAdornment = {
                         <InputAdornment position ="end">
                             <MdAlternateEmail size = {20} color="#fff"/>
@@ -78,45 +97,27 @@ const SignupLogin = () => {
                     }
                   />
                 </div>
-                <div className = {classes.bottomContainer}>
-                    <Checkbox className = {classes.checkboxStyles}/>
-                </div>
-              </Stack>
-            </div>
-            <div className={classes.signBtnContainer}>
-              <Stack direction="column" spacing={2}>
+                {
+                  !isSignup && 
+                  <div className = {classes.bottomContainer}>
+                    <FormGroup>
+                      <FormControlLabel control={<Checkbox name = "remember" className = {classes.checkboxStyles}/>} label="Remember for 30 days" />
+                    </FormGroup>
+                  </div>
+                }
                 <Button
                   type="submit"
                   disabled={isSubmitting}
                   className={classes.submitCta}
                   variant="contained"
+                  fullWidth = {true}
                 >
-                  Continue
+                  {isSignup?"Create An Account":"Login"}
                 </Button>
-                <Button
-                  className={classes.socialCta}
-                  fullWidth
-                  startIcon={<FcGoogle />}
-                  variant="outlined"
-                >
-                  Continue with Google
-                </Button>
-                <Button
-                  className={classes.socialCta}
-                  fullWidth
-                  startIcon={<FaFacebook />}
-                  variant="outlined"
-                >
-                  Continue with Facebook
-                </Button>
-                <Button
-                  className={classes.socialCta}
-                  fullWidth
-                  startIcon={<FaGithub />}
-                  variant="outlined"
-                >
-                  Continue with Github
-                </Button>
+                <div>
+                  Don't Have an Account?
+                  <Button onClick = {()=>setIsSignUp(!isSignup)} className = {classes.switchFormCta} variant = "text">{isSignup?"Login":"Sign Up"}</Button>
+                </div>
               </Stack>
             </div>
           </form>
