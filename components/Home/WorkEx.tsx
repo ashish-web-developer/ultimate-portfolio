@@ -207,11 +207,9 @@ const WorkEx = ()=>{
                    ...style,
                 }}
             >
-              <Link href = {item.link}>
-                <a className = {classes.projectItemAnker}>
+              <Link className = {classes.projectItemAnker} href = {item.link}>
                   <div className = {classes.projectItem}>{item.project}</div>
                   <div style = {{textAlign:"center"}}>{item.techStack}</div>
-                </a>
               </Link>
             </animated.div>
             ))}

@@ -12,6 +12,8 @@ import {
   Alert
 } from "@mui/material";
 
+import {axios,axiosForm} from "../../lib/axios";
+
 
 const useStyles = makeStyles({
   editorContainer:{
@@ -156,21 +158,17 @@ const Editor = ({id})=>{
   
   const blogSubmitHandler = async ()=>{
     const data = await editorRef.current.save();
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/blog`,{
-      method :"POST",
-      body:JSON.stringify({
+    axios.post("/api/blog",{
         data:data,
         title:blogsData.title,
         status:0,
         featured_image:blogsData["featured image"],
         ...(id?{id}:{})
-      }),
-      headers:{
-        "Content-type":"Application/json"
-      }
-    });
-    const responseData =  await response.json();
-    setAlertMessage(responseData.message);
+    }).then(res=>{
+      setAlertMessage(res.data.message);
+    }).catch((err)=>{
+      console.log(err);
+    })
     setShowSnackbar(true);
   }
 
@@ -178,16 +176,13 @@ const Editor = ({id})=>{
   const featuredImageHandlerUploader = async (event)=>{
     const formData = new FormData();
     formData.append("image",event.target.files[0]);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/featured-image`,{
-      method :"POST",
-      body:formData
-    });
-    const data = await response.json();
-    setBlogsData((prev)=>{
-      return{
-        ...prev,
-        ["featured image"]:data.file.url
-      }
+    axiosForm.post("/api/featured-image",formData).then(res=>{
+      setBlogsData((prev)=>{
+        return{
+          ...prev,
+          ["featured image"]:res.data.file.url
+        }
+      })
     })
   }
 

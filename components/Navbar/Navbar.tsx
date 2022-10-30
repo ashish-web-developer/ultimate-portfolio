@@ -1,11 +1,8 @@
 // react
 import {FC,memo} from "react";
 import {useRouter} from "next/router";
-import {
-    useSession, 
-    signIn, 
-    signOut
-} from "next-auth/react";
+import useAuth from "../../hooks/auth";
+import Link from "next/link";
 
 
 // material ui
@@ -68,20 +65,15 @@ interface Props{
 const Navbar:FC<Props> = ({scrollHandler})=>{
     const theme = useTheme();
     const classes = useStyles();
-    const {data:session} = useSession();
+    const {user,logout} = useAuth();
     const router = useRouter();
-
     const resumeClickHandler = ()=>{
-        if(!session){
-            signIn();
-            return
-        }
         router.push("/Resume/resume.pdf")
     }
 
     return(
         <Grid container>
-            <Grid xs = {8} item>
+            <Grid xs = {user?6:8} item>
                 <div className = {classes.logoContainer}>
                     <div className = {classes.logoCanvasContainer}>
                         {/*<Canvas>
@@ -94,28 +86,39 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                     <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
                 </div>
             </Grid>
-            <Grid xs = {4} item>
+            <Grid xs = {user?6:4} item>
                 <div className = {classes.menuContainer}>
-                        <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
-                        <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
-                        <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
-                        <Button onClick = {()=>resumeClickHandler()} className = {classes.resumeBtn}>
-                            Resume
+                    {user?
+                    <Link className = {classes.ankerStyle} href = "/blogs">
+                        blogs
+                    </Link>:null
+                    }
+                    {user?
+                    <Link className = {classes.ankerStyle} href = "/blog-edit">
+                        write blog
+                    </Link>:null
+                    }
+                    <a onClick = {()=>scrollHandler(1)} className = {classes.ankerStyle}>Portfolio</a>
+                    <a onClick = {()=>scrollHandler(2)} className = {classes.ankerStyle}>About</a>
+                    <a onClick = {()=>scrollHandler(3)} className = {classes.ankerStyle}>Contact</a>
+                    <Button onClick = {()=>resumeClickHandler()} className = {classes.resumeBtn}>
+                        Resume
+                    </Button>
+                    {
+                        user?
+                        <Button onClick = {()=> logout()} className = {classes.resumeBtn}>
+                            Sign Out
+                        </Button>:
+                        <Button onClick = {()=>router.push("/login")} className = {classes.resumeBtn}>
+                            Sign In
                         </Button>
-                        {
-                            session?
-                            <Button onClick = {()=> signOut()} className = {classes.resumeBtn}>
-                                Sign Out
-                            </Button>:
-                            <Button onClick = {()=>signIn()} className = {classes.resumeBtn}>
-                                Sign In
-                            </Button>
 
-                        }
+                    }
                 </div>
             </Grid>
         </Grid>
     )
 }
+
 
 export default memo(Navbar);

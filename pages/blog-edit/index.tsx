@@ -4,6 +4,7 @@ import Editor from "../../components/Editor/Editor"
 import { makeStyles } from "@mui/styles";
 import {Grid,Button,IconButton} from "@mui/material";
 import {FiChevronDown} from "react-icons/fi"
+import {useRouter} from "next/router";
 
 
 const useStyles = makeStyles({
@@ -56,9 +57,17 @@ const useStyles = makeStyles({
 const BlogEdit = ()=>{
     const [isLoaded,setIsLoaded] = useState(false);
     const classes = useStyles();
+    const router = useRouter();
+
     useEffect(()=>{
-        setIsLoaded(true);
+        if(window.sessionStorage.user){
+            setIsLoaded(true);
+        }else{
+            router.push("/")
+        }
     },[isLoaded])
+
+    
     return(
         isLoaded && 
         <div className = {classes.container}>

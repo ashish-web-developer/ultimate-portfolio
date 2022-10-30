@@ -1,107 +1,131 @@
-import { Input,Button,Stack} from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import {FcGoogle}  from "react-icons/fc"
-import {FaFacebook}  from "react-icons/fa"
-import {FaGithub} from "react-icons/fa"
+// React
+import {useState} from "react";
 
-const useStyles = makeStyles({
-    container:{
-        backgroundColor:"#fff",
-        border:"1px solid red",
-        height:"100%",
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        justifyContent:"center"
-    },
-    header:{
-        color:"#000",
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        fontFamily:"'Oswald', sans-serif;",
-        marginBottom:"1.5rem"
-    },
-    headerText:{
-        margin:"0px",
-        padding:"0px",
-        fontSize:"2rem",
-        color:"#101727"
+// Mui
+import {
+  Input,
+  Button,
+  Stack,
+  InputLabel,
+  InputAdornment,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+} from "@mui/material";
 
-    },
-    headerSubtitle:{
-        margin:"0px",
-        padding:"0px",
-        color:"#4a515d"
-    },
-    emailContainer:{
-        marginBottom:"1rem",
-        width:"350px"
-    },
-    inputStyles:{
-        border:"2px solid #e2e3e6",
-        borderRadius:"5px",
-        padding:"0.2rem 1rem"
-    },
-    signBtnContainer:{
-        width:"350px",
-    },
-    submitBtnStyles:{
-        backgroundColor:"#000",
-        border:"none",
-        width:"350px",
-        padding:"1rem 1rem",
-        borderRadius:"5px",
-    },
-    submitCta:{
-        "&.MuiButton-root":{
-            color:"#fff",
-            fontFamily:"'Oswald', sans-serif;",
-            backgroundColor:"#101727",
-            padding:"0.5rem 0px"
-        },
-        "&.MuiButton-root:hover":{
-            backgroundColor:"#101727",
-        }
-    },
-    socialCta:{
-        "&.MuiButton-root":{
-            color:"#000",
-            fontFamily:"'Oswald', sans-serif;",
-        },
-        "&.MuiButton-outlined":{
-            border: "2px solid #e2e3e6 ",
-        },
-        "&.MuiButton-outlined:hover":{
-            border: "2px solid #e2e3e6 ",
-        },
-    }
-})
+import {MdAlternateEmail} from "react-icons/md";
+import {RiLockPasswordFill} from "react-icons/ri";
 
-const SignupLogin = ()=>{
-    const  classes = useStyles();
-    return(
-        <div className = {classes.container}>
-            <div className = {classes.header}>
-                <h3 className = {classes.headerText}>Welcome back</h3>
-                <p className = {classes.headerSubtitle}>Please enter your Details</p>
+// Helpers
+import useAuth from "../../hooks/auth";
+import useStyles from "../../styles/login";
+
+import { Formik } from "formik";
+
+const SignupLogin = () => {
+  const classes = useStyles();
+  const [isSignup,setIsSignUp] = useState(true);
+  const { login, register } = useAuth();
+
+  return (
+    <Formik
+      initialValues={{ email: "", password: "" ,name:""}}
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(true);
+        isSignup?register(values,setSubmitting,setIsSignUp):login(values,setSubmitting);
+      }}
+    >
+      {({ values, isSubmitting, handleChange, handleSubmit }) => {
+        return (
+          <form onSubmit={handleSubmit} className={classes.signLoginContainer}>
+            <div className={classes.header}>
+              <h3 className={classes.headerText}>Welcome to Creative Dev</h3>
+              <p className={classes.headerSubtitle}>Create Your Account</p>
             </div>
-            <div className = {classes.emailContainer}>
-                <Stack direction = "column" spacing = {2}>
-                    <Input disableUnderline = {true} className = {classes.inputStyles} type = "text" placeholder="Enter your email" fullWidth/>
-                    <Input disableUnderline = {true} className = {classes.inputStyles} type = "password" placeholder="Enter your password" fullWidth/>
-                </Stack>
+            <div className={classes.emailContainer}>
+              <Stack direction="column" spacing={3}>
+                {
+                 isSignup && <div>
+                  <InputLabel className={classes.inputLabel}>Name</InputLabel>
+                  <Input
+                    onChange={handleChange}
+                    disableUnderline={true}
+                    name="name"
+                    className={classes.inputStyles}
+                    type="text"
+                    placeholder="Enter your name"
+                    endAdornment = {
+                        <InputAdornment position ="end">
+                            <MdAlternateEmail size = {20} color="#fff"/>
+                        </InputAdornment>
+                    }
+                  />
+
+                </div>
+                }
+                <div>
+                  <InputLabel className={classes.inputLabel}>Email</InputLabel>
+                  <Input
+                    onChange={handleChange}
+                    disableUnderline={true}
+                    name="email"
+                    className={classes.inputStyles}
+                    type="text"
+                    placeholder="Enter your email"
+                    endAdornment = {
+                        <InputAdornment position ="end">
+                            <MdAlternateEmail size = {20} color="#fff"/>
+                        </InputAdornment>
+                    }
+                  />
+                </div>
+                <div>
+                  <InputLabel className={classes.inputLabel}>
+                    Password
+                  </InputLabel>
+                  <Input
+                    onChange={handleChange}
+                    disableUnderline={true}
+                    name="password"
+                    className={classes.inputStyles}
+                    type="password"
+                    placeholder="Enter your password"
+                    fullWidth
+                    endAdornment = {
+                        <InputAdornment position ="end">
+                            <RiLockPasswordFill size = {20} color="#fff"/>
+                        </InputAdornment>
+                    }
+                  />
+                </div>
+                {
+                  !isSignup && 
+                  <div className = {classes.bottomContainer}>
+                    <FormGroup>
+                      <FormControlLabel control={<Checkbox name = "remember" className = {classes.checkboxStyles}/>} label="Remember for 30 days" />
+                    </FormGroup>
+                  </div>
+                }
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={classes.submitCta}
+                  variant="contained"
+                  fullWidth = {true}
+                >
+                  {isSignup?"Create An Account":"Login"}
+                </Button>
+                <div>
+                  Don&apos;t Have an Account?
+                  <Button onClick = {()=>setIsSignUp(!isSignup)} className = {classes.switchFormCta} variant = "text">{isSignup?"Login":"Sign Up"}</Button>
+                </div>
+              </Stack>
             </div>
-            <div className = {classes.signBtnContainer}>
-                <Stack direction = "column" spacing = {2}>
-                <Button className = {classes.submitCta} variant = "contained">Continue</Button>
-                <Button className = {classes.socialCta} fullWidth startIcon = {<FcGoogle/>} variant = "outlined">Continue with Google</Button>
-                <Button className = {classes.socialCta} fullWidth startIcon = {<FaFacebook/>} variant = "outlined">Continue with Facebook</Button>
-                <Button className = {classes.socialCta} fullWidth startIcon = {<FaGithub/>} variant = "outlined">Continue with Github</Button>
-                </Stack>
-            </div>
-        </div>
-    )
-}
+          </form>
+        );
+      }}
+    </Formik>
+  );
+};
 
 export default SignupLogin;

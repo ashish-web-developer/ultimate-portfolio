@@ -188,19 +188,19 @@ const Blogs  = ()=>{
     }
     return (
         <div className = {classes.blogContainer}>
-            <div className = {classes.header}>
-                <Grid  container>
-                    <Grid item xs = {12} md={4} >
-                        <div className = {classes.headerTitle}>
-                            Ashish Prajapati
-                        </div>
-                    </Grid>
-                    <Grid item xs = {0} md = {8}>
-                    </Grid>
-                </Grid>
-            </div>
             {blogsData && 
                 <>
+                    <div className = {classes.header}>
+                        <Grid  container>
+                            <Grid item xs = {12} md={4} >
+                                <div className = {classes.headerTitle}>
+                                    {blogsData.user}
+                                </div>
+                            </Grid>
+                            <Grid item xs = {0} md = {8}>
+                            </Grid>
+                        </Grid>
+                    </div>
                     <div>
                         <div className = {classes.blogsSubtitleContainer}>
                             <div>Blogs</div>
@@ -224,30 +224,22 @@ const Blogs  = ()=>{
                                         <div className={classes.socialIconContainer}>
                                             <div className={classes.socialIcon}>
                                                 <Link href="https://www.facebook.com/thebadbluffer">
-                                                <a>
                                                     <ImFacebook size={24} color="#000" />
-                                                </a>
                                                 </Link>
                                             </div>
                                             <div className={classes.socialIcon}>
                                                 <Link href="https://twitter.com/ashish_classic">
-                                                <a>
                                                     <BsTwitter size={24} color="#000" />
-                                                </a>
                                                 </Link>
                                             </div>
                                             <div className={classes.socialIcon}>
                                                 <Link href="https://github.com/ashish-web-developer">
-                                                <a>
                                                     <FaGithubAlt size={24} color="#000" />
-                                                </a>
                                                 </Link>
                                             </div>
                                             <div className={classes.socialIcon}>
                                                 <Link href="https://www.linkedin.com/in/ashish_classic">
-                                                <a>
                                                     <GrLinkedinOption size={24} color="#000" />
-                                                </a>
                                                 </Link>
                                             </div>
                                         </div>
