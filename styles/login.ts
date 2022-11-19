@@ -15,7 +15,10 @@ const useStyles = makeStyles({
         flexDirection:"column",
         alignItems:"flex-start",
         justifyContent:"center",
-        paddingLeft:"5rem"
+        paddingLeft:"5rem",
+        ['@media(max-width:780px)']:{
+            padding:"1rem 3rem 0rem 3rem"
+        }
     },
     header:{
         color:"#000",
@@ -29,8 +32,11 @@ const useStyles = makeStyles({
         margin:"0px",
         padding:"0px",
         fontSize:"2rem",
-        color:"#fff"
-
+        color:"#fff",
+        ['@media(max-width:780px)']:{
+            fontSize:"1.4rem",
+            textAlign:"center"
+        }
     },
     headerSubtitle:{
         margin:"0px",
@@ -40,6 +46,9 @@ const useStyles = makeStyles({
     emailContainer:{
         marginBottom:"1rem",
         width:'80%',
+        ['@media(max-width:780px)']:{
+            width:"100%"
+        }
     },
     inputLabel:{
         "&.MuiInputLabel-root":{
@@ -80,6 +89,10 @@ const useStyles = makeStyles({
         },
         "&.MuiButton-root:hover":{
             backgroundColor:"#101727",
+        },
+        "&.Mui-disabled":{
+            backgroundColor:"#101727 !important",
+            color:"#e2cf52 !important",
         }
     },
     socialCta:{
