@@ -220,12 +220,11 @@ const Home: FC = () => {
                       <span className={classes.mainTextHeader}>CREATIVE</span>
                       <br />
                       <TypeAnimation 
-                        time={1000}
                         style = {{
                           letterSpacing:"35px"
                         }}
                         cursor={false}
-                        sequnce = {["DEV",1000,"DEVELOPER",1000]}
+                        sequence = {["DEV",1000,"DEVELOPER",1000]}
                       />
                     </div>
                   </Grid>
