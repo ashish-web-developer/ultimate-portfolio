@@ -18,9 +18,30 @@ import {RiLockPasswordFill} from "react-icons/ri";
 
 // Helpers
 import useAuth from "../../hooks/auth";
+
+
+// styles
 import useStyles from "../../styles/login";
 
 import { Formik } from "formik";
+
+
+const signUpLoginButtonTextHandler = (state, isSignup)=>{
+  if(state){
+    if(isSignup){
+      return "Create An Account"
+    }else{
+      return "Login"
+    }
+  }else{
+    if(isSignup){
+      return "Signing Up..."
+    }else{
+      return "Logging In..."
+    }
+
+  }
+}
 
 const SignupLogin = () => {
   const classes = useStyles();
@@ -113,7 +134,7 @@ const SignupLogin = () => {
                   variant="contained"
                   fullWidth = {true}
                 >
-                  {isSignup?"Create An Account":"Login"}
+                  {signUpLoginButtonTextHandler(!isSubmitting,isSignup)}
                 </Button>
                 <div>
                   Don&apos;t Have an Account?
