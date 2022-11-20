@@ -8,6 +8,7 @@ import ProjectCube from "./ProjectCube";
 import WorkEx from "./WorkEx";
 import TechStackCloud from "./TechStackCloud";
 import Contact from "./HomeSection/Contact";
+import TypeAnimation from "../Animation/TypeAnimation";
 
 // material ui
 import { Grid, Button ,useTheme,Theme,useMediaQuery} from "@mui/material";
@@ -148,7 +149,6 @@ const Home: FC = () => {
   const classes = useStyles();
   const parallaxRef = useRef<any>(null);
   const isMobile = useMediaQuery('(max-width:758px)');
-  const springProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
   const scrollHandler = (offset:Number):void=>{
     if(parallaxRef?.current){
       parallaxRef.current.scrollTo(offset);
@@ -219,15 +219,14 @@ const Home: FC = () => {
                     <div className={classes.mainText}>
                       <span className={classes.mainTextHeader}>CREATIVE</span>
                       <br />
-                      <animated.div
-                        onFocus={() => {
-                          console.log("hello world");
+                      <TypeAnimation 
+                        time={1000}
+                        style = {{
+                          letterSpacing:"35px"
                         }}
-                        style={springProps}
-                        className={classes.mainTextSub}
-                      >
-                        <span style={{ color: theme.palette.primary.main }}>DEV</span>ELOPER
-                      </animated.div>
+                        cursor={false}
+                        sequnce = {["DEV",1000,"DEVELOPER",1000]}
+                      />
                     </div>
                   </Grid>
                 </Grid>
