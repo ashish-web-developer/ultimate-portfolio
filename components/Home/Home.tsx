@@ -414,7 +414,7 @@ const Home: FC = () => {
       <Loader/>
       </div>:
       <div> 
-            {isMobile && <MobileNavbar anchor = "left" />}
+            {isMobile && <MobileNavbar anchor = "right" />}
       </div>
 
     }
