@@ -3,12 +3,12 @@ import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 
 // Local components
-import Navbar from "../Navbar/Navbar";
-import ProjectCube from "./ProjectCube";
-import WorkEx from "./WorkEx";
-import TechStackCloud from "./TechStackCloud";
-import Contact from "./HomeSection/Contact";
-import TypeAnimation from "../Animation/TypeAnimation";
+import Navbar from "@/components/Navbar/Navbar";
+import ProjectCube from "@/components/Home/ProjectCube";
+import WorkEx from "@/components/Home/WorkEx";
+import TechStackCloud from "@/components/Home/TechStackCloud";
+import Contact from "@/components/Home/HomeSection/Contact";
+import TypeAnimation from "@/components/Animation/TypeAnimation";
 
 // material ui
 import { Grid, Button ,useTheme,Theme,useMediaQuery} from "@mui/material";
