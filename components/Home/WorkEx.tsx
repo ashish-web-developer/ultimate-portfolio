@@ -23,8 +23,7 @@ import {
 
 // local components
 
-import TechStack from "./TechStack";
-
+import TechStack from "@/components/Home/TechStack";
 
 const useStyles = makeStyles((theme:Theme)=>({
   workParentContainer:{
