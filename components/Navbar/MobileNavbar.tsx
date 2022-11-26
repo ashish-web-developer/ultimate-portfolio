@@ -33,7 +33,7 @@ const MobileNavbar:FC<Props> = ({anchor})=>{
             open = {isOpen}
             onClose = {()=>dispatch(togglerNavbar(false))}
             >
-                <div>
+                <div className = {classes.drawerContainer}>
                 </div>
             </Drawer>
             <>
