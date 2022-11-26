@@ -1,10 +1,10 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import {createContext,useEffect,useState} from "react";
 
 import { ThemeProvider} from '@mui/styles'
 import { createTheme } from '@mui/material'
-import useAuth from '../hooks/auth';
+import { Provider } from 'react-redux'
+import store from "@/store/rootReducer";
 
 
 
@@ -19,7 +19,9 @@ const theme = createTheme({
 function MyApp({ Component, pageProps:{session,...pageProps} }: AppProps) {
   return (
       <ThemeProvider theme= {theme}>
+        <Provider store={store}>
           <Component {...pageProps} />
+        </Provider>
       </ThemeProvider>
   )
 }

@@ -1,9 +1,17 @@
 import React, { FC, memo ,Suspense,useRef} from "react";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 
 // Local components
-import Navbar from "@/components/Navbar/Navbar";
+const Navbar = dynamic(()=>import("@/components/Navbar/Navbar"),{
+  ssr:false
+})
+
+const MobileNavbar = dynamic(()=>import("@/components/Navbar/MobileNavbar"),{
+  ssr:false
+})
+
 import ProjectCube from "@/components/Home/ProjectCube";
 import WorkEx from "@/components/Home/WorkEx";
 import TechStackCloud from "@/components/Home/TechStackCloud";
@@ -12,7 +20,6 @@ import TypeAnimation from "@/components/Animation/TypeAnimation";
 
 // material ui
 import { Grid, Button ,useTheme,Theme,useMediaQuery} from "@mui/material";
-
 // icons
 import { ImFacebook } from "react-icons/im";
 import { BsTwitter } from "react-icons/bs";
@@ -172,7 +179,7 @@ const Home: FC = () => {
           }}
         >
           <div className={classes.container}>
-            <Navbar scrollHandler = {scrollHandler} />
+            {!isMobile && <Navbar scrollHandler = {scrollHandler} />}
             <span className={classes.pageNumberStyle}>01</span>
             <Grid sx={{ height: "100%" }} container>
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
@@ -405,7 +412,10 @@ const Home: FC = () => {
         </ParallaxLayer>
       </Parallax>
       <Loader/>
-      </div>:<h1>Mobile view is under progress....</h1>
+      </div>:
+      <div> 
+            {isMobile && <MobileNavbar anchor = "left" />}
+      </div>
 
     }
     </>
