@@ -4,6 +4,9 @@ import {FC} from "react";
 // Mui
 import { Drawer, Grid ,IconButton,useTheme} from "@mui/material";
 
+// Local components
+import DrawerPaper from "@/components/Navbar/DrawerPaper";
+
 
 // Redux
 import { useDispatch,useSelector } from "react-redux";
@@ -25,16 +28,21 @@ const MobileNavbar:FC<Props> = ({anchor})=>{
     const classes = useStyles();
     const isOpen = useSelector((state)=>state.navbar.isOpen)
     const dispatch = useDispatch();
-    console.log("value of is open",isOpen)
     return (
         <>
             <Drawer
             anchor={anchor}
             open = {isOpen}
             onClose = {()=>dispatch(togglerNavbar(false))}
+            className = {classes.drawer}
+            PaperProps={{
+                sx:{
+                    backgroundColor:"#fff",
+                    width:"100%"
+                }
+            }}
             >
-                <div className = {classes.drawerContainer}>
-                </div>
+                <DrawerPaper classes = {classes}/>
             </Drawer>
             <>
             <Grid className = {classes.container} container>

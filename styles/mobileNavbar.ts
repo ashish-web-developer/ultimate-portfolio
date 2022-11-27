@@ -25,8 +25,17 @@ const useStyles = makeStyles({
     curlyBraces:{
         color:"#e2cf52"
     },
-    drawerContainer:{
-        backgroundColor:"#000"
+    drawer:{
+        "&.MuiDrawer-root":{
+            width:"100%",
+            height:"100%",
+        },
+    },
+    closeIconContainer:{
+        marginTop:"16px",
+        marginRight:"16px",
+        display:"flex",
+        justifyContent:"flex-end"
     }
 })
 
