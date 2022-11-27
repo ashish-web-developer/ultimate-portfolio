@@ -1,4 +1,5 @@
 import {FC} from "react";
+import {useRouter} from "next/router"
 // Mui
 import {
     IconButton,
@@ -21,7 +22,8 @@ import useAuth from "@/hooks/auth";
 
 const DrawerPaper:FC<any> = ({classes})=>{
     const dispatch = useDispatch();
-    const user = useAuth();
+    const {user,logout} = useAuth();
+    const router = useRouter();
     return (
         <div className = {classes.drawerContent}>
         <div className = {classes.closeIconContainer}>
@@ -41,7 +43,7 @@ const DrawerPaper:FC<any> = ({classes})=>{
                     Contact
                 </Button>
 
-                <Button className = {classes.resumeBtn}>
+                <Button onClick = {()=>router.push("/Resume/resume.pdf")} className = {classes.resumeBtn}>
                     Resume
                 </Button>
                 {
