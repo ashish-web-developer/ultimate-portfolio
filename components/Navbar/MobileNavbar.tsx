@@ -37,7 +37,7 @@ const MobileNavbar:FC<Props> = ({anchor})=>{
             className = {classes.drawer}
             PaperProps={{
                 sx:{
-                    backgroundColor:"#fff",
+                    backgroundColor:"#000",
                     width:"100%"
                 }
             }}

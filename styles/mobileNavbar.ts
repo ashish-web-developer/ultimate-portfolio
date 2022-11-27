@@ -31,11 +31,31 @@ const useStyles = makeStyles({
             height:"100%",
         },
     },
+    drawerContent:{
+        position:"relative",
+        width:"100%",
+        height:"100%"
+    },
     closeIconContainer:{
         marginTop:"16px",
         marginRight:"16px",
         display:"flex",
         justifyContent:"flex-end"
+    },
+    bottomContainer:{
+        position:"absolute",
+        bottom:"0px",
+        padding:"16px",
+        display:"flex",
+    },
+    bottomContent:{
+        color:"#fff",
+        paddingLeft:"16px",
+        fontFamily:"'Bungee', cursive",
+    },
+    bottomAvatar:{
+        width:"50px !important",
+        height:'50px !important'
     }
 })
 
