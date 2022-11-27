@@ -42,6 +42,24 @@ const useStyles = makeStyles({
         display:"flex",
         justifyContent:"flex-end"
     },
+    navContainer:{
+        display:"flex",
+        justifyContent:"center",
+        marginTop:"2rem",
+    },
+    navButton:{
+        "&.MuiButton-root":{
+            color:"#fff"
+        }
+    },
+    resumeBtn:{
+        "&.MuiButton-root":{
+            border:"3px solid #fff",
+        },
+        "&.MuiButton-text":{
+            color:"#fff"
+        }
+    },
     bottomContainer:{
         position:"absolute",
         bottom:"0px",
