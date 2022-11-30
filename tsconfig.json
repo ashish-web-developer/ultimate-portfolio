@@ -17,7 +17,9 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
-      "@/hooks/*":["hooks/*"]
+      "@/hooks/*":["hooks/*"],
+      "@/store/*":["store/*"],
+      "@/styles/*":["styles/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

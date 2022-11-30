@@ -1,18 +1,27 @@
 import React, { FC, memo ,Suspense,useRef} from "react";
-import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 
 // Local components
-import Navbar from "@/components/Navbar/Navbar";
-import ProjectCube from "@/components/Home/ProjectCube";
+const Navbar = dynamic(()=>import("@/components/Navbar/Navbar"),{
+  ssr:false
+})
+
+const MobileNavbar = dynamic(()=>import("@/components/Navbar/MobileNavbar"),{
+  ssr:false
+})
+
+import HomeMainText from "@/components/Home/HomeMainText"
+
+const ProjectCube = dynamic(()=>import("@/components/Home/ProjectCube"),{
+  ssr:false
+})
 import WorkEx from "@/components/Home/WorkEx";
 import TechStackCloud from "@/components/Home/TechStackCloud";
 import Contact from "@/components/Home/HomeSection/Contact";
-import TypeAnimation from "@/components/Animation/TypeAnimation";
 
 // material ui
 import { Grid, Button ,useTheme,Theme,useMediaQuery} from "@mui/material";
-
 // icons
 import { ImFacebook } from "react-icons/im";
 import { BsTwitter } from "react-icons/bs";
@@ -31,118 +40,11 @@ import Avatar from "./DevAvatar";
 import { useSpring, animated } from "react-spring";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
+// Style
+import useStyles from "@/styles/home.style";
 
 
-const useStyles = makeStyles((theme:Theme)=>({
-  container: {
-    position: "relative",
-    width: "100%",
-    height: "100vh",
-    minHeight: "700px",
-    padding: "3rem",
-  },
-  socialIconContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "150px",
-  },
-  scrollCtaContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  emailContainer:{
-    fontSize:"1.2rem",
-    letterSpacing:"0.1rem",
-    fontFamily: "'Oswald', sans-serif",
-    position:"fixed",
-    bottom:"50px",
-    left:"50%",
-    transform:"translateX(-50%)",
-    zIndex:"10"
-  },
-  pageNumberStyle: {
-    position: "absolute",
-    fontFamily: "'Bungee', cursive",
-    color: "rgb(255, 200, 124)",
-    bottom: "0px",
-    fontSize: "100px",
-    textDecoration: "underline",
-    backgroundImage: "radial-gradient(circle at 10% 20%, rgb(255, 200, 124) 0%, rgb(252, 251, 121) 90%)",
-    WebkitBackgroundClip:"text",
-    WebkitTextFillColor:"transparent"
-  },
-  mainText: {
-    fontFamily: "'Oswald', sans-serif",
-    fontSize: "40px",
-    fontWeight: "700",
-  },
-  mainTextHeader: {
-    fontSize: "100px",
-    backgroundColor: theme.palette.primary.main,
-    color: "#000",
-    padding: "0px 50px",
-  },
-  mainTextSub: {
-    letterSpacing: "35px",
-  },
-  socialIcon: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: "50%",
-    width: "25px",
-    height: "25px",
-  },
-  container2:{
-    position: "relative",
-    background:"#000"
-  },
-  workContainer:{
-    display:"flex",
-    flexDirection:"column",
-    justifyContent:"flex-start",
-    height:"100%",
-    width:"90%"
-  },
-  workHeading:{
-    fontFamily:"'Bungee', cursive",
-    color:"#fff",
-    fontSize:"30px",
-    textDecoration:"underline",
-    textDecorationColor:theme.palette.primary.main,
-    textDecorationThickness:"5px"
 
-  },
-  curlyBraces:{
-      color:theme.palette.primary.main,
-  },
-  projectItemContainer:{
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-    border:"1px solid #fff"
-  },
-  projectItem:{
-    fontSize:"32px",
-    fontFamily:"'Oswald', sans-serif",
-    textTransform:"uppercase",
-    fontWeight:"600",
-
-  },
-  devInfoContainer:{
-    display:"flex",
-    flexDirection:"column",
-    justifyContent:"center",
-    width:"100%",
-    height:"100%"
-  },
-  devIntro:{
-    fontSize:"1.3rem"
-  }
-}));
 
 const Home: FC = () => {
   const theme = useTheme();
@@ -172,7 +74,7 @@ const Home: FC = () => {
           }}
         >
           <div className={classes.container}>
-            <Navbar scrollHandler = {scrollHandler} />
+            {!isMobile && <Navbar scrollHandler = {scrollHandler} />}
             <span className={classes.pageNumberStyle}>01</span>
             <Grid sx={{ height: "100%" }} container>
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
@@ -216,17 +118,7 @@ const Home: FC = () => {
                     xs={6}
                     item
                   >
-                    <div className={classes.mainText}>
-                      <span className={classes.mainTextHeader}>CREATIVE</span>
-                      <br />
-                      <TypeAnimation 
-                        style = {{
-                          letterSpacing:"35px"
-                        }}
-                        cursor={false}
-                        sequence = {["DEV",1000,"DEVELOPER",1000]}
-                      />
-                    </div>
+                    <HomeMainText/>
                   </Grid>
                 </Grid>
               </Grid>
@@ -405,7 +297,19 @@ const Home: FC = () => {
         </ParallaxLayer>
       </Parallax>
       <Loader/>
-      </div>:<h1>Mobile view is under progress....</h1>
+      </div>:
+      <div> 
+            {isMobile && 
+            <>
+              <MobileNavbar anchor = "right" />
+              <div>
+                <div style = {{display:"flex",justifyContent:"center",alignItems:"center",height:"90vh"}}>
+                  <HomeMainText/>
+                </div>
+              </div>
+            </>
+            }
+      </div>
 
     }
     </>
