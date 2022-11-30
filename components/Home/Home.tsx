@@ -66,7 +66,7 @@ const Home: FC = () => {
       <Parallax ref = {parallaxRef} pages={4}>
         <ParallaxLayer
           offset={0}
-          speed={2.5}
+          speed={0.5}
           style={{
             display: "flex",
             justifyContent: "center",
@@ -162,26 +162,7 @@ const Home: FC = () => {
                 <WorkEx/>
               </Grid>
               <Grid sx = {{height:"100%"}} xs = {4} item>
-                {/*<Canvas>
-                  <PerspectiveCamera
-                    position={[0, 3, 0]}
-                    fov={120}
-                    makeDefault={true}
-                  />
-                  <OrthographicCamera
-                    position={[-3, 0, 5]}
-                    zoom={250}
-                    makeDefault={true}
-                  />
-                  <Suspense>
-                    <Avatar rotation={[0, -1, 0]} position={[-3,-1,0]} />
-                  </Suspense>
-                  <ambientLight intensity={1} />
-                  <pointLight position={[-10, 10, 5]} />
-                  <spotLight intensity={0.5} position={[0, -10, -10]} />
-              </Canvas>*/}
-              <TechStackCloud/>
-
+                <TechStackCloud/>
               </Grid>
 
               <Grid
