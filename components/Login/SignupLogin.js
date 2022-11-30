@@ -21,7 +21,7 @@ import useAuth from "../../hooks/auth";
 
 
 // styles
-import useStyles from "../../styles/login";
+import useStyles from "../../styles/login.style";
 
 import { Formik } from "formik";
 

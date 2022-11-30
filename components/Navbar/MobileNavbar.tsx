@@ -31,7 +31,7 @@ interface Props{
 
 const MobileNavbar:FC<Props> = ({anchor})=>{
     const classes = useStyles();
-    const isOpen = useSelector((state)=>state.navbar.isOpen)
+    const isOpen = useSelector((state:any)=>state.navbar.isOpen)
     const dispatch = useDispatch();
     return (
         <>

@@ -55,6 +55,7 @@ const useStyles = makeStyles({
     resumeBtn:{
         "&.MuiButton-root":{
             border:"3px solid #fff",
+            width:"200px"
         },
         "&.MuiButton-text":{
             color:"#fff"

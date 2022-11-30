@@ -13,7 +13,7 @@ const Model = dynamic(()=>import("../components/Login/Model"),{
 })
 
 // styles
-import useStyles from "../styles/login";
+import useStyles from "../styles/login.style";
 
 // React Three js
 import {Loader} from "@react-three/drei";
