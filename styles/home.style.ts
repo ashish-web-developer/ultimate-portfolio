@@ -61,8 +61,6 @@ const useStyles = makeStyles((theme:Theme)=>({
       fontSize: "50px",
     }
   },
-  mainTextSub: {
-  },
   socialIcon: {
     display: "flex",
     justifyContent: "center",
@@ -117,6 +115,12 @@ const useStyles = makeStyles((theme:Theme)=>({
   },
   devIntro:{
     fontSize:"1.3rem"
+  },
+  appBar:{
+    "&.MuiAppBar-root":{
+      height:"60px",
+      backgroundColor:"rgb(18,18,18)"
+    }
   }
 }));
 

@@ -1,5 +1,4 @@
 import React, { FC, memo ,Suspense,useRef} from "react";
-import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 
@@ -14,7 +13,9 @@ const MobileNavbar = dynamic(()=>import("@/components/Navbar/MobileNavbar"),{
 
 import HomeMainText from "@/components/Home/HomeMainText"
 
-import ProjectCube from "@/components/Home/ProjectCube";
+const ProjectCube = dynamic(()=>import("@/components/Home/ProjectCube"),{
+  ssr:false
+})
 import WorkEx from "@/components/Home/WorkEx";
 import TechStackCloud from "@/components/Home/TechStackCloud";
 import Contact from "@/components/Home/HomeSection/Contact";
