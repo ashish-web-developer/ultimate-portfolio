@@ -95,7 +95,7 @@ const Home: FC = () => {
                     </Link>
                   </div>
                   <div className={classes.socialIcon}>
-                    <Link href="https://www.linkedin.com/in/ashish_classic">
+                    <Link href="https://www.linkedin.com/in/ashish-classic">
                         <GrLinkedinOption color="#000" />
                     </Link>
                   </div>
