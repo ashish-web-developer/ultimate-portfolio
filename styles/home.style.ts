@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme:Theme)=>({
     flexDirection: "column",
     justifyContent: "space-between",
     height: "150px",
+    position:"relative",
+    zIndex:"0"
   },
   scrollCtaContainer: {
     display: "flex",
