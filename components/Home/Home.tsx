@@ -13,7 +13,7 @@ const MobileNavbar = dynamic(()=>import("@/components/Navbar/MobileNavbar"),{
 
 import HomeMainText from "@/components/Home/HomeMainText"
 
-const ProjectCube = dynamic(()=>import("@/components/Home/ProjectCube"),{
+const TechCube = dynamic(()=>import("@/components/Home/TechCube"),{
   ssr:false
 })
 import WorkEx from "@/components/Home/WorkEx";
@@ -104,14 +104,9 @@ const Home: FC = () => {
               <Grid xs={10} item>
                 <Grid sx={{ height: "100%" }} container>
                   <Grid xs={6} item>
-                    <Canvas>
-                      <ambientLight intensity={0.5} />
-                      <pointLight position={[-10, 10, -5]} />
-                      <spotLight intensity={0.5} position={[0, -10, -10]} />
-                      <Suspense>
-                        <ProjectCube />
-                      </Suspense>
-                    </Canvas>
+                    <Suspense>
+                      <TechCube/>
+                    </Suspense>
                   </Grid>
                   <Grid
                     sx={{ display: "flex", alignItems: "center" }}
