@@ -151,7 +151,7 @@ const Blogs  = ()=>{
                 const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
                     method:"POST",
                     body:JSON.stringify({
-                        id:blog
+                        slug:blog
                     }),
                     headers:{
                         "Content-type":"Application/json"
