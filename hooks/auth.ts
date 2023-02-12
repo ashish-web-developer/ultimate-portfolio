@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 import {useState,useEffect} from "react";
 import { useRouter } from "next/router";
 import {register,login} from "../types/login"
-import User from "../types/user"; 
+import User from "../types/user";
 
 function useAuth(){
     const cookies = new Cookies();
