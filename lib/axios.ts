@@ -11,7 +11,9 @@ const axios = Axios.create({
     headers: {
         "Content-type":"application/json",
         Authorization: `Bearer ${token}`,
-        "content-security-policy": "upgrade-insecure-requests"
+        "content-security-policy": "upgrade-insecure-requests",
+        "Access-Control-Allow-Origin": "*"
+
 
     },
 })
