@@ -10,7 +10,9 @@ const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
     headers: {
         "Content-type":"application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        "content-security-policy": "upgrade-insecure-requests"
+
     },
 })
 const axiosForm = Axios.create({
