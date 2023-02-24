@@ -163,7 +163,7 @@ const Editor = ({id})=>{
         title:blogsData.title,
         status:0,
         featured_image:blogsData["featured image"],
-        ...(id?{id}:{})
+        ...(id?{slug:id}:{})
     }).then(res=>{
       setAlertMessage(res.data.message);
     }).catch((err)=>{
@@ -196,19 +196,23 @@ const Editor = ({id})=>{
       initEditor();
     }
   },[isRendered])
+
+
+  //
   useEffect(()=>{
       if(id && isEditorReady){
         (async function(){
           const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
             method :"POST",
             body:JSON.stringify({
-              id:id
+              slug:id
             }),
             headers:{
               "Content-type":"Application/json"
             }
           });
           const data = await response.json();
+          console.log("value of data",data);
           editorRef.current.render(data.blogs);
           setBlogsData(data);
         }())

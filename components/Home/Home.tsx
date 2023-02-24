@@ -62,7 +62,7 @@ const Home: FC = () => {
       !isMobile?
     <div>
 
-    <div className = {classes.emailContainer}>thebadbluffer@proton.me</div>
+    <div className = {classes.emailContainer}>ashish_classic@proton.me</div>
       <Parallax ref = {parallaxRef} pages={4}>
         <ParallaxLayer
           offset={0}
