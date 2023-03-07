@@ -169,10 +169,10 @@ const Editor = ({id})=>{
         ...(id?{slug:id}:{})
     }).then(res=>{
       setAlertMessage(res.data.message);
+      setShowSnackbar(true);
     }).catch((err)=>{
       console.log(err);
     })
-    setShowSnackbar(true);
   }
 
   // Featured Image uploade handler
