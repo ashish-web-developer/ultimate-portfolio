@@ -12,7 +12,9 @@ import {
   Alert
 } from "@mui/material";
 
-import {axios,axiosForm} from "../../lib/axios";
+
+// Helpers
+import { useAxios } from "@/hooks/common";
 
 
 const useStyles = makeStyles({
@@ -102,6 +104,7 @@ const Editor = ({id})=>{
     updated_at:null
   });
   const editorRef = useRef(null);
+  const {axios,axiosForm} = useAxios();
 
 
 
