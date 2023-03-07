@@ -1,6 +1,6 @@
 import React, { FC, memo ,Suspense,useRef} from "react";
 import clsx from "clsx";
-import dynamic from "next/dynamic";
+import dynamic from "next/dynamic"; 
 
 // Local components
 const Navbar = dynamic(()=>import("@/components/Navbar/Navbar"),{
