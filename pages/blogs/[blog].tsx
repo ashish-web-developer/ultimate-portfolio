@@ -178,6 +178,11 @@ const Blogs  = ({blogsData}:Props)=>{
                 <meta name="og:title" content={blogsData.title}/>
                 <meta name="og:description" content={blogsData.meta_description}/>
                 <meta property="og:image" content= {blogsData["featured image"]}/>
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="@ashish_classic" />
+                <meta name="twitter:title" content={blogsData.title} />
+                <meta name="twitter:description" content={blogsData.meta_description} />
+                <meta name="twitter:image" content={blogsData["featured image"]} />
             </Head>
             <div className = {classes.blogContainer}>
                 {blogsData && 
