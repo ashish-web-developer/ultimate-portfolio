@@ -172,20 +172,31 @@ const Editor = ({id})=>{
   // blog submit handler 
   
   const blogSubmitHandler = async ()=>{
-    const data = await editorRef.current.save();
-    axios.post("/api/blog",{
-        data:data,
-        title:blogsData.title,
-        status:0,
-        featured_image:blogsData["featured image"],
-        meta_description:blogsData.meta_description,
-        ...(id?{slug:id}:{})
-    }).then(res=>{
-      setAlertMessage(res.data.message);
+    if(!blogsData.title){
+      setAlertMessage("Please Enter Title");
       setShowSnackbar(true);
-    }).catch((err)=>{
-      console.log(err);
-    })
+    }else if(!blogsData.meta_description){
+      setAlertMessage("Please Enter Meta Description")
+      setShowSnackbar(true);
+    }else if(!blogsData["featured image"]){
+      setAlertMessage("Please Add Featured Image");
+      setShowSnackbar(true);
+    }else{
+      const data = await editorRef.current.save();
+      axios.post("/api/blog",{
+          data:data,
+          title:blogsData.title,
+          status:0,
+          featured_image:blogsData["featured image"],
+          meta_description:blogsData.meta_description,
+          ...(id?{slug:id}:{})
+      }).then(res=>{
+        setAlertMessage(res.data.message);
+        setShowSnackbar(true);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
   }
 
   // Featured Image uploade handler
