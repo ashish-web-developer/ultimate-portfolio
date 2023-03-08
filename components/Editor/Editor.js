@@ -12,7 +12,13 @@ import {
   Alert
 } from "@mui/material";
 
-import {axios,axiosForm} from "../../lib/axios";
+
+// Helpers
+import { useAxios } from "@/hooks/common";
+
+
+// FirstPanel
+import FirstPanel from "@/components/Editor/FirstPanel";
 
 
 const useStyles = makeStyles({
@@ -86,6 +92,8 @@ function TabPanel(props) {
     </div>
   );
 }
+
+
 const Editor = ({id})=>{
   const classes = useStyles();
   const [isRendered,setIsRendered] = useState(false);
@@ -99,9 +107,16 @@ const Editor = ({id})=>{
     "featured image":"",
     id:null,
     title:"",
+    meta_description:"",
     updated_at:null
   });
   const editorRef = useRef(null);
+  const {axios,axiosForm} = useAxios();
+
+
+  useEffect(()=>{
+    console.log("value of blogsData",blogsData);
+  },[blogsData])
 
 
 
@@ -157,23 +172,36 @@ const Editor = ({id})=>{
   // blog submit handler 
   
   const blogSubmitHandler = async ()=>{
-    const data = await editorRef.current.save();
-    axios.post("/api/blog",{
-        data:data,
-        title:blogsData.title,
-        status:0,
-        featured_image:blogsData["featured image"],
-        ...(id?{slug:id}:{})
-    }).then(res=>{
-      setAlertMessage(res.data.message);
-    }).catch((err)=>{
-      console.log(err);
-    })
-    setShowSnackbar(true);
+    if(!blogsData.title){
+      setAlertMessage("Please Enter Title");
+      setShowSnackbar(true);
+    }else if(!blogsData.meta_description){
+      setAlertMessage("Please Enter Meta Description")
+      setShowSnackbar(true);
+    }else if(!blogsData["featured image"]){
+      setAlertMessage("Please Add Featured Image");
+      setShowSnackbar(true);
+    }else{
+      const data = await editorRef.current.save();
+      axios.post("/api/blog",{
+          data:data,
+          title:blogsData.title,
+          status:0,
+          featured_image:blogsData["featured image"],
+          meta_description:blogsData.meta_description,
+          ...(id?{slug:id}:{})
+      }).then(res=>{
+        setAlertMessage(res.data.message);
+        setShowSnackbar(true);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
   }
 
   // Featured Image uploade handler
   const featuredImageHandlerUploader = async (event)=>{
+    console.log("inside function")
     const formData = new FormData();
     formData.append("image",event.target.files[0]);
     axiosForm.post("/api/featured-image",formData).then(res=>{
@@ -242,16 +270,7 @@ const Editor = ({id})=>{
               </Tabs>
             </Box>
             <TabPanel value = {tabValue} index = {0}>
-              <div className = {classes.statusContainer}>
-                <div>Status</div>
-                <div className =  {classes.status}>Draft</div>
-              </div>
-              <div className = {classes.titleContainer}>
-                <div style = {{paddingTop:"5px"}}>Title</div>
-                <Input value = {blogsData.title} onChange={(event)=>setBlogsData((val)=>{return {...val,title:event.target.value}})} className = {classes.titleInput} disableUnderline placeholder = "Title of Blog" fullWidth/>
-                <img src={blogsData["featured image"]} width="100%"/>
-                <Input onChange={featuredImageHandlerUploader}  fullWidth disableUnderline type = "file" placeholder = "Add File"/>
-              </div>
+              <FirstPanel blogsData={blogsData} setBlogsData={setBlogsData} featuredImageHandlerUploader={featuredImageHandlerUploader}/>
             </TabPanel>
           </div>
         </Grid>
