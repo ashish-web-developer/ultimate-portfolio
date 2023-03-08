@@ -1,5 +1,5 @@
 
-import {useEffect, useState,ReactDOM,useRef, useCallback} from "react";
+import {useEffect, useState,ReactDOM,useRef, useCallback,FC} from "react";
 import Link from "next/link";
 import Head from "next/head";
 import {useRouter} from "next/router"
@@ -25,6 +25,10 @@ import Blocks from 'editorjs-blocks-react-renderer';
 
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark.css';
+
+
+// Types
+import { Blog } from "types/blogs";
 
 const useStyles = makeStyles({
     blogContainer:{
@@ -133,8 +137,11 @@ const useStyles = makeStyles({
     }
 })
 
+interface Props {
+    blogsData:Blog;
+}
 
-const Blogs  = ({blogsData})=>{
+const Blogs  = ({blogsData}:Props)=>{
     const classes = useStyles();
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
@@ -167,6 +174,7 @@ const Blogs  = ({blogsData})=>{
     return (
         <>
             <Head>
+                <title>Ultimate Dev | {blogsData.title}</title>
                 <meta name="og:title" content={blogsData.title}/>
                 <meta name="og:description" content={blogsData.meta_description}/>
                 <meta property="og:image" content= {blogsData["featured image"]}/>
@@ -263,7 +271,7 @@ const Blogs  = ({blogsData})=>{
 }
 
 
-export async function getServerSideProps({params}){
+export async function getServerSideProps({params}:any){
         const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
             method:"POST",
             body:JSON.stringify({
@@ -273,7 +281,7 @@ export async function getServerSideProps({params}){
                 "Content-type":"Application/json"
             }
         });
-        const blogsData = await res.json();
+        const blogsData:Blog = await res.json();
         return {
             props:{
                 blogsData
