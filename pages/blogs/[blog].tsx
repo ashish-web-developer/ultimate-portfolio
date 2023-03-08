@@ -175,8 +175,9 @@ const Blogs  = ({blogsData}:Props)=>{
         <>
             <Head>
                 <title>Ultimate Dev | {blogsData.title}</title>
-                <meta name="og:title" content={blogsData.title}/>
-                <meta name="og:description" content={blogsData.meta_description}/>
+                <meta property="og:type" content="article"/>
+                <meta property="og:title" content={blogsData.title}/>
+                <meta property="og:description" content={blogsData.meta_description}/>
                 <meta property="og:image" content= {blogsData["featured image"]}/>
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@ashish_classic" />
