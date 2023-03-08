@@ -1,6 +1,7 @@
 
-import {useEffect, useState,ReactDOM,useRef, useCallback} from "react";
+import {useEffect, useState,ReactDOM,useRef, useCallback,FC} from "react";
 import Link from "next/link";
+import Head from "next/head";
 import {useRouter} from "next/router"
 
 
@@ -24,6 +25,10 @@ import Blocks from 'editorjs-blocks-react-renderer';
 
 import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark.css';
+
+
+// Types
+import { Blog } from "types/blogs";
 
 const useStyles = makeStyles({
     blogContainer:{
@@ -132,39 +137,19 @@ const useStyles = makeStyles({
     }
 })
 
+interface Props {
+    blogsData:Blog;
+}
 
-const Blogs  = ()=>{
+const Blogs  = ({blogsData}:Props)=>{
     const classes = useStyles();
-    const router = useRouter();
-    const {blog} = router.query;
     const [isPageLoaded,setIsPageLoaded] = useState(false);
-    const [blogsData,setBlogsData] = useState<any>(null);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
     const isMobile = useMediaQuery('(max-width:758px)');
 
     useEffect(()=>{
         setIsPageLoaded(true);
     },[])
-    useEffect(()=>{
-        if(blog){
-            (async function(){
-                const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
-                    method:"POST",
-                    body:JSON.stringify({
-                        slug:blog
-                    }),
-                    headers:{
-                        "Content-type":"Application/json"
-                    }
-                });
-                const data = await response.json();
-                setBlogsData(data);
-                let creationDate = new Date(data.created_at);
-                setBlogCreationDate(creationDate);
-            }())
-    }
-
-    },[blog])
 
     const onRefChange = useCallback((node:any)=>{
         if(node){
@@ -187,94 +172,121 @@ const Blogs  = ()=>{
         return;
     }
     return (
-        <div className = {classes.blogContainer}>
-            {blogsData && 
-                <>
-                    <div className = {classes.header}>
-                        <Grid  container>
-                            <Grid item xs = {12} md={4} >
-                                <div className = {classes.headerTitle}>
-                                    {blogsData.user}
-                                </div>
+        <>
+            <Head>
+                <title>Ultimate Dev | {blogsData.title}</title>
+                <meta name="og:title" content={blogsData.title}/>
+                <meta name="og:description" content={blogsData.meta_description}/>
+                <meta property="og:image" content= {blogsData["featured image"]}/>
+            </Head>
+            <div className = {classes.blogContainer}>
+                {blogsData && 
+                    <>
+                        <div className = {classes.header}>
+                            <Grid  container>
+                                <Grid item xs = {12} md={4} >
+                                    <div className = {classes.headerTitle}>
+                                        {blogsData.user}
+                                    </div>
+                                </Grid>
+                                <Grid item xs = {0} md = {8}>
+                                </Grid>
                             </Grid>
-                            <Grid item xs = {0} md = {8}>
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <div>
-                        <div className = {classes.blogsSubtitleContainer}>
-                            <div>Blogs</div>
-                            <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
-                            <div style = {{color:"#fff"}}>{`Posted At ${blogsCreationDate?.getDate()} ${blogsCreationDate?.getMonth()} ${blogsCreationDate?.getFullYear()}`}</div>
                         </div>
-                            <div className = {classes.blogTitleContainer}>
-                                {blogsData.title}
+                        <div>
+                            <div className = {classes.blogsSubtitleContainer}>
+                                <div>Blogs</div>
+                                <div style = {{width:"25px",height:"2px",backgroundColor:"#fff",margin:"0px 6px"}}></div>
+                                {/*<div style = {{color:"#fff"}}>{`Posted At ${blogsCreationDate?.getDate()} ${blogsCreationDate?.getMonth()} ${blogsCreationDate?.getFullYear()}`}</div>*/}
                             </div>
-                            <div className = {classes.blogImageContainer}>
-                                <img width="100%" src = {blogsData["featured image"]}/>
-                                <span className={classes.bottomBox}>
-                                </span>
-                            </div>
-                            <Grid container>
-                                <Grid item xs = {0} md = {2}>
+                                <div className = {classes.blogTitleContainer}>
+                                    {blogsData.title}
+                                </div>
+                                <div className = {classes.blogImageContainer}>
+                                    <img width="100%" src = {blogsData["featured image"]}/>
+                                    <span className={classes.bottomBox}>
+                                    </span>
+                                </div>
+                                <Grid container>
+                                    <Grid item xs = {0} md = {2}>
 
 
-                                    {
-                                        !isMobile && 
-                                        <div className={classes.socialIconContainer}>
-                                            <div className={classes.socialIcon}>
-                                                <Link href="https://twitter.com/ashish_classic">
-                                                    <BsTwitter size={24} color="#000" />
-                                                </Link>
+                                        {
+                                            !isMobile && 
+                                            <div className={classes.socialIconContainer}>
+                                                <div className={classes.socialIcon}>
+                                                    <Link href="https://twitter.com/ashish_classic">
+                                                        <BsTwitter size={24} color="#000" />
+                                                    </Link>
+                                                </div>
+                                                <div className={classes.socialIcon}>
+                                                    <Link href="https://github.com/ashish-web-developer">
+                                                        <FaGithubAlt size={24} color="#000" />
+                                                    </Link>
+                                                </div>
+                                                <div className={classes.socialIcon}>
+                                                    <Link href="https://www.linkedin.com/in/ashish-classic">
+                                                        <GrLinkedinOption size={24} color="#000" />
+                                                    </Link>
+                                                </div>
                                             </div>
-                                            <div className={classes.socialIcon}>
-                                                <Link href="https://github.com/ashish-web-developer">
-                                                    <FaGithubAlt size={24} color="#000" />
-                                                </Link>
-                                            </div>
-                                            <div className={classes.socialIcon}>
-                                                <Link href="https://www.linkedin.com/in/ashish-classic">
-                                                    <GrLinkedinOption size={24} color="#000" />
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    }
-                                </Grid>
-                                <Grid ref = {onRefChange} item xs = {12} md={10}>
-                                    <Blocks 
-                                        data = {blogsData.blogs} 
-                                        config = {{
-                                            image: {
-                                                className:classes.imageContainer ,
-                                                actionsClassNames: {
-                                                    stretched: true,
-                                                    withBorder: "image-block--with-border",
-                                                    withBackground: "image-block--with-background",
+                                        }
+                                    </Grid>
+                                    <Grid ref = {onRefChange} item xs = {12} md={10}>
+                                        <Blocks 
+                                            data = {blogsData.blogs} 
+                                            config = {{
+                                                image: {
+                                                    className:classes.imageContainer ,
+                                                    actionsClassNames: {
+                                                        stretched: true,
+                                                        withBorder: "image-block--with-border",
+                                                        withBackground: "image-block--with-background",
+                                                    }
+                                                },
+                                                paragraph: {
+                                                    className:classes.paraContainer,
+                                                },
+                                                header:{
+                                                    className:classes.headerContainer
+                                                },
+                                                code:{
+                                                    className:classes.codeContainer
+                                                },
+                                                table:{
+                                                    className:classes.tableContainer
                                                 }
-                                            },
-                                            paragraph: {
-                                                className:classes.paraContainer,
-                                            },
-                                            header:{
-                                                className:classes.headerContainer
-                                            },
-                                            code:{
-                                                className:classes.codeContainer
-                                            },
-                                            table:{
-                                                className:classes.tableContainer
-                                            }
 
-                                        }}/>
+                                            }}/>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                    </div>
-                </>
+                        </div>
+                    </>
 
-            }
-        </div>
+                }
+            </div>
+        </>
     )
 
+}
+
+
+export async function getServerSideProps({params}:any){
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/get-blog`,{
+            method:"POST",
+            body:JSON.stringify({
+                slug:params.blog
+            }),
+            headers:{
+                "Content-type":"Application/json"
+            }
+        });
+        const blogsData:Blog = await res.json();
+        return {
+            props:{
+                blogsData
+            }
+        }
 }
 
 export default Blogs;
