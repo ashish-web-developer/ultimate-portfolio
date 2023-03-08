@@ -223,11 +223,6 @@ const Blogs  = ()=>{
                                         !isMobile && 
                                         <div className={classes.socialIconContainer}>
                                             <div className={classes.socialIcon}>
-                                                <Link href="https://www.facebook.com/thebadbluffer">
-                                                    <ImFacebook size={24} color="#000" />
-                                                </Link>
-                                            </div>
-                                            <div className={classes.socialIcon}>
                                                 <Link href="https://twitter.com/ashish_classic">
                                                     <BsTwitter size={24} color="#000" />
                                                 </Link>
@@ -238,7 +233,7 @@ const Blogs  = ()=>{
                                                 </Link>
                                             </div>
                                             <div className={classes.socialIcon}>
-                                                <Link href="https://www.linkedin.com/in/ashish_classic">
+                                                <Link href="https://www.linkedin.com/in/ashish-classic">
                                                     <GrLinkedinOption size={24} color="#000" />
                                                 </Link>
                                             </div>
