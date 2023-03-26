@@ -27,6 +27,10 @@ import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark.css';
 
 
+// Local Component
+import Comment from "@/components/Blog/Comment";
+
+
 // Types
 import { Blog } from "types/blogs";
 
@@ -270,6 +274,7 @@ const Blogs  = ({blogsData}:Props)=>{
                     </>
 
                 }
+                <Comment blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
             </div>
         </>
     )

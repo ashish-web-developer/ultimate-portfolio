@@ -4,7 +4,8 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
     container:{
-        marginTop:"16px"
+        marginTop:"16px",
+        padding:"0px 16px"
     },
     navCtaContainer:{
         position:"relative"
@@ -75,6 +76,15 @@ const useStyles = makeStyles({
     bottomAvatar:{
         width:"50px !important",
         height:'50px !important'
+    },
+    userLogoContainer:{
+        display:"inline-flex",
+        alignItems:"center",
+        border:"3px solid #fff",
+        fontFamily:"'Oswald', sans-serif",
+        textTransform:"uppercase",
+        borderRadius:"25px",
+        padding:"6px 8px"
     }
 })
 
