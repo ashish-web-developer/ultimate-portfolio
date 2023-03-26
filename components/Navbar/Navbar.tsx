@@ -1,7 +1,7 @@
 // react
 import {FC,memo} from "react";
 import {useRouter} from "next/router";
-import useAuth from "../../hooks/auth";
+import useAuth from "@/hooks/auth";
 import Link from "next/link";
 
 
@@ -14,6 +14,10 @@ import {
     Theme
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+
+// Avatar 
+import { createAvatar } from '@dicebear/core';
+import { lorelei } from '@dicebear/collection';
 
 
 const useStyles = makeStyles((theme:Theme)=>({
@@ -54,6 +58,15 @@ const useStyles = makeStyles((theme:Theme)=>({
             color:"#fff"
         }
     },
+    userLogoContainer:{
+        display:"flex",
+        alignItems:"center",
+        border:"3px solid #fff",
+        fontFamily:"'Oswald', sans-serif",
+        textTransform:"uppercase",
+        borderRadius:"25px",
+        padding:"6px 8px"
+    }
 
 }));
 
@@ -70,6 +83,12 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
     const resumeClickHandler = ()=>{
         router.push("/Resume/resume.pdf")
     }
+    const avatar = createAvatar(lorelei, {
+        seed: user?.name,
+        // ... other options
+    });
+
+    console.log("value of avatar",avatar.toString());
 
     return(
         <Grid container>
@@ -83,7 +102,13 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                             <spotLight intensity={0.5} position = {[0,-10,-10]}/>
                         </Canvas>*/}
                     </div>
-                    <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
+                    {user ? 
+                        <div className = {classes.userLogoContainer}>
+                            <div style = {{width:"30px",height:"30px"}} dangerouslySetInnerHTML={{ __html: avatar.toString() }} /> | {user.name}
+                        </div>:
+                        <span className = {classes.logoText}><span className = {classes.curlyBraces}> &#123;</span> Ashish Prajapati <span className = {classes.curlyBraces}>&#125;</span></span>
+                    }
+                    
                 </div>
             </Grid>
             <Grid xs = {user?6:4} item>

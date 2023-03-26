@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dicebear/collection": "^5.3.4",
+    "@dicebear/core": "^5.3.4",
     "@editorjs/code": "^2.7.0",
     "@editorjs/editorjs": "^2.25.0",
     "@editorjs/embed": "^2.5.3",
