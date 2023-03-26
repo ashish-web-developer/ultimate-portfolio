@@ -1,5 +1,5 @@
 import useStyles from "@/styles/Blog/comment.style";
-import { useState } from "react";
+import { useState ,FC} from "react";
 
 import { createAvatar } from '@dicebear/core';
 import { lorelei } from '@dicebear/collection';
@@ -14,7 +14,11 @@ import UserLogo from "../UserLogo";
 // Helpers
 import { useAxios } from "@/hooks/common";
 
-const Comment = ({blogsMeta,blogId})=>{
+interface Props{
+    blogsMeta:string;
+    blogId:number
+}
+const Comment:FC<Props> = ({blogsMeta,blogId})=>{
     const classes = useStyles();
     const [comment,setComment] = useState();
     const {axios} = useAxios();
