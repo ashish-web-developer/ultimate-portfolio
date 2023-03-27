@@ -3,6 +3,14 @@ import { createAvatar } from '@dicebear/core';
 import { lorelei } from '@dicebear/collection';
 
 import { makeStyles } from "@mui/styles";
+// Mui
+import {
+    IconButton
+} from "@mui/material";
+
+//Icons
+import ThumbUpOffAltOutlinedIcon from '@mui/icons-material/ThumbUpOffAltOutlined';
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 
 const useStyles = makeStyles({
     container:{
@@ -30,6 +38,15 @@ const useStyles = makeStyles({
     userComment:{
         fontFamily:"'Allerta Stencil', sans-serif",
         marginLeft:"68px"
+    },
+    actionsCtaContainer:{
+        marginLeft:"68px",
+        display:"flex",
+    },
+    voteActionCta:{
+        "&.MuiIconButton-root":{
+            color:"#fff"
+        }
     }
 })
 
@@ -51,6 +68,14 @@ const UserComment = ({comment,user})=>{
             </div>
             <div className = {classes.userComment}>
                 {comment.body}
+            </div>
+            <div className = {classes.actionsCtaContainer}>
+                <IconButton className = {classes.voteActionCta} aria-label="upvote" color="primary">
+                    <ThumbUpOffAltOutlinedIcon/>
+                </IconButton>
+                <IconButton className = {classes.voteActionCta} aria-label="downvote" color="primary">
+                    <ThumbDownAltOutlinedIcon/>
+                </IconButton>
             </div>
         </div>
     )

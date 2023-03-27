@@ -1,11 +1,9 @@
 import useStyles from "@/styles/Blog/comment.style";
 import { useState ,FC} from "react";
 
-import { createAvatar } from '@dicebear/core';
-import { lorelei } from '@dicebear/collection';
 import {
     TextField,
-    Button
+    Button,
 } from "@mui/material"
 
 // Local Component
@@ -21,13 +19,18 @@ interface Props{
 const Comment:FC<Props> = ({blogsMeta,blogId})=>{
     const classes = useStyles();
     const [comment,setComment] = useState();
+    const [isCommentDisabled,setIsCommentDisabled] = useState(false);
     const {axios} = useAxios();
     const commentSubmitHandler = async ()=>{
-      const data = axios.post("/api/comment/create",{
-        body:comment,
-        blog_id:blogId
-      })
-      console.log("value of data",data);
+        setIsCommentDisabled(true);
+        const data = await axios.post("/api/comment/create",{
+            body:comment,
+            blog_id:blogId
+        })
+        setIsCommentDisabled(false);
+    }
+    const onCancelHandler = ()=>{
+        setComment("");
     }
     return (
         <div className = {classes.container}>
@@ -41,6 +44,7 @@ const Comment:FC<Props> = ({blogsMeta,blogId})=>{
                 {blogsMeta}
             </div>
             <TextField
+                value = {comment}
                 hiddenLabel
                 id="filled-hidden-label-small"
                 variant="filled"
@@ -58,10 +62,10 @@ const Comment:FC<Props> = ({blogsMeta,blogId})=>{
                 }}
             />
             <div className = {classes.btnContainer}>
-                <Button className = {classes.cancelBtn}>
+                <Button onClick = {onCancelHandler} className = {classes.cancelBtn}>
                     Cancel
                 </Button>
-                <Button onClick = {commentSubmitHandler} className = {classes.commentBtn}>
+                <Button  disabled = {isCommentDisabled} onClick = {commentSubmitHandler} className = {classes.commentBtn}>
                     Comment
                 </Button>
             </div>
