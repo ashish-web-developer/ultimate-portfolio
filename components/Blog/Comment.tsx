@@ -18,8 +18,8 @@ interface Props{
 }
 const Comment:FC<Props> = ({blogsMeta,blogId})=>{
     const classes = useStyles();
-    const [comment,setComment] = useState();
-    const [isCommentDisabled,setIsCommentDisabled] = useState(false);
+    const [comment,setComment] = useState<string>();
+    const [isCommentDisabled,setIsCommentDisabled] = useState<boolean>(false);
     const {axios} = useAxios();
     const commentSubmitHandler = async ()=>{
         setIsCommentDisabled(true);
