@@ -25,6 +25,12 @@ import { useAxios } from "@/hooks/common";
 // Auth
 import useAuth from "@/hooks/auth";
 
+
+// Types
+import { Comment } from "@/types/blogs";
+import User from "@/types/user";
+import { FC } from "react";
+
 const useStyles = makeStyles({
     container:{
         padding:"20px 0px",
@@ -62,8 +68,12 @@ const useStyles = makeStyles({
         }
     }
 })
-
-const UserComment = ({blogId, comment,commentUser})=>{
+interface Props {
+    blogId:number,
+    comment:Comment,
+    commentUser:User
+}
+const UserComment:FC<Props> = ({blogId, comment,commentUser})=>{
     const {user} = useAuth();
     const classes = useStyles();
     const [commentData,setCommentData] = useState(comment);

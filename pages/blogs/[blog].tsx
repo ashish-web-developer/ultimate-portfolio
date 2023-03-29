@@ -32,7 +32,7 @@ import Comment from "@/components/Blog/Comment";
 
 
 // Types
-import { Blog } from "types/blogs";
+import { Blog } from "@/types/blogs";
 import UserComment from "@/components/UserComment";
 
 const useStyles = makeStyles({
@@ -277,8 +277,8 @@ const Blogs  = ({blogsData}:Props)=>{
                 }
                 <Comment blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
                 {
-                    blogsData.comments.map((comment)=>{
-                        return <UserComment blogId = {blogsData.id} comment = {comment} commentUser = {comment.user} />
+                    blogsData.comments.map((comment,index)=>{
+                        return <UserComment blogId = {blogsData.id} comment = {comment} commentUser = {comment.user} key = {index} />
                     })
                 }
             </div>
