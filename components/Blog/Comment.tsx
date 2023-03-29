@@ -12,21 +12,26 @@ import UserLogo from "../UserLogo";
 // Helpers
 import { useAxios } from "@/hooks/common";
 
+// types
+import { Comment as CommentType } from "@/types/blogs";
+
 interface Props{
     blogsMeta:string;
-    blogId:number
+    blogId:number;
+    updateComments:(comments:Array<CommentType>)=>void;
 }
-const Comment:FC<Props> = ({blogsMeta,blogId})=>{
+const Comment:FC<Props> = ({blogsMeta,blogId,updateComments})=>{
     const classes = useStyles();
     const [comment,setComment] = useState<string>();
     const [isCommentDisabled,setIsCommentDisabled] = useState<boolean>(false);
     const {axios} = useAxios();
     const commentSubmitHandler = async ()=>{
         setIsCommentDisabled(true);
-        const data = await axios.post("/api/comment/create",{
+        const res = await axios.post("/api/comment/create",{
             body:comment,
             blog_id:blogId
         })
+        updateComments(res.data.comments);
         setIsCommentDisabled(false);
     }
     const onCancelHandler = ()=>{

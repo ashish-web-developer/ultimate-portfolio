@@ -32,7 +32,7 @@ import Comment from "@/components/Blog/Comment";
 
 
 // Types
-import { Blog } from "@/types/blogs";
+import { Blog, Comment as CommentType } from "@/types/blogs";
 import UserComment from "@/components/UserComment";
 
 const useStyles = makeStyles({
@@ -148,6 +148,7 @@ interface Props {
 
 const Blogs  = ({blogsData}:Props)=>{
     const classes = useStyles();
+    const [comments,setComments] = useState(blogsData.comments);
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
     const isMobile = useMediaQuery('(max-width:758px)');
@@ -171,6 +172,10 @@ const Blogs  = ({blogsData}:Props)=>{
             });
         }
     },[])
+
+    const updateComments = (comments:Array<CommentType>)=>{
+        setComments(comments);
+    }
 
 
     if(!isPageLoaded){
@@ -275,9 +280,9 @@ const Blogs  = ({blogsData}:Props)=>{
                     </>
 
                 }
-                <Comment blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
+                <Comment updateComments = {updateComments} blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
                 {
-                    blogsData.comments.map((comment,index)=>{
+                    comments.map((comment,index)=>{
                         return <UserComment blogId = {blogsData.id} comment = {comment} commentUser = {comment.user} key = {index} />
                     })
                 }
@@ -298,10 +303,10 @@ export async function getServerSideProps({params}:any){
                 "Content-type":"Application/json"
             }
         });
-        const blogsData:Blog = await res.json();
+        const data:Blog = await res.json();
         return {
             props:{
-                blogsData
+               blogsData:data
             }
         }
 }
