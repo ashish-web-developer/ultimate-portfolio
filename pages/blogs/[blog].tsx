@@ -147,7 +147,6 @@ interface Props {
 }
 
 const Blogs  = ({blogsData}:Props)=>{
-    console.log("value of blogs data",blogsData);
     const classes = useStyles();
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
@@ -279,7 +278,7 @@ const Blogs  = ({blogsData}:Props)=>{
                 <Comment blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
                 {
                     blogsData.comments.map((comment)=>{
-                        return <UserComment comment = {comment} user = {comment.user} />
+                        return <UserComment blogId = {blogsData.id} comment = {comment} commentUser = {comment.user} />
                     })
                 }
             </div>

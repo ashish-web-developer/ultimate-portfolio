@@ -1,3 +1,6 @@
+// React 
+import {useState} from "react";
+
 // Avatar 
 import { createAvatar } from '@dicebear/core';
 import { lorelei } from '@dicebear/collection';
@@ -11,6 +14,16 @@ import {
 //Icons
 import ThumbUpOffAltOutlinedIcon from '@mui/icons-material/ThumbUpOffAltOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+
+
+// Axios
+import { useAxios } from "@/hooks/common";
+
+
+// Auth
+import useAuth from "@/hooks/auth";
 
 const useStyles = makeStyles({
     container:{
@@ -50,12 +63,30 @@ const useStyles = makeStyles({
     }
 })
 
-const UserComment = ({comment,user})=>{
+const UserComment = ({blogId, comment,commentUser})=>{
+    const {user} = useAuth();
     const classes = useStyles();
+    const [commentData,setCommentData] = useState(comment);
     const avatar = createAvatar(lorelei, {
-        seed: user?.name,
+        seed: commentUser?.name,
         // ... other options
     });
+    const {axios} = useAxios();
+
+    const upvoteHandler = async ()=>{
+        const res = await axios.post("/api/comment/upvote",{
+            blog_id:blogId,
+            comment_id:comment.id,
+        })
+        setCommentData(res.data.comment);
+    }
+    const downvoteHandler = async ()=>{
+        const res = await axios.post("/api/comment/downvote",{
+            blog_id:blogId,
+            comment_id:comment.id,
+        })
+        setCommentData(res.data.comment);
+    }
     return (
         <div className = {classes.container}>
             <div className = {classes.userContainer}>
@@ -63,18 +94,18 @@ const UserComment = ({comment,user})=>{
                     <div style = {{width:"40px",height:"40px"}} dangerouslySetInnerHTML={{ __html: avatar.toString() }} />
                 </div>
                 <div className = {classes.userName}>
-                    {user.name}
+                    {commentUser.name}
                 </div>
             </div>
             <div className = {classes.userComment}>
-                {comment.body}
+                {commentData.body}
             </div>
             <div className = {classes.actionsCtaContainer}>
-                <IconButton className = {classes.voteActionCta} aria-label="upvote" color="primary">
-                    <ThumbUpOffAltOutlinedIcon/>
+                <IconButton onClick = {upvoteHandler} className = {classes.voteActionCta} aria-label="upvote" color="primary">
+                    {(commentData.like?.like == 1 && commentData.like?.user_id == user?.id)?<ThumbUpIcon/>: <ThumbUpOffAltOutlinedIcon/>}
                 </IconButton>
-                <IconButton className = {classes.voteActionCta} aria-label="downvote" color="primary">
-                    <ThumbDownAltOutlinedIcon/>
+                <IconButton onClick = {downvoteHandler} className = {classes.voteActionCta} aria-label="downvote" color="primary">
+                    {(commentData.like?.like == 0 && commentData.like?.user_id == user?.id)?<ThumbDownIcon/>:<ThumbDownAltOutlinedIcon/>}
                 </IconButton>
             </div>
         </div>
