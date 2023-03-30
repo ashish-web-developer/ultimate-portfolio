@@ -14,7 +14,7 @@ type Comment = {
     user_id:number,
     blog_id:number,
     user:User,
-    like:Like
+    like:Array<Like>
 }
 
 type Blog = {

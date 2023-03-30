@@ -8,7 +8,8 @@ import { lorelei } from '@dicebear/collection';
 import { makeStyles } from "@mui/styles";
 // Mui
 import {
-    IconButton
+    IconButton,
+    Badge
 } from "@mui/material";
 
 //Icons
@@ -61,10 +62,19 @@ const useStyles = makeStyles({
     actionsCtaContainer:{
         marginLeft:"68px",
         display:"flex",
+        gap:"10px"
     },
     voteActionCta:{
         "&.MuiIconButton-root":{
             color:"#fff"
+        }
+    },
+    badgeStyle:{
+        "&.MuiBadge-badge":{
+            left:"10px",
+        },
+        "&.MuiBadge-colorSecondary":{
+            backgroundColor:"#fff !important"
         }
     }
 })
@@ -112,10 +122,22 @@ const UserComment:FC<Props> = ({blogId, comment,commentUser})=>{
             </div>
             <div className = {classes.actionsCtaContainer}>
                 <IconButton onClick = {upvoteHandler} className = {classes.voteActionCta} aria-label="upvote" color="primary">
-                    {(commentData.like?.like == 1 && commentData.like?.user_id == user?.id)?<ThumbUpIcon/>: <ThumbUpOffAltOutlinedIcon/>}
+                    <Badge 
+                        className = {classes.badgeStyle}
+                        color="secondary" 
+                        badgeContent={commentData.like?.filter((like)=>like.like==1).length}
+                    >
+                        {(commentData.like?.some((like)=>like.like==1 && like.user_id == user?.id))?<ThumbUpIcon/>: <ThumbUpOffAltOutlinedIcon/>}
+                    </Badge>
                 </IconButton>
                 <IconButton onClick = {downvoteHandler} className = {classes.voteActionCta} aria-label="downvote" color="primary">
-                    {(commentData.like?.like == 0 && commentData.like?.user_id == user?.id)?<ThumbDownIcon/>:<ThumbDownAltOutlinedIcon/>}
+                    <Badge 
+                        className = {classes.badgeStyle}
+                        color="secondary" 
+                        badgeContent={commentData.like?.filter((like)=>like.like==0).length}
+                    >
+                    {(commentData.like?.some((like)=>like.like == 0 && like.user_id == user?.id))?<ThumbDownIcon/>:<ThumbDownAltOutlinedIcon/>}
+                    </Badge>
                 </IconButton>
             </div>
         </div>

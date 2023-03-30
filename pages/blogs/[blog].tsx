@@ -147,6 +147,7 @@ interface Props {
 }
 
 const Blogs  = ({blogsData}:Props)=>{
+    console.log("blogdata",blogsData);
     const classes = useStyles();
     const [comments,setComments] = useState(blogsData.comments);
     const [isPageLoaded,setIsPageLoaded] = useState(false);
