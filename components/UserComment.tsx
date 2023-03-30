@@ -32,6 +32,9 @@ import { Comment } from "@/types/blogs";
 import User from "@/types/user";
 import { FC } from "react";
 
+// Helpers
+import { getTimeDiff } from "@/helpers/common";
+
 const useStyles = makeStyles({
     container:{
         padding:"20px 0px",
@@ -76,6 +79,9 @@ const useStyles = makeStyles({
         "&.MuiBadge-colorSecondary":{
             backgroundColor:"#fff !important"
         }
+    },
+    timeDiff:{
+        fontFamily:"'Allerta Stencil', sans-serif",
     }
 })
 interface Props {
@@ -114,7 +120,7 @@ const UserComment:FC<Props> = ({blogId, comment,commentUser})=>{
                     <div style = {{width:"40px",height:"40px"}} dangerouslySetInnerHTML={{ __html: avatar.toString() }} />
                 </div>
                 <div className = {classes.userName}>
-                    {commentUser.name}
+                    {commentUser.name}<span className = {classes.timeDiff}> | {getTimeDiff(comment.created_at)}</span> 
                 </div>
             </div>
             <div className = {classes.userComment}>
