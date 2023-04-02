@@ -3,7 +3,7 @@ const getTimeDiff = (created_at:any)=>{
     const now:any = new Date();
 
     // Get the created_at time
-    created_at: = new Date(created_at);
+    created_at = new Date(created_at);
 
     // Calculate the time difference in milliseconds
     const timeDiff = now - created_at;
