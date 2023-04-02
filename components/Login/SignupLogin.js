@@ -63,7 +63,6 @@ const SignupLogin = ({redirect}) => {
     <Formik
       initialValues={{ email: "", password: "" ,name:""}}
       onSubmit={(values,{setSubmitting})=>{
-        setSubmitting(true);
         isSignup?dispatch(registerHandler(values)):dispatch(loginHandler(values));
       }}
     >

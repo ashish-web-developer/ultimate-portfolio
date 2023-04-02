@@ -8,8 +8,11 @@ const useStyles = makeStyles((theme:Theme)=>({
         border:"3px solid #fff",
         minHeight:"200px",
         padding:"10px 16px",
-        marginBottom:"100px",
-        borderRadius:"6px"
+        margin:"60px 0px",
+        borderRadius:"6px",
+        ['@media(max-width:780px)']:{
+            margin:"40px 0px",
+        }
     },
     commentTopContainer:{
         paddingBottom:"10px",

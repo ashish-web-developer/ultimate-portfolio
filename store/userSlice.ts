@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { handleToggle } from "./signupLogin.slice";
 import User from "@/types/user";
 import type { RootState } from "./rootReducer";
 import Cookies from "universal-cookie"
@@ -44,9 +45,10 @@ interface UserState{
     }
 }
 
-export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest>(
+export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest,{state:RootState}>(
   'user/login',
-  async ({ email,password }) => {
+  async ({ email,password },{getState,dispatch}) => {
+    dispatch(handleToggle(false));
     const response = await axios.post("/api/login",{
         email,
         password
