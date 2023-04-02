@@ -201,9 +201,16 @@ const Home: FC = () => {
                 <div className = {classes.devInfoContainer}>
                   <h1><span className = {classes.curlyBraces}> &#123;</span>  Hi, I&apos;m Ashish Prajapati.<span className = {classes.curlyBraces}>&#125;</span> </h1>
                   <p className = {classes.devIntro}>
-                    I&apos;m a creative web developer from India.
-                    I use Javascript, Typescript create high-end interactive experiences and products.
-                    I currently work as a senior software Developer at Mim-Essay.
+                    I am a skilled and experienced full-stack developer currently employed at MIM-Essay,
+                    where I have been working for a year. My technical proficiency lies in a diverse set
+                    of tools and technologies, including Next.js, Laravel, Redux, MySQL, Vim, and TypeScript.
+                    I am an expert in developing web applications and have worked on a variety of successful
+                    projects, such as Mentr-me, MIM-Essay, Sales-CRM, and Digitalstrategos, showcasing my 
+                    expertise in delivering high-quality work. My knowledge of these frameworks and
+                    technologies has helped me develop efficient and robust applications that provide
+                    an exceptional user experience. I am also proud of my personal portfolio, which showcases 
+                    my skills and experience as a developer. I am a valuable asset to my team at MIM-Essay,
+                    and my contributions have helped the organization achieve its goals.
                   </p>
                 </div>
               </Grid>

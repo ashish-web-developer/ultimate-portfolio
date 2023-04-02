@@ -27,20 +27,19 @@ import { useAppDispatch,useAppSelector } from "@/hooks/redux";
 import { loginHandler,registerHandler } from "@/store/userSlice";
 
 
-const signUpLoginButtonTextHandler = (state, isSignup)=>{
-  if(state){
-    if(isSignup){
-      return "Create An Account"
+const signUpLoginButtonTextHandler = (isLogging,isSigning ,isSignup)=>{
+  if(!isSignup){
+    if(isLogging){
+      return "Logging In";
     }else{
-      return "Login"
+      return "Login";
     }
   }else{
-    if(isSignup){
-      return "Signing Up..."
+    if(isSigning){
+      return "Signing Up";
     }else{
-      return "Logging In..."
+      return "Sign Up";
     }
-
   }
 }
 
@@ -49,15 +48,17 @@ const SignupLogin = ({redirect}) => {
   const classes = useStyles();
   const [isSignup,setIsSignUp] = useState(true);
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector((state)=>state.user.login.isLoggedIn);
+  const isLogging = useAppSelector((state)=>state.user.login.isLogging);
+  const isSigning = useAppSelector((state)=>state.user.register.isSigning);
+  const user = useAppSelector((state)=>state.user.user);
   const router = useRouter();
 
 
   useEffect(()=>{
-    if(isLoggedIn && redirect){
+    if(user && redirect){
       router.push("/");
     }
-  },[isLoggedIn])
+  },[user])
 
   return (
     <Formik
@@ -139,12 +140,12 @@ const SignupLogin = ({redirect}) => {
                 }
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isLogging || isSigning}
                   className={classes.submitCta}
                   variant="contained"
                   fullWidth = {true}
                 >
-                  {signUpLoginButtonTextHandler(!isSubmitting,isSignup)}
+                  {signUpLoginButtonTextHandler(isLogging,isSigning,isSignup)}
                 </Button>
                 <div>
                   Don&apos;t Have an Account?

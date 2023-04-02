@@ -36,11 +36,11 @@ interface UserState{
     user:User|null;
     token:string|null;
     login:{
-        isLoggedIn:boolean;
+        isLogging:boolean;
         message:string|null;
     }
     register:{
-        isRegister:boolean;
+        isSigning:boolean;
         message:string|null;
     }
 }
@@ -48,11 +48,13 @@ interface UserState{
 export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest,{state:RootState}>(
   'user/login',
   async ({ email,password },{getState,dispatch}) => {
-    dispatch(handleToggle(false));
     const response = await axios.post("/api/login",{
         email,
         password
     });
+    if(response.data.status){
+        dispatch(handleToggle(false));
+    }
     return response.data;
   }
 );
@@ -102,12 +104,12 @@ const initialState:UserState = {
     user:null,
     token:cookie.get("token"),
     login:{
-        isLoggedIn:false,
+        isLogging:false,
         message:null,
 
     },
     register:{
-        isRegister:false,
+        isSigning:false,
         message:null,
     }
 }
@@ -124,15 +126,15 @@ export const userSlice = createSlice({
     extraReducers:(builder)=>{
         // Login cases
         builder.addCase(loginHandler.pending,(state)=>{
-            state.login.isLoggedIn = false;
+            state.login.isLogging = true;
             state.login.message = "Logging in...."
         })
         builder.addCase(loginHandler.rejected,(state)=>{
-            state.login.isLoggedIn = false;
+            state.login.isLogging = false;
             state.login.message = "Your email or password must be wrong";
         })
         builder.addCase(loginHandler.fulfilled,(state,action)=>{
-            state.login.isLoggedIn = true;
+            state.login.isLogging = false;
             state.login.message = "You are Logged In successfully";
             state.user = action.payload.user;
             state.token = action.payload.token;
@@ -143,15 +145,15 @@ export const userSlice = createSlice({
 
         // Register cases
         builder.addCase(registerHandler.pending,(state)=>{
-            state.register.isRegister = false;
+            state.register.isSigning = true;
             state.register.message = "Registering...."
         })
         builder.addCase(registerHandler.rejected,(state)=>{
-            state.register.isRegister=false;
+            state.register.isSigning = false;
             state.register.message = "failed";
         })
         builder.addCase(registerHandler.fulfilled,(state,action)=>{
-            state.register.isRegister=true;
+            state.register.isSigning = false;
             state.register.message = "Registered Successfully";
             state.user = action.payload.user;
             state.token = action.payload.token;
