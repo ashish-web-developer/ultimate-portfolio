@@ -1,9 +1,9 @@
-const getTimeDiff = (created_at:string|Date)=>{
+const getTimeDiff = (created_at:any)=>{
     // Get the current time
-    const now = new Date();
+    const now:any = new Date();
 
     // Get the created_at time
-    created_at = new Date(created_at);
+    created_at: = new Date(created_at);
 
     // Calculate the time difference in milliseconds
     const timeDiff = now - created_at;
