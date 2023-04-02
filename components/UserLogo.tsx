@@ -4,9 +4,8 @@ import { makeStyles } from "@mui/styles";
 import { createAvatar } from '@dicebear/core';
 import { lorelei } from '@dicebear/collection';
 
-
-// Auth
-import useAuth from "@/hooks/auth";
+// Redux
+import { useAppSelector } from "@/hooks/redux";
 
 
 
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
 
 const UserLogo = ()=>{
     const classes = useStyles();
-    const {user,logout} = useAuth()
+    const user = useAppSelector((state)=>state.user.user);
     const avatar = createAvatar(lorelei, {
         seed: user?.name,
         // ... other options

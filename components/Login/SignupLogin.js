@@ -1,5 +1,6 @@
 // React
-import {useState} from "react";
+import {useState,useEffect} from "react";
+import { useRouter } from "next/router";
 
 // Mui
 import {
@@ -16,14 +17,14 @@ import {
 import {MdAlternateEmail} from "react-icons/md";
 import {RiLockPasswordFill} from "react-icons/ri";
 
-// Helpers
-import useAuth from "../../hooks/auth";
-
 
 // styles
 import useStyles from "../../styles/login.style";
 
 import { Formik } from "formik";
+// Redux
+import { useAppDispatch,useAppSelector } from "@/hooks/redux";
+import { loginHandler,registerHandler } from "@/store/userSlice";
 
 
 const signUpLoginButtonTextHandler = (state, isSignup)=>{
@@ -43,17 +44,27 @@ const signUpLoginButtonTextHandler = (state, isSignup)=>{
   }
 }
 
-const SignupLogin = () => {
+
+const SignupLogin = ({redirect}) => {
   const classes = useStyles();
   const [isSignup,setIsSignUp] = useState(true);
-  const { login, register } = useAuth();
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector((state)=>state.user.login.isLoggedIn);
+  const router = useRouter();
+
+
+  useEffect(()=>{
+    if(isLoggedIn && redirect){
+      router.push("/");
+    }
+  },[isLoggedIn])
 
   return (
     <Formik
       initialValues={{ email: "", password: "" ,name:""}}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values,{setSubmitting})=>{
         setSubmitting(true);
-        isSignup?register(values,setSubmitting,setIsSignUp):login(values,setSubmitting);
+        isSignup?dispatch(registerHandler(values)):dispatch(loginHandler(values));
       }}
     >
       {({ values, isSubmitting, handleChange, handleSubmit }) => {

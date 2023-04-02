@@ -1,6 +1,4 @@
 import {FC} from "react";
-import useAuth from "@/hooks/auth";
-
 
 // Mui
 import {
@@ -31,6 +29,10 @@ import useStyles from "@/styles/mobileNavbar";
 import { createAvatar } from '@dicebear/core';
 import { lorelei } from '@dicebear/collection';
 
+
+// Redux 
+import { useAppSelector } from "@/hooks/redux";
+
 interface Props{
     anchor:"left"|"right"|"top"|"bottom";
 }
@@ -38,7 +40,7 @@ interface Props{
 const MobileNavbar:FC<Props> = ({anchor})=>{
     const classes = useStyles();
     const isOpen = useSelector((state:any)=>state.navbar.isOpen)
-    const {user,logout} = useAuth();
+    const user = useAppSelector((state)=>state.user.user);
     const dispatch = useDispatch();
     const avatar = createAvatar(lorelei, {
         seed: user?.name,

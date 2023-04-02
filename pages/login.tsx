@@ -36,7 +36,7 @@ const Login:NextPage = ()=>{
             <div className = {classes.container}>
                 <Grid sx = {{height:"100%"}} container>
                     <Grid item xs = {12} md={5}>
-                        <SignUpLogin/>
+                        <SignUpLogin redirect={true}/>
                     </Grid>
                     {
                         !isMobile &&<Grid item xs = {12} md={7}>

@@ -10,7 +10,7 @@ interface registerValues extends loginValues{
 type setState<Type> = (isSubmitting:Type)=>void;
 
 type register = (values:registerValues,setSubmitting:setState,setIsSignUp:setState)=>void;
-type login = (values:loginValues,setSubmitting:setSubmitting)=>void;
+type login = (values:loginValues,setSubmitting:setSubmitting,redirect:boolean)=>void;
 
 export {
     register,

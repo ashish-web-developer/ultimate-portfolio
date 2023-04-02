@@ -1,7 +1,6 @@
 // react
 import {FC,memo} from "react";
 import {useRouter} from "next/router";
-import useAuth from "@/hooks/auth";
 import Link from "next/link";
 
 
@@ -18,6 +17,11 @@ import { makeStyles } from "@mui/styles";
 // Avatar 
 import { createAvatar } from '@dicebear/core';
 import { lorelei } from '@dicebear/collection';
+
+
+// Redux
+import { useAppSelector ,useAppDispatch} from "@/hooks/redux";
+import { logoutHandler } from "@/store/userSlice";
 
 
 const useStyles = makeStyles((theme:Theme)=>({
@@ -76,9 +80,10 @@ interface Props{
 }
 
 const Navbar:FC<Props> = ({scrollHandler})=>{
+    const user = useAppSelector((state)=>state.user.user);
+    const dispatch = useAppDispatch();
     const theme = useTheme();
     const classes = useStyles();
-    const {user,logout} = useAuth();
     const router = useRouter();
     const resumeClickHandler = ()=>{
         router.push("/Resume/resume.pdf")
@@ -131,7 +136,7 @@ const Navbar:FC<Props> = ({scrollHandler})=>{
                     </Button>
                     {
                         user?
-                        <Button onClick = {()=> logout()} className = {classes.resumeBtn}>
+                        <Button onClick = {()=>dispatch(logoutHandler())} className = {classes.resumeBtn}>
                             Sign Out
                         </Button>:
                         <Button onClick = {()=>router.push("/login")} className = {classes.resumeBtn}>

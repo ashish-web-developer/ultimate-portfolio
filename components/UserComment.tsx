@@ -22,11 +22,6 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 // Axios
 import { useAxios } from "@/hooks/common";
 
-
-// Auth
-import useAuth from "@/hooks/auth";
-
-
 // Types
 import { Comment } from "@/types/blogs";
 import User from "@/types/user";
@@ -87,10 +82,10 @@ const useStyles = makeStyles({
 interface Props {
     blogId:number,
     comment:Comment,
-    commentUser:User
+    commentUser:User,
+    user:User
 }
-const UserComment:FC<Props> = ({blogId, comment,commentUser})=>{
-    const {user} = useAuth();
+const UserComment:FC<Props> = ({blogId, comment,commentUser,user})=>{
     const classes = useStyles();
     const [commentData,setCommentData] = useState(comment);
     const avatar = createAvatar(lorelei, {

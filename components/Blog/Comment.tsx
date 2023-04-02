@@ -14,25 +14,38 @@ import { useAxios } from "@/hooks/common";
 
 // types
 import { Comment as CommentType } from "@/types/blogs";
+import User from "@/types/user";
+
+
+// Redux
+import {useDispatch} from "react-redux";
+import { handleToggle } from "@/store/signupLogin.slice";
 
 interface Props{
     blogsMeta:string;
     blogId:number;
     updateComments:(comments:Array<CommentType>)=>void;
+    user:User
 }
-const Comment:FC<Props> = ({blogsMeta,blogId,updateComments})=>{
+const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
     const classes = useStyles();
+    const dispatch = useDispatch();
     const [comment,setComment] = useState<string>();
     const [isCommentDisabled,setIsCommentDisabled] = useState<boolean>(false);
     const {axios} = useAxios();
     const commentSubmitHandler = async ()=>{
-        setIsCommentDisabled(true);
-        const res = await axios.post("/api/comment/create",{
-            body:comment,
-            blog_id:blogId
-        })
-        updateComments(res.data.comments);
-        setIsCommentDisabled(false);
+        if(user){
+            setIsCommentDisabled(true);
+            const res = await axios.post("/api/comment/create",{
+                body:comment,
+                blog_id:blogId
+            })
+            updateComments(res.data.comments);
+            setIsCommentDisabled(false);
+        }else{
+            // For Open signup modal
+            dispatch(handleToggle(true));
+        }
     }
     const onCancelHandler = ()=>{
         setComment("");
