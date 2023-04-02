@@ -79,10 +79,15 @@ const techStackData:techStackDataI[] = [
     {
         title:'Next JS',
         startDate:"January 2020",
-        endDate:"September 2022",
+        endDate:"March 2023",
         descList:[
-            "Have a quite good experience in it",
-            "I mostly work on Next js in my current company",
+            "I have been working with Next.js for approximately 2 years.",
+            "I built my own personal project using Next.js.",
+            "Currently, I am working for a company where I used Next.js for their Mentr-Me project.",
+            "I have built an admin view for the blog page.",
+            "I implemented an exit-intent modal for the 'Ask a Question' feature.",
+            "I worked on the logic of filters for the Explore page.",
+            "I created a slider for events on the Single Course page."
         ]
     },
     {
@@ -92,7 +97,9 @@ const techStackData:techStackDataI[] = [
         descList:[
             "Used it as the backend of of portfolio",
             "Have gain quite good knowledge about this framwork and still curious to learn more, will love to work in a company in which this the part of Tech Stack",
-            "Have used Next js in Portfolio too"
+            "Have used Next js in Portfolio too",
+            "I have used laravel to create leaderboard for sales-CRM in Mim-Essay company",
+            "I have used laravel to create budget section in analytics marketing in Mim-Essay company"
         ]
     },
     {
@@ -106,7 +113,7 @@ const techStackData:techStackDataI[] = [
         ]
     },
     {
-        title:"Mongo DB",
+        title:"My Sql",
         startDate:"January 2022",
         endDate:"September 2022",
         descList:[
@@ -176,7 +183,7 @@ const TechStack:React.FC<TechStackProps> = ({setOpen})=>{
                     aria-label="Vertical tabs example"
                 >
                     <Tab className = {classes.tabs} label="Next js" {...a11yProps(0)} />
-                    <Tab className = {classes.tabs} label="Nest js" {...a11yProps(1)} />
+                    <Tab className = {classes.tabs} label="Laravel" {...a11yProps(1)} />
                     <Tab className = {classes.tabs} label="Typescript" {...a11yProps(2)} />
                     <Tab className = {classes.tabs} label="Mongo db" {...a11yProps(3)} />
                     <Tab className = {classes.tabs} label="Vim" {...a11yProps(4)} />
