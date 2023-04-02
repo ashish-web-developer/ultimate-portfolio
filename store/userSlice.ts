@@ -135,7 +135,7 @@ export const userSlice = createSlice({
             state.user = action.payload.user;
             state.token = action.payload.token;
             window.sessionStorage.setItem("user",JSON.stringify(action.payload.user))
-            cookie.set("token",action.payload.token);
+            cookie.set("token",action.payload.token,{path:'/'});
         })
 
 

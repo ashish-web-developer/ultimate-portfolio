@@ -30,6 +30,12 @@ import { FC } from "react";
 // Helpers
 import { getTimeDiff } from "@/helpers/common";
 
+//Redux
+import { useAppDispatch } from "@/hooks/redux";
+import { handleToggle } from "@/store/signupLogin.slice";
+
+
+
 const useStyles = makeStyles({
     container:{
         padding:"20px 0px",
@@ -86,6 +92,7 @@ interface Props {
     user:User
 }
 const UserComment:FC<Props> = ({blogId, comment,commentUser,user})=>{
+    const dispatch = useAppDispatch();
     const classes = useStyles();
     const [commentData,setCommentData] = useState(comment);
     const avatar = createAvatar(lorelei, {
@@ -95,18 +102,26 @@ const UserComment:FC<Props> = ({blogId, comment,commentUser,user})=>{
     const {axios} = useAxios();
 
     const upvoteHandler = async ()=>{
-        const res = await axios.post("/api/comment/upvote",{
-            blog_id:blogId,
-            comment_id:comment.id,
-        })
-        setCommentData(res.data.comment);
+        if(user){
+            const res = await axios.post("/api/comment/upvote",{
+                blog_id:blogId,
+                comment_id:comment.id,
+            })
+            setCommentData(res.data.comment);
+        }else{
+            dispatch(handleToggle(true));
+        }
     }
     const downvoteHandler = async ()=>{
-        const res = await axios.post("/api/comment/downvote",{
-            blog_id:blogId,
-            comment_id:comment.id,
-        })
-        setCommentData(res.data.comment);
+        if(user){
+            const res = await axios.post("/api/comment/downvote",{
+                blog_id:blogId,
+                comment_id:comment.id,
+            })
+            setCommentData(res.data.comment);
+        }else{
+            dispatch(handleToggle(true))
+        }
     }
     return (
         <div className = {classes.container}>

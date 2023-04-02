@@ -12,17 +12,16 @@ import {
 import {VscChromeClose} from "react-icons/vsc"
 
 
-// Redux
-import { useDispatch } from "react-redux";
-import { togglerNavbar } from "@/store/Navbar/navbar.slice";
 
-// Hooks
-import useAuth from "@/hooks/auth";
+// Redux
+import { useAppSelector,useAppDispatch } from "@/hooks/redux"; 
+import { logoutHandler } from "@/store/userSlice";
+import { togglerNavbar } from "@/store/Navbar/navbar.slice";
 
 
 const DrawerPaper:FC<any> = ({classes})=>{
-    const dispatch = useDispatch();
-    const {user,logout} = useAuth();
+    const user = useAppSelector((state)=>state.user.user);
+    const dispatch = useAppDispatch();
     const router = useRouter();
     return (
         <div className = {classes.drawerContent}>
@@ -48,7 +47,7 @@ const DrawerPaper:FC<any> = ({classes})=>{
                 </Button>
                 {
                     user?
-                    <Button onClick = {()=> logout()} className = {classes.resumeBtn}>
+                    <Button onClick = {()=> dispatch(logoutHandler())} className = {classes.resumeBtn}>
                         Sign Out
                     </Button>:
                     <Button onClick = {()=>router.push("/login")} className = {classes.resumeBtn}>
