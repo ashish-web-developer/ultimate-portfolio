@@ -26,7 +26,7 @@ interface Props{
     blogsMeta:string;
     blogId:number;
     updateComments:(comments:Array<CommentType>)=>void;
-    user:User
+    user:User|null
 }
 const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
     const classes = useStyles();

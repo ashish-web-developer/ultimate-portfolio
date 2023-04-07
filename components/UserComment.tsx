@@ -92,7 +92,7 @@ interface Props {
     blogId:number,
     comment:Comment,
     commentUser:User,
-    user:User
+    user:User|null
 }
 const UserComment:FC<Props> = ({blogId, comment,commentUser,user})=>{
     const dispatch = useAppDispatch();
