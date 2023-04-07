@@ -2,13 +2,21 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 
+type snackbarInitialState = {
+    isOpen:boolean,
+    message:string|null,
+    severity:string
+}
+
+const initialState:snackbarInitialState = {
+    isOpen:false,
+    message:null,
+    severity:"info",
+}
+
 export const snackbarSlice = createSlice({
     name:"snackbar",
-    initialState:{
-        isOpen:false,
-        message:null,
-        severity:"info",
-    },
+    initialState,
     reducers:{
         showSnackbar:(state,action)=>{
             state.isOpen = true;
