@@ -1,5 +1,5 @@
 import useStyles from "@/styles/Blog/comment.style";
-import { useState ,FC} from "react";
+import { useState ,FC, useEffect} from "react";
 
 import {
     TextField,
@@ -18,8 +18,9 @@ import User from "@/types/user";
 
 
 // Redux
-import {useDispatch} from "react-redux";
 import { handleToggle } from "@/store/signupLogin.slice";
+import { showSnackbar } from "@/store/snackbar.slice";
+import { useAppDispatch } from "@/hooks/redux";
 
 interface Props{
     blogsMeta:string;
@@ -29,9 +30,9 @@ interface Props{
 }
 const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const [comment,setComment] = useState<string>();
-    const [isCommentDisabled,setIsCommentDisabled] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
+    const [comment,setComment] = useState<string>("");
+    const [isCommentDisabled,setIsCommentDisabled] = useState<boolean>(true);
     const {axios} = useAxios();
     const commentSubmitHandler = async ()=>{
         if(user){
@@ -41,7 +42,12 @@ const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
                 blog_id:blogId
             })
             updateComments(res.data.comments);
+            setComment("");
             setIsCommentDisabled(false);
+            dispatch(showSnackbar({
+                message:"Comment Posted Successfully",
+                severity:"info",
+            }))
         }else{
             // For Open signup modal
             dispatch(handleToggle(true));
@@ -50,6 +56,13 @@ const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
     const onCancelHandler = ()=>{
         setComment("");
     }
+    useEffect(()=>{
+        if(comment){
+            setIsCommentDisabled(false);
+        }else{
+            setIsCommentDisabled(true);
+        }
+    },[comment])
     return (
         <div className = {classes.container}>
             <div className = {classes.commentTopContainer}>
@@ -83,7 +96,7 @@ const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
                 <Button onClick = {onCancelHandler} className = {classes.cancelBtn}>
                     Cancel
                 </Button>
-                <Button  disabled = {isCommentDisabled} onClick = {commentSubmitHandler} className = {classes.commentBtn}>
+                <Button  disabled = {isCommentDisabled && !comment} onClick = {commentSubmitHandler} className = {classes.commentBtn}>
                     Comment
                 </Button>
             </div>

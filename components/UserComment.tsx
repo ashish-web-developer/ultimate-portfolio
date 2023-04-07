@@ -74,11 +74,14 @@ const useStyles = makeStyles({
         }
     },
     badgeStyle:{
+
         "&.MuiBadge-badge":{
             left:"10px",
         },
         "&.MuiBadge-colorSecondary":{
-            backgroundColor:"#fff !important"
+            backgroundColor:"#e2cf52 !important",
+            color:"#000",
+            fontWeight:"700"
         }
     },
     timeDiff:{
@@ -139,7 +142,9 @@ const UserComment:FC<Props> = ({blogId, comment,commentUser,user})=>{
             <div className = {classes.actionsCtaContainer}>
                 <IconButton onClick = {upvoteHandler} className = {classes.voteActionCta} aria-label="upvote" color="primary">
                     <Badge 
-                        className = {classes.badgeStyle}
+                        classes  = {{
+                            badge:classes.badgeStyle
+                        }}
                         color="secondary" 
                         badgeContent={commentData.like?.filter((like)=>like.like==1).length}
                     >
@@ -148,7 +153,9 @@ const UserComment:FC<Props> = ({blogId, comment,commentUser,user})=>{
                 </IconButton>
                 <IconButton onClick = {downvoteHandler} className = {classes.voteActionCta} aria-label="downvote" color="primary">
                     <Badge 
-                        className = {classes.badgeStyle}
+                        classes  = {{
+                            badge:classes.badgeStyle
+                        }}
                         color="secondary" 
                         badgeContent={commentData.like?.filter((like)=>like.like==0).length}
                     >

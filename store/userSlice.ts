@@ -139,7 +139,9 @@ export const userSlice = createSlice({
             state.user = action.payload.user;
             state.token = action.payload.token;
             window.sessionStorage.setItem("user",JSON.stringify(action.payload.user))
-            cookie.set("token",action.payload.token,{path:'/'});
+            let expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate()+30);
+            cookie.set("token",action.payload.token,{path:'/',expires:expiryDate});
         })
 
 
@@ -158,7 +160,9 @@ export const userSlice = createSlice({
             state.user = action.payload.user;
             state.token = action.payload.token;
             window.sessionStorage.setItem("user",JSON.stringify(action.payload));
-            cookie.set("token",action.payload.token);
+            let expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate()+30);
+            cookie.set("token",action.payload.token,{path:'/',expires:expiryDate});
         })
         
 
