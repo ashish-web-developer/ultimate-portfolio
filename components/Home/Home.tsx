@@ -80,11 +80,6 @@ const Home: FC = () => {
               <Grid sx={{ display: "flex", alignItems: "center" }} xs={1} item>
                 <div className={classes.socialIconContainer}>
                   <div className={classes.socialIcon}>
-                    <Link href="https://www.facebook.com/thebadbluffer">
-                        <ImFacebook color="#000" />
-                    </Link>
-                  </div>
-                  <div className={classes.socialIcon}>
                     <Link href="https://twitter.com/ashish_classic">
                         <BsTwitter color="#000" />
                     </Link>
@@ -97,6 +92,11 @@ const Home: FC = () => {
                   <div className={classes.socialIcon}>
                     <Link href="https://www.linkedin.com/in/ashish-classic">
                         <GrLinkedinOption color="#000" />
+                    </Link>
+                  </div>
+                  <div className={classes.socialIcon}>
+                    <Link href="https://www.facebook.com/thebadbluffer">
+                        <ImFacebook color="#000" />
                     </Link>
                   </div>
                 </div>

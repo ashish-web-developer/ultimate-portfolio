@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { handleToggle } from "./signupLogin.slice";
+import { showSnackbar } from "./snackbar.slice";
 import User from "@/types/user";
 import type { RootState } from "./rootReducer";
 import Cookies from "universal-cookie"
@@ -54,6 +55,10 @@ export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest,{state:R
     });
     if(response.data.status){
         dispatch(handleToggle(false));
+        dispatch(showSnackbar({
+            message:"You are Logged In successfully!",
+            severity:"info",
+        }))
     }
     return response.data;
   }
