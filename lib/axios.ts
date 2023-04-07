@@ -5,7 +5,6 @@ const cookies = new Cookies();
 
 const token = cookies.get("token");
 
-console.log("value of token",token);
 const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
     headers: {

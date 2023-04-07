@@ -27,8 +27,18 @@ import hljs from "highlight.js";
 import 'highlight.js/styles/github-dark.css';
 
 
+// Local Component
+import Comment from "@/components/Blog/Comment";
+import SignupLoginModal from "@/components/Login/SignupLoginModal";
+
+
 // Types
-import { Blog } from "types/blogs";
+import { Blog, Comment as CommentType } from "@/types/blogs";
+import UserComment from "@/components/UserComment";
+
+
+// Redux
+import { useAppSelector } from "@/hooks/redux";
 
 const useStyles = makeStyles({
     blogContainer:{
@@ -143,9 +153,11 @@ interface Props {
 
 const Blogs  = ({blogsData}:Props)=>{
     const classes = useStyles();
+    const [comments,setComments] = useState(blogsData.comments);
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
     const isMobile = useMediaQuery('(max-width:758px)');
+    const user = useAppSelector((state)=>state.user.user);
 
     useEffect(()=>{
         setIsPageLoaded(true);
@@ -167,6 +179,10 @@ const Blogs  = ({blogsData}:Props)=>{
         }
     },[])
 
+    const updateComments = (comments:Array<CommentType>)=>{
+        setComments(comments);
+    }
+
 
     if(!isPageLoaded){
         return;
@@ -186,6 +202,7 @@ const Blogs  = ({blogsData}:Props)=>{
                 <meta name="twitter:image" content={blogsData["featured image"]} />
             </Head>
             <div className = {classes.blogContainer}>
+                <SignupLoginModal/>
                 {blogsData && 
                     <>
                         <div className = {classes.header}>
@@ -270,6 +287,12 @@ const Blogs  = ({blogsData}:Props)=>{
                     </>
 
                 }
+                <Comment user = {user} updateComments = {updateComments} blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
+                {
+                    comments.map((comment,index)=>{
+                        return <UserComment user = {user} blogId = {blogsData.id} comment = {comment} commentUser = {comment.user} key = {index} />
+                    })
+                }
             </div>
         </>
     )
@@ -287,10 +310,10 @@ export async function getServerSideProps({params}:any){
                 "Content-type":"Application/json"
             }
         });
-        const blogsData:Blog = await res.json();
+        const data:Blog = await res.json();
         return {
             props:{
-                blogsData
+               blogsData:data
             }
         }
 }

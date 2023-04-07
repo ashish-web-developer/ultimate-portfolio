@@ -1,5 +1,6 @@
 // React
-import {useState} from "react";
+import {useState,useEffect} from "react";
+import { useRouter } from "next/router";
 
 // Mui
 import {
@@ -16,44 +17,54 @@ import {
 import {MdAlternateEmail} from "react-icons/md";
 import {RiLockPasswordFill} from "react-icons/ri";
 
-// Helpers
-import useAuth from "../../hooks/auth";
-
 
 // styles
 import useStyles from "../../styles/login.style";
 
 import { Formik } from "formik";
+// Redux
+import { useAppDispatch,useAppSelector } from "@/hooks/redux";
+import { loginHandler,registerHandler } from "@/store/userSlice";
 
 
-const signUpLoginButtonTextHandler = (state, isSignup)=>{
-  if(state){
-    if(isSignup){
-      return "Create An Account"
+const signUpLoginButtonTextHandler = (isLogging,isSigning ,isSignup)=>{
+  if(!isSignup){
+    if(isLogging){
+      return "Logging In";
     }else{
-      return "Login"
+      return "Login";
     }
   }else{
-    if(isSignup){
-      return "Signing Up..."
+    if(isSigning){
+      return "Signing Up";
     }else{
-      return "Logging In..."
+      return "Sign Up";
     }
-
   }
 }
 
-const SignupLogin = () => {
+
+const SignupLogin = ({redirect}) => {
   const classes = useStyles();
   const [isSignup,setIsSignUp] = useState(true);
-  const { login, register } = useAuth();
+  const dispatch = useAppDispatch();
+  const isLogging = useAppSelector((state)=>state.user.login.isLogging);
+  const isSigning = useAppSelector((state)=>state.user.register.isSigning);
+  const user = useAppSelector((state)=>state.user.user);
+  const router = useRouter();
+
+
+  useEffect(()=>{
+    if(user && redirect){
+      router.push("/");
+    }
+  },[user])
 
   return (
     <Formik
       initialValues={{ email: "", password: "" ,name:""}}
-      onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(true);
-        isSignup?register(values,setSubmitting,setIsSignUp):login(values,setSubmitting);
+      onSubmit={(values,{setSubmitting})=>{
+        isSignup?dispatch(registerHandler(values)):dispatch(loginHandler(values));
       }}
     >
       {({ values, isSubmitting, handleChange, handleSubmit }) => {
@@ -129,12 +140,12 @@ const SignupLogin = () => {
                 }
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isLogging || isSigning}
                   className={classes.submitCta}
                   variant="contained"
                   fullWidth = {true}
                 >
-                  {signUpLoginButtonTextHandler(!isSubmitting,isSignup)}
+                  {signUpLoginButtonTextHandler(isLogging,isSigning,isSignup)}
                 </Button>
                 <div>
                   Don&apos;t Have an Account?

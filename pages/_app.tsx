@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider} from '@mui/styles'
 import { createTheme } from '@mui/material'
 import { Provider } from 'react-redux'
+import UserProvider from './UserProvider'
 import store from "@/store/rootReducer";
 
 
@@ -20,7 +21,9 @@ function MyApp({ Component, pageProps:{session,...pageProps} }: AppProps) {
   return (
       <ThemeProvider theme= {theme}>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <UserProvider>
+            <Component {...pageProps} />
+          </UserProvider>
         </Provider>
       </ThemeProvider>
   )

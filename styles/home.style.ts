@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme:Theme)=>({
     height:"100%"
   },
   devIntro:{
-    fontSize:"1.3rem"
+    fontSize:"1.1rem"
   },
   appBar:{
     "&.MuiAppBar-root":{
