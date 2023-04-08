@@ -144,6 +144,19 @@ const useStyles = makeStyles({
             borderBottom:"1px solid #fff",
             padding:"8px 0px"
         }
+    },
+    list:{
+        fontFamily:"'Allerta Stencil', sans-serif",
+        "& li":{
+            marginBottom:"12px",
+            marginLeft:"100px",
+        },
+        ['@media(max-width:780px)']:{
+            "& li":{
+                marginBottom:"12px",
+                marginLeft:"16px",
+            }
+        }
     }
 })
 
@@ -278,8 +291,10 @@ const Blogs  = ({blogsData}:Props)=>{
                                                 },
                                                 table:{
                                                     className:classes.tableContainer
+                                                },
+                                                list:{
+                                                    className:classes.list
                                                 }
-
                                             }}/>
                                     </Grid>
                                 </Grid>

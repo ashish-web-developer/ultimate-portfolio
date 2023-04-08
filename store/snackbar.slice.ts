@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { AlertColor } from '@mui/material/Alert'
 
 
 
 type snackbarInitialState = {
     isOpen:boolean,
     message:string|null,
-    severity:string
+    severity:AlertColor
 }
 
 const initialState:snackbarInitialState = {

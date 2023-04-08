@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosError} from "axios";
 import { handleToggle } from "./signupLogin.slice";
 import { showSnackbar } from "./snackbar.slice";
 import User from "@/types/user";
@@ -48,32 +49,53 @@ interface UserState{
 
 export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest,{state:RootState}>(
   'user/login',
-  async ({ email,password },{getState,dispatch}) => {
-    const response = await axios.post("/api/login",{
-        email,
-        password
-    });
-    if(response.data.status){
-        dispatch(handleToggle(false));
+  async ({ email,password },{getState,dispatch,rejectWithValue}) => {
+    try{
+        const response = await axios.post("/api/login",{
+            email,
+            password
+        });
+        if(response.data.status){
+            dispatch(handleToggle(false));
+            dispatch(showSnackbar({
+                message:"You are Logged In successfully!",
+                severity:"info",
+            }))
+        }
+        return response.data;
+    }catch(error:unknown){
         dispatch(showSnackbar({
-            message:"You are Logged In successfully!",
-            severity:"info",
+            message:"Your Password or Email must be wrong, Try Again!",
+            severity:"error",
         }))
+        return rejectWithValue(error?.response?.data);
     }
-    return response.data;
   }
 );
 
 
 export const registerHandler = createAsyncThunk<LoginResponse,RegisterRequest>(
     "user/register",
-    async ({name,email,password})=>{
-        const response = await axios.post("api/register",{
-            name,
-            email,
-            password
-        });
-        return response.data;
+    async ({name,email,password},{rejectWithValue,dispatch})=>{
+        try{
+            const response = await axios.post("api/register",{
+                name,
+                email,
+                password
+            });
+            dispatch(handleToggle(false));
+            dispatch(showSnackbar({
+                message:"Your Account Created Successfully!",
+                severity:"info",
+            }))
+            return response.data;
+        }catch(error:unknown){
+            dispatch(showSnackbar({
+                message:"Account already exist!",
+                severity:"error",
+            }))
+            return rejectWithValue(error?.response.data)
+        }
     }
 )
 
