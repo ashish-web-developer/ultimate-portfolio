@@ -16,7 +16,8 @@ const UserProvider:FC<Props> = ({children})=>{
     const  dispatch  = useAppDispatch();
     const user = useAppSelector((state)=>state.user.user);
     const isSnackbarOpen = useAppSelector((state)=>state.snackbar.isOpen);
-    const snackbarMessage = useAppSelector((state)=>state.snackbar.message)
+    const snackbarMessage = useAppSelector((state)=>state.snackbar.message);
+    const severity  = useAppSelector((state)=>state.snackbar.severity);
     useEffect(()=>{
         if(!user){
             dispatch(getUserHandler())
@@ -25,7 +26,7 @@ const UserProvider:FC<Props> = ({children})=>{
     return (
         <>
         <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={()=>dispatch(hideSnackbar())}>
-            <Alert  severity="success" sx={{ width: '100%' }} onClose={()=>dispatch(hideSnackbar())}>
+            <Alert  severity={severity} sx={{ width: '100%' }} onClose={()=>dispatch(hideSnackbar())}>
                {snackbarMessage} 
             </Alert>
         </Snackbar>

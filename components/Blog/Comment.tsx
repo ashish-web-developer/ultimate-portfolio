@@ -9,60 +9,24 @@ import {
 // Local Component
 import UserLogo from "../UserLogo";
 
-// Helpers
-import { useAxios } from "@/hooks/common";
-
 // types
-import { Comment as CommentType } from "@/types/blogs";
 import User from "@/types/user";
 
 
 // Redux
-import { handleToggle } from "@/store/signupLogin.slice";
-import { showSnackbar } from "@/store/snackbar.slice";
-import { useAppDispatch } from "@/hooks/redux";
+import { commentSubmitHandler,updateCommentInputVal } from "@/store/blog.slice";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 interface Props{
     blogsMeta:string;
     blogId:number;
-    updateComments:(comments:Array<CommentType>)=>void;
     user:User|null
 }
-const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
+const Comment:FC<Props> = ({blogsMeta,blogId,user})=>{
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const [comment,setComment] = useState<string>("");
-    const [isCommentDisabled,setIsCommentDisabled] = useState<boolean>(true);
-    const {axios} = useAxios();
-    const commentSubmitHandler = async ()=>{
-        if(user){
-            setIsCommentDisabled(true);
-            const res = await axios.post("/api/comment/create",{
-                body:comment,
-                blog_id:blogId
-            })
-            updateComments(res.data.comments);
-            setComment("");
-            setIsCommentDisabled(false);
-            dispatch(showSnackbar({
-                message:"Comment Posted Successfully",
-                severity:"info",
-            }))
-        }else{
-            // For Open signup modal
-            dispatch(handleToggle(true));
-        }
-    }
-    const onCancelHandler = ()=>{
-        setComment("");
-    }
-    useEffect(()=>{
-        if(comment){
-            setIsCommentDisabled(false);
-        }else{
-            setIsCommentDisabled(true);
-        }
-    },[comment])
+    const isCommentDisabled = useAppSelector((state)=>state.blog.isCommentDisabled);
+    const commentInputVal = useAppSelector((state)=>state.blog.commentInputVal);
     return (
         <div className = {classes.container}>
             <div className = {classes.commentTopContainer}>
@@ -75,14 +39,14 @@ const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
                 {blogsMeta}
             </div>
             <TextField
-                value = {comment}
+                value = {commentInputVal}
                 hiddenLabel
                 id="filled-hidden-label-small"
                 variant="filled"
                 fullWidth
                 multiline
                 className={classes.textField}
-                onChange = {(event)=>setComment(event.target.value)}
+                onChange = {(event)=>dispatch(updateCommentInputVal(event.target.value))}
                 placeholder = "Type your comment here....."
                 InputProps={{
                     disableUnderline:true,
@@ -93,10 +57,10 @@ const Comment:FC<Props> = ({blogsMeta,blogId,updateComments,user})=>{
                 }}
             />
             <div className = {classes.btnContainer}>
-                <Button onClick = {onCancelHandler} className = {classes.cancelBtn}>
+                <Button onClick = {()=>dispatch(updateCommentInputVal(""))} className = {classes.cancelBtn}>
                     Cancel
                 </Button>
-                <Button  disabled = {isCommentDisabled && !comment} onClick = {commentSubmitHandler} className = {classes.commentBtn}>
+                <Button  disabled = {isCommentDisabled} onClick = {()=>dispatch(commentSubmitHandler({blog_id:blogId}))} className = {classes.commentBtn}>
                     Comment
                 </Button>
             </div>

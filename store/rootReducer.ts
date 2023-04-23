@@ -3,13 +3,15 @@ import navbarReducer from "@/store/Navbar/navbar.slice"
 import signupLoginReducer from "@/store/signupLogin.slice";
 import UserReducer from "@/store/userSlice";
 import snackbarReducer from "@/store/snackbar.slice";
+import blogReducer from './blog.slice';
 
 const store =  configureStore({
   reducer: {
     navbar:navbarReducer,
     signupLogin:signupLoginReducer,
     user:UserReducer,
-    snackbar:snackbarReducer
+    snackbar:snackbarReducer,
+    blog:blogReducer
   },
 })
 

@@ -2,7 +2,6 @@
 import {useEffect, useState,ReactDOM,useRef, useCallback,FC} from "react";
 import Link from "next/link";
 import Head from "next/head";
-import {useRouter} from "next/router"
 
 
 import { makeStyles } from "@mui/styles";
@@ -39,6 +38,8 @@ import UserComment from "@/components/UserComment";
 
 // Redux
 import { useAppSelector } from "@/hooks/redux";
+import { useAppDispatch } from "@/hooks/redux";
+import { updateComments } from "@/store/blog.slice";
 
 const useStyles = makeStyles({
     blogContainer:{
@@ -144,6 +145,19 @@ const useStyles = makeStyles({
             borderBottom:"1px solid #fff",
             padding:"8px 0px"
         }
+    },
+    list:{
+        fontFamily:"'Allerta Stencil', sans-serif",
+        "& li":{
+            marginBottom:"12px",
+            marginLeft:"100px",
+        },
+        ['@media(max-width:780px)']:{
+            "& li":{
+                marginBottom:"12px",
+                marginLeft:"16px",
+            }
+        }
     }
 })
 
@@ -153,13 +167,15 @@ interface Props {
 
 const Blogs  = ({blogsData}:Props)=>{
     const classes = useStyles();
-    const [comments,setComments] = useState(blogsData.comments);
     const [isPageLoaded,setIsPageLoaded] = useState(false);
     const [blogsCreationDate,setBlogCreationDate] = useState<Date>();
     const isMobile = useMediaQuery('(max-width:758px)');
     const user = useAppSelector((state)=>state.user.user);
+    const comments = useAppSelector((state)=>state.blog.comments)
+    const dispatch = useAppDispatch();
 
     useEffect(()=>{
+        dispatch(updateComments(blogsData.comments));
         setIsPageLoaded(true);
     },[])
 
@@ -179,9 +195,6 @@ const Blogs  = ({blogsData}:Props)=>{
         }
     },[])
 
-    const updateComments = (comments:Array<CommentType>)=>{
-        setComments(comments);
-    }
 
 
     if(!isPageLoaded){
@@ -278,8 +291,10 @@ const Blogs  = ({blogsData}:Props)=>{
                                                 },
                                                 table:{
                                                     className:classes.tableContainer
+                                                },
+                                                list:{
+                                                    className:classes.list
                                                 }
-
                                             }}/>
                                     </Grid>
                                 </Grid>
@@ -287,9 +302,9 @@ const Blogs  = ({blogsData}:Props)=>{
                     </>
 
                 }
-                <Comment user = {user} updateComments = {updateComments} blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
+                <Comment user = {user} blogsMeta = {blogsData.meta_description} blogId = {blogsData.id}/>
                 {
-                    comments.map((comment,index)=>{
+                    comments?.map((comment,index)=>{
                         return <UserComment user = {user} blogId = {blogsData.id} comment = {comment} commentUser = {comment.user} key = {index} />
                     })
                 }

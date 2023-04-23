@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { AlertColor } from '@mui/material/Alert'
 
 
+
+type snackbarInitialState = {
+    isOpen:boolean,
+    message:string|null,
+    severity:AlertColor
+}
+
+const initialState:snackbarInitialState = {
+    isOpen:false,
+    message:null,
+    severity:"info",
+}
 
 export const snackbarSlice = createSlice({
     name:"snackbar",
-    initialState:{
-        isOpen:false,
-        message:null,
-        severity:"info",
-    },
+    initialState,
     reducers:{
         showSnackbar:(state,action)=>{
             state.isOpen = true;
