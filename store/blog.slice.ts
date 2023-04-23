@@ -37,8 +37,7 @@ export const commentSubmitHandler = createAsyncThunk<CommentSubmitResponse,Comme
                 }))
             }
             return response.data;
-        }catch(error){
-            console.log("value of error",error);
+        }catch(error:any){
             if(error?.response.data.message == "Unauthenticated."){
                 dispatch(handleToggle(true))
             }else{

@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosError} from "axios";
 import { handleToggle } from "./signupLogin.slice";
 import { showSnackbar } from "./snackbar.slice";
 import User from "@/types/user";
@@ -63,7 +62,7 @@ export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest,{state:R
             }))
         }
         return response.data;
-    }catch(error:unknown){
+    }catch(error:any){
         dispatch(showSnackbar({
             message:"Your Password or Email must be wrong, Try Again!",
             severity:"error",
@@ -89,7 +88,7 @@ export const registerHandler = createAsyncThunk<LoginResponse,RegisterRequest>(
                 severity:"info",
             }))
             return response.data;
-        }catch(error:unknown){
+        }catch(error:any){
             dispatch(showSnackbar({
                 message:"Account already exist!",
                 severity:"error",
