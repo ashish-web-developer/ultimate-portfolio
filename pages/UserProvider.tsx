@@ -3,6 +3,7 @@ import {ReactNode,FC,useEffect} from "react";
 import { getUserHandler } from "@/store/userSlice";
 import { useAppDispatch ,useAppSelector} from "@/hooks/redux";
 import { hideSnackbar } from "@/store/snackbar.slice";
+import { getCsrfToken } from "@/store/csrfTokenSlice.slice";
 
 // Mui
 import { Snackbar,Alert } from "@mui/material";
@@ -23,6 +24,9 @@ const UserProvider:FC<Props> = ({children})=>{
             dispatch(getUserHandler())
         }
     },[user])
+    useEffect(()=>{
+        dispatch(getCsrfToken());
+    },[])
     return (
         <>
         <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={()=>dispatch(hideSnackbar())}>

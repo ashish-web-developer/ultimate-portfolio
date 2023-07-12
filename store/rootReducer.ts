@@ -4,6 +4,7 @@ import signupLoginReducer from "@/store/signupLogin.slice";
 import UserReducer from "@/store/userSlice";
 import snackbarReducer from "@/store/snackbar.slice";
 import blogReducer from './blog.slice';
+import csrfTokenReducer from './csrfTokenSlice.slice';
 
 const store =  configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store =  configureStore({
     signupLogin:signupLoginReducer,
     user:UserReducer,
     snackbar:snackbarReducer,
-    blog:blogReducer
+    blog:blogReducer,
+    csrfToken:csrfTokenReducer
   },
 })
 

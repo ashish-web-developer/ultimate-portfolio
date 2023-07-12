@@ -50,9 +50,14 @@ export const loginHandler = createAsyncThunk<LoginResponse,LoginRequest,{state:R
   'user/login',
   async ({ email,password },{getState,dispatch,rejectWithValue}) => {
     try{
-        const response = await axios.post("/api/login",{
-            email,
-            password
+        const state = getState();
+        const response = await axios.request({
+            method: 'post',
+            url: '/api/login',
+            data: {
+                email,
+                password,
+            },
         });
         if(response.data.status){
             dispatch(handleToggle(false));
